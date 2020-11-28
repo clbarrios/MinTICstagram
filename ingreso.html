@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MinTICstagram | Iniciar Sesión</title>
+    <style>
+        label {
+            display: inline-block;
+            width: 150px
+        }
+
+        .formulario {
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .contenedor {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div>
+            <h1>MinTICstagram</h1>
+            <image src="img/logo.png">
+        </div>
+        
+        <div>
+            <form class="formulario" action="/principal.html">
+                <label> Usuario </label>
+                <input type="text" placeholder="Usuario"> 
+                <br>
+                <br>
+                <label> Contraseña </label>
+                <input type="password" placeholder="Contraseña"> 
+                <br>
+                <br>
+                <a href="reestablecerContra.html"> ¿Olvidaste tu contraseña?</a> 
+                <br>
+                <br>
+                <input type="submit" value="Iniciar Sesión">
+                <br>
+                <br>
+                <a href="registro.html"> ¿Aún no tienes una cuenta? Registrate</a> 
+            </form>
+        </div>
+    </div>
+</body>
+</html>

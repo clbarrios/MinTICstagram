@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>MinTICstagram | Nueva Contreña </title>
+    <style>
+        label {
+            display: inline-block;
+            width: 200px
+        }
+
+        .formulario {
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .contenedor {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <form class="formulario" action="/reestablecimientoExitoso.html">
+            <h1>Nueva Contraseña</h1>
+            <label for="nuevacontra"> Elige tu nueva contraseña</label>
+            <input type="password" size=30 id="nuevacontra"> 
+            <p>Tu contraseña debe contener por lo menos un número y un caracter especial</p>
+            <label for="confirmacontra"> Confirma tu nueva contraseña</label>
+            <input type="password" size=30 id="confirmacontra">
+            <br>
+            <br>
+            <input type="submit" value="Reestablecer Contraseña">
+        </form>
+    </div>
+</body>
+</html>
