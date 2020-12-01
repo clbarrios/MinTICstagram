@@ -11,3 +11,47 @@ body {
 .boton {
     background-color: #ffe3ae;
 }
+
+.boxedStatic{
+    border: 1px solid black ;
+    background-color: #f7fade;
+    text-align: center;
+    position: fixed;
+    top: 10%;
+    right: 30%;
+    width: 500px;
+    height: 180px;
+}
+
+.boxedres{
+    border: 1px solid black ;
+    background-color: #f7fade;
+    text-align: center;   
+    position: fixed;
+    bottom: 50%;
+    right: 28%;
+    width: 650px;
+    height: 250px;
+}
+
+.boxedreg{
+    border: 1px solid black ;
+    background-color: #fefce0;
+    text-align: center;   
+    position: fixed;
+    top: 30%;
+    right: 25%;
+    width: 700px;
+    height: 450px;
+}
+
+#botonres{
+    background-color:#ffe3ae;
+    font-weight:bold;
+    font-size:15px;
+    font-family:Verdana,Helvetica;
+    width:100px;
+    height:35px;
+}
+
+
