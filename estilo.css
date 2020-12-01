@@ -15,13 +15,14 @@ header {
 
 #wrapper {
     width:100%;
-    height:100px;
+    height:150px;
     margin:auto;
 }
 #column1 {
     width:25%;    
-    height:100px;
+    height:150px;
     float:left;
+    align-items: center;
 }
 #column2 {
     width:50%;    
@@ -31,6 +32,10 @@ header {
 }
 #column3 {
     width:25%;    
-    height:100px;
+    height:150px;
     float:left;
+}
+.logo {
+    height:150px;
+    width:150px;
 }
