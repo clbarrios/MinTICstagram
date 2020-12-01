@@ -12,14 +12,22 @@ body {
     background-color: #ffe3ae;
 }
 
-.boxed{
+.boxedStatic{
     border: 1px solid black ;
     background-color: #f7fade;
     text-align: center;
     position: fixed;
-    bottom: 60%;
+    top: 10%;
     right: 30%;
     width: 500px;
     height: 180px;
 }
 
+.boxedForm{
+    border: 1px solid black ;
+    background-color: #f7fade;
+    position: fixed;
+    top: 10%;
+    right: 30%;
+    width: 500px;
+}
