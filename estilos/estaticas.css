@@ -11,3 +11,14 @@ body {
 .boton {
     background-color: #ffe3ae;
 }
+
+.boxed{
+    border: 1px solid black ;
+    background-color: #f7fade;
+    text-align: center;
+    position: fixed;
+    bottom: 60%;
+    right: 30%;
+    width: 500px;
+}
+
