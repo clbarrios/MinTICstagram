@@ -11,25 +11,24 @@
         }
 
         .formulario {
-            margin: 0 auto;
+            margin: 15%;
             display: block;
         }
-        
-        .contenedor {
-            display: flex;
-            align-items: center;
-        }
+
     </style>
 </head>
 <body>
-    <div class="contenedor">
+    <div class="boxedForm " style="height: 450px;">
         <form class="formulario" action="reestablecimientoExitoso.html">
-            <h1>Nueva Contraseña</h1>
+            <h1 style="text-align: center;">Nueva Contraseña</h1>
+            <br>
             <label for="nuevacontra"> Elige tu nueva contraseña</label>
             <input type="password" size=30 id="nuevacontra"> 
-            <p>Tu contraseña debe contener por lo menos un número y un caracter especial</p>
+            <p style="font-size: 12px; color: grey;">Tu contraseña debe contener por lo menos un número y un caracter especial</p>
+            <br>
             <label for="confirmacontra"> Confirma tu nueva contraseña</label>
             <input type="password" size=30 id="confirmacontra">
+            <br>
             <br>
             <br>
             <input type="submit" value="Reestablecer Contraseña">
