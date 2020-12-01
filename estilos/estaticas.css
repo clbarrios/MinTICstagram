@@ -53,5 +53,8 @@ body {
     width:100px;
     height:35px;
 }
-
+label {
+    width:20%;
+    display: inline-block;
+}
 
