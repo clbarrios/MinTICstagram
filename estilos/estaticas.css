@@ -1,0 +1,13 @@
+body {
+    background-color: #d7eb5a;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.contenido {
+    border: 1px #000000;
+    background-color: #fefce0;
+}
+
+.boton {
+    background-color: #ffe3ae;
+}
