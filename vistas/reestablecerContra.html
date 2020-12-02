@@ -2,41 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>MinTICstagram | Reestablecer Contraseña </title>
-    <link rel="stylesheet" href="../estilos/estaticas.css">
-    <style>
-        .digito {
-            font-size: 16pt;
-        }
-    </style>
+    <title>MinTICstagram | Reestablecer Contraseña</title>
+    <link rel="stylesheet" href="../estilos/nuevcontra.css">
+
 </head>
 <body>
-    <div>
-        <h1>Reestablecer Contraseña</h1>
-        <form>
-            <label></label>
-            <input type="text" size=30 placeholder="Ingresa tu correo Electrónico">
-            <div class="contenedorBoton">
-                <input class="botonNewImg" type="submit" value="Enviar Código" style="width: 200px;">
-            </div>
-           
-        </form>
-        <br>
-        <br>
-        <form action="nuevaContra.html">
+    <div class="boxedreg">
+        <form class="formulario" action="activacion.html">
+            <h1>Reestablecer Contraseña</h1>
+            <br>
+            <input type="text" size=30 placeholder="Ingresa tu correo electrónico" >
+            <input type="submit" value="Enviar Código" class="botonNewImg" style="width: 120px;">
+            <br>
+            <br>
             <p>Ingresa el código</p>
             <br>
+            <input class="digito" type="text" size=1 maxlength=1 >
             <input class="digito" type="text" size=1 maxlength=1>
             <input class="digito" type="text" size=1 maxlength=1>
             <input class="digito" type="text" size=1 maxlength=1>
-            <input class="digito" type="text" size=1 maxlength=1>
-            <input class="digito" type="text" size=1 maxlength=1>            
+            <input class="digito" type="text" size=1 maxlength=1>    
             <br>
             <br>
-            <div class="contenedorBoton">
-                <input class="botonNewImg" type="submit" value="Reestablecer" style="width: 200px;">
-            </div>
-            
+            <br>
+            <input type="submit" value="Restablecer" class="botonNewImg">
         </form>
     </div>
 </body>
