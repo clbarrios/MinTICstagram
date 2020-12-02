@@ -1,0 +1,37 @@
+body {
+    background-color: #d7eb5a;
+    font-family: "Courier New", Courier, monospace;
+}
+.botonNewImg{
+    background-color:#ffe3ae;
+    font-weight:bold;
+    font-size:15px;
+    width:100px;
+    height:25px;
+}
+label{
+    display: inline-block;
+    width: 110;
+    text-align: left;
+}
+.formulario{
+    margin: 78 auto;
+    display: block;
+    background-color: #f7fade;
+    align-items: center;
+    bottom: 50%;
+    right: 60%;
+
+}
+.contenedor{
+    display: flex;
+    text-align: center;
+    position: fixed;
+    top: 25%;
+    right: 15%;
+    width: 700px;
+    height: 350px;
+
+
+    
+}
