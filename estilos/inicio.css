@@ -15,12 +15,12 @@ label{
     text-align: left;
 }
 .formulario{
-    margin: 78 auto;
+    margin: 70 80;
     display: block;
     background-color: #f7fade;
     align-items: center;
     bottom: 50%;
-    right: 60%;
+    right: 70%;
 
 }
 .contenedor{
@@ -28,7 +28,7 @@ label{
     text-align: center;
     position: fixed;
     top: 25%;
-    right: 15%;
+    right: 25%;
     width: 700px;
     height: 350px;
    

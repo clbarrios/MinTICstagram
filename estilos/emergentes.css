@@ -2,6 +2,14 @@ body {
     background-color: #d7eb5a;
     font-family: "Courier New", Courier, monospace;
 }
+header {
+    width: 100%;
+    background-color: #f7fade;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 form{
     display: block;
 }
