@@ -23,6 +23,15 @@ body {
     height: 180px;
 }
 
+.boxedForm{
+    border: 1px solid black ;
+    background-color: #f7fade;
+    position: fixed;
+    top: 10%;
+    right: 30%;
+    width: 500px;
+}
+
 .boxedres{
     border: 1px solid black ;
     background-color: #f7fade;
