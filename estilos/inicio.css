@@ -16,6 +16,7 @@ label{
 }
 .formulario{
     margin: 20 100;
+    width: 50%;
     display: block;
     background-color: #f7fade;
     align-items: center;
@@ -27,6 +28,7 @@ label{
 
 .contenedor{
     display: flex;
+    width: 80%;
     text-align: center;
     position: flex;
     height: 350px;
