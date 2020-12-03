@@ -16,7 +16,7 @@ header {
   height: 150px;
   text-align: center;
   left: 0; /* Posicionamos la cabecera al lado izquierdo */
-top: 0; /* Posicionamos la cabecera pegada arriba */
+  top: 0; /* Posicionamos la cabecera pegada arriba */
 /* position: fixed;  Hacemos que la cabecera tenga una posición fija */
 }
 
@@ -46,15 +46,30 @@ position: relative;
 #column3 {
   width:25%;    
   height:150px;
+  align-items: center;
   float:left;
 }
 .logo {
-  height:150px;
+  height:100px;
   width:150px;
+  position:absolute;
+  right:100px;
+  top:10px;
 }
 
-#garden{
-float: left;
+.logo2 {
+  height:130px;
+  width:180px;
+  position:absolute;
+  left:100px;
+  top:10px;
+}
+
+#gender{
+  position:absolute;
+  width:150px;
+  right:100px;
+  top:120px;
 }
 
 .cuerpito{

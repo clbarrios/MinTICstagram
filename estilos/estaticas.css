@@ -54,14 +54,7 @@ body {
     height: 450px;
 }
 
-#botonres{
-    background-color:#ffe3ae;
-    font-weight:bold;
-    font-size:15px;
-    font-family:Verdana,Helvetica;
-    width:100px;
-    height:35px;
-}
+
 label {
     width:20%;
     display: inline-block;
