@@ -40,7 +40,14 @@ label{
     padding-top: 30px;
     margin-top:120px;
 }
-
+input[type=text], input[type=password], textarea {
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    border-style: solid;
+    border: 1px solid black;
+    border-radius: 4px;
+    height:25px;
+}
 .contenedor{
     display: flex;
     width: 80%;

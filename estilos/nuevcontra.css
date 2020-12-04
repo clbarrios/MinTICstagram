@@ -33,7 +33,6 @@ input[type=text], textarea {
     border-style: solid;
     border: 1px solid black;
     border-radius: 4px;
-    background-color: #f7fade;
     height:30px;
 }
 .boxedreg{
