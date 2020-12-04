@@ -61,10 +61,25 @@ textarea{
     text-align: center;
     align-items: center;
 }
-.botonNewImg{
-    background-color:#ffe3ae;
+
+.boton {
+    background-color: #ffe3ae;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
     font-weight:bold;
     font-size:15px;
-    width:100px;
-    height:35px;
+    padding: 8px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+.boton:hover {
+    background-color: goldenrod;
 }
