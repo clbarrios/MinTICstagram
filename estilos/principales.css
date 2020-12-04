@@ -44,9 +44,6 @@ header {
     justify-content: center;
 }
 
-#column2 h1{
-    font-weight: bold;
-}
 
 #column3 {
     width:25%;    
@@ -55,11 +52,10 @@ header {
     float:left;
 }
 
-#gender{
-    position:absolute;
-    width:150px;
-    right:100px;
-    top:120px;
+.logo {
+    display: inline-block;
+    height: 75%;
+    vertical-align: middle;
 }
 
 /*
@@ -96,4 +92,12 @@ Grid layout para las pestañas
 .active {
     background-color: grey;
     font-weight: bold;
+}
+
+/*
+Customizing bootstrap
+*/
+
+.card-body {
+    background-color: #f7fade;
 }
