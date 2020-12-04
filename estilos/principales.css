@@ -1,60 +1,65 @@
 *{
-  font-family: "Courier New", Courier, monospace;
-  margin: 0;
-  box-sizing: border-box;
+    font-family: "Courier New", Courier, monospace;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: #d7eb5a;
-  font-family: "Courier New", Courier, monospace;
-  margin: 0;
+    background-color: #d7eb5a;
+    font-family: "Courier New", Courier, monospace;
+    margin: 0;
 }
 
 header {
-  width:100%;
-  background-color: #f7fade;
-  height: 150px;
-  text-align: center;
-  left: 0; /* Posicionamos la cabecera al lado izquierdo */
-  top: 0; /* Posicionamos la cabecera pegada arriba */
-/* position: fixed;  Hacemos que la cabecera tenga una posición fija */
+    width:100%;
+    background-color: #f7fade;
+    height: 150px;
+    text-align: center;
+    left: 0; /* Posicionamos la cabecera al lado izquierdo */
+    top: 0; /* Posicionamos la cabecera pegada arriba */
+    /* position: fixed;  Hacemos que la cabecera tenga una posición fija */
 }
 
 #wrapper {
-  width:100%;
-  height:150px;
-  margin:auto;
-  display: flex;
-  
+    width:100%;
+    height:150px;
+    margin:auto;
+    display: flex;
 }
 
-p{
-position: relative;
-}
 #column1 {
-  width:25%;    
-  height:150px;
-  float:left;
-  align-items: center;
+    width:25%;    
+    height:150px;
+    float:left;
+    align-items: center;
 }
 #column2 {
-  width:50%;    
-  height:150px;
-  line-height: 120px;
-  float:left;
+    width:50%;    
+    height:150px;
+    float:left;
+    line-height: 150px;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
+
+#column2 h1{
+    font-weight: bold;
+}
+
 #column3 {
-  width:25%;    
-  height:150px;
-  align-items: center;
-  float:left;
+    width:25%;    
+    height:150px;
+    align-items: center;
+    float:left;
 }
 
 #gender{
-  position:absolute;
-  width:150px;
-  right:100px;
-  top:120px;
+    position:absolute;
+    width:150px;
+    right:100px;
+    top:120px;
 }
 
 /*
@@ -90,4 +95,5 @@ Grid layout para las pestañas
 
 .active {
     background-color: grey;
+    font-weight: bold;
 }
