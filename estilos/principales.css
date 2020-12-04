@@ -57,6 +57,56 @@ header {
     height: 75%;
     vertical-align: middle;
 }
+/*
+Animated Button
+*/
+.boton {
+    background-color: #ffe3ae;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight:bold;
+    font-size:15px;
+    padding: 8px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+.boton:hover {
+    background-color: goldenrod;
+}
+
+/*
+Animated searchbar
+*/
+input[type=text] {
+width: 150px;
+box-sizing: border-box;
+border: 2px solid #ccc;
+border-radius: 4px;
+font-size: 16px;
+background-color: white;
+background-image: url('../img/searchicon.svg');
+background-position: 5px 5px; 
+background-repeat: no-repeat;
+padding: 5px 20px 5px 35px;
+transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+width: 100%;
+}
+
+
+.center {
+    text-align: center;
+}
 
 /*
 Grid layout para las pestañas
@@ -84,6 +134,7 @@ Grid layout para las pestañas
     font-size: 20px;
     cursor: pointer;
 }
+
 
 .grid-item:hover {
     background-color: lightgrey;
