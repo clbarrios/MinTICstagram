@@ -85,7 +85,7 @@ Animated Button
 /*
 Animated searchbar
 */
-input[type=text] {
+.searchbar {
 width: 150px;
 box-sizing: border-box;
 border: 2px solid #ccc;
@@ -99,8 +99,12 @@ padding: 5px 20px 5px 35px;
 transition: width 0.4s ease-in-out;
 }
 
-input[type=text]:focus {
+.searchbar:focus {
 width: 100%;
+}
+
+.long {
+    width: 500px;
 }
 
 

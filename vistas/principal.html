@@ -88,7 +88,7 @@
                 </div>
                 <div class="col align-self-center center">
                     <form>
-                        <input type="text" name="search" placeholder="Buscar...">
+                        <input type="text" class="searchbar" name="search" placeholder="Buscar...">
                     </form>
                 </div>
                 <div class="col align-self-center center">
@@ -208,7 +208,14 @@
     </div>
 
     <div class="tab-content" id="buscar-content" style="display: none;">
-        <h2>Pestaña de búsqueda por implementar</h2>
+        
+        <br>
+        <div class="container-fluid">
+            <form style="text-align: center;">
+                <input type="text" class="searchbar long" name="search" placeholder="Buscar por nombre de imagen o etiquetas...">
+            </form>
+        </div>
+        
     </div>
     <script>
         document.getElementById("myImgs-tab").click();
