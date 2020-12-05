@@ -37,3 +37,7 @@ def actualizarImagen():
 @app.route("/nuevaImagen")
 def nuevaImagen():
     return render_template("nuevaImagen.html")
+
+# Activar el modo debug
+if __name__=="__main__":
+    app.run(debug=True)
