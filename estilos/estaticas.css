@@ -8,10 +8,6 @@ body {
     background-color: #fefce0;
 }
 
-.boton {
-    background-color: #ffe3ae;
-}
-
 .boxedStatic{
     border: 1px solid black ;
     background-color: #f7fade;
@@ -54,17 +50,40 @@ body {
     height: 450px;
 }
 
-
-label {
-    width:20%;
+.boton {
+    background-color: #ffe3ae;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
     display: inline-block;
-}
-.botonNewImg{
-    background-color:#ffe3ae;
+    font-family: 'Courier New', Courier, monospace;
     font-weight:bold;
     font-size:15px;
-    width:100px;
-    height:35px;
+    padding: 8px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+label{
+    display: inline-block;
+    text-align: left;
+}
+
+input[type=text], input[type=password], textarea {
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    border-style: solid;
+    border: 1px solid black;
+    border-radius: 4px;
+    height:25px;
+}
+
+.boton:hover {
+    background-color: goldenrod;
 }
 .contenedorBoton{
     text-align: center;

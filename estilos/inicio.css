@@ -2,12 +2,26 @@ body {
     background-color: #d7eb5a;
     font-family: "Courier New", Courier, monospace;
 }
-.botonNewImg{
-    background-color:#ffe3ae;
+.boton {
+    background-color: #ffe3ae;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
     font-weight:bold;
     font-size:15px;
-    width:100px;
-    height:25px;
+    padding: 5px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid gray;
+}
+
+.boton:hover {
+    background-color: goldenrod;
 }
 label{
     display: inline-block;
@@ -19,13 +33,22 @@ label{
     width: 50%;
     display: block;
     background-color: #f7fade;
+    border: 1px solid black;
+    line-height: 2em;
     align-items: center;
     bottom: 5%;
     right: 70%;
     padding-top: 30px;
     margin-top:120px;
 }
-
+input[type=text], input[type=password], textarea {
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    border-style: solid;
+    border: 1px solid black;
+    border-radius: 4px;
+    height:25px;
+}
 .contenedor{
     display: flex;
     width: 80%;
