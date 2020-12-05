@@ -33,6 +33,7 @@ label{
     width: 50%;
     display: block;
     background-color: #f7fade;
+    border: 1px solid black;
     line-height: 2em;
     align-items: center;
     bottom: 5%;

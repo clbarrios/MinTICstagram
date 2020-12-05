@@ -8,10 +8,6 @@ body {
     background-color: #fefce0;
 }
 
-.boton {
-    background-color: #ffe3ae;
-}
-
 .boxedStatic{
     border: 1px solid black ;
     background-color: #f7fade;
@@ -54,11 +50,6 @@ body {
     height: 450px;
 }
 
-
-label {
-    width:20%;
-    display: inline-block;
-}
 .boton {
     background-color: #ffe3ae;
     border: none;
@@ -75,6 +66,20 @@ label {
     cursor: pointer;
     border-radius: 5px;
     border: 2px solid gray;
+}
+
+label{
+    display: inline-block;
+    text-align: left;
+}
+
+input[type=text], input[type=password], textarea {
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    border-style: solid;
+    border: 1px solid black;
+    border-radius: 4px;
+    height:25px;
 }
 
 .boton:hover {
