@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>MinTICstagram | Activación exitosa</title>
-    <link rel="stylesheet" href="../estilos/estaticas.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/estaticas.css') }}">
 </head>
 <body>
     <div class="boxedStatic">
         <h1>¡Activación exitosa!</h1>
-        <p>Tu cuenta ha sido activada con mucho éxito, ya puedes disfrutar de Minticstagram</p>
-        <form method="get" action="ingreso.html">
-        
+        <p>Tu cuenta ha sido activada con mucho éxito, ya puedes disfrutar de Minticstagram.</p>
+        <form method="get" action="{{ url_for('ingreso') }}">
             <div class="contenedorBoton">
                 <input class="boton" type="submit" value="Actualizar">
             </div>

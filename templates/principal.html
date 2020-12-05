@@ -14,9 +14,9 @@
     >
 
     <title>MinTICstagram | Página Principal</title>
-    <link rel="stylesheet" href="../estilos/principales.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/principales.css') }}">
     <!-- css del proyecto -->
-    <script src="../scripts/principal.js"></script>
+    <script src="{{ url_for('static', filename='scripts/principal.js') }}"></script>
 </head>
 <body>
     <header>
@@ -37,7 +37,7 @@
                     <svg height="100%" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                     </svg>
-                </div>
+                </div>  
                 
                 <div>
                     <button type="button" class="btn btn-outline-secondary btn-sm">
@@ -85,33 +85,6 @@
                         <option value="3">Etiqueta 3</option>
                     </select>    
                     
-<<<<<<< HEAD
-                    <div>
-                        <div class="grid-container">
-                            <div class = "grid-item">
-                            <button type="button" class="btn btn-outline-dark">Agregar nueva imagen</button>
-                            </div>
-                            <div class="dropdown" class="grid-item">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Mi galeria
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                              </div>
-                              <div id="custom-search-input" class="grid-item">
-                                <div class="input-group col-md-12">
-                                    <input type="text" class="  search-query form-control" placeholder="Filtrar" />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button">
-                                            <span class=" glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-=======
                 </div>
                 <div class="col align-self-center center">
                     <form>
@@ -132,7 +105,7 @@
                 
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -152,42 +125,12 @@
                                     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                 </svg>
                             </button>
->>>>>>> cards
                         </div>
                       </div>
                 </div>
-<<<<<<< HEAD
-    
-                <div id="pnl_2">
-                    <div>
-                        <div class="grid-container">
-                            <div class = "grid-item">
-                            <button type="button" class="btn btn-outline-dark">Agregar nueva imagen</button>
-                            </div>
-                            <div class="dropdown" class="grid-item">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Mi galeria
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                              </div>
-                              <div id="custom-search-input" class="grid-item">
-                                <div class="input-group col-md-12">
-                                    <input type="text" class="  search-query form-control" placeholder="Filtrar" />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button">
-                                            <span class=" glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-=======
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -207,42 +150,12 @@
                                     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                 </svg>
                             </button>
->>>>>>> cards
                         </div>
                       </div>
                 </div>
-<<<<<<< HEAD
-
-                <div id="pnl_3">
-                    <div>
-                        <div class="grid-container">
-                            <div class = "grid-item">
-                            <button type="button" class="btn btn-outline-dark">Agregar nueva imagen</button>
-                            </div>
-                            <div class="dropdown" class="grid-item">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Mi galeria
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                              </div>
-                              <div id="custom-search-input" class="grid-item">
-                                <div class="input-group col-md-12">
-                                    <input type="text" class="  search-query form-control" placeholder="Filtrar" />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button">
-                                            <span class=" glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-=======
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -262,13 +175,12 @@
                                     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                 </svg>
                             </button>
->>>>>>> cards
                         </div>
                       </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -299,7 +211,7 @@
                 
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -324,7 +236,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -349,7 +261,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -374,7 +286,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -405,7 +317,7 @@
                 
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -430,7 +342,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -455,7 +367,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -480,7 +392,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card mx-auto" style="width: 18rem;">
-                        <img src="../img/imagen15.jpg" class="card-img-top">
+                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Nombre de la Imagen</h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -512,87 +424,16 @@
 
     <div class="tab-content" id="buscar-content" style="display: none;">
         
-<<<<<<< HEAD
-        <div>
-            <div class="topnav">
-                <input type="text"  placeholder="Ingresa un nombre o etiqueta...">
-            </div>
-      
-              <div class="wrapp"> 
-                <div> 
-                    <img src="../img/imagen7.jpg">
-                    <img src="../img/imagen9.jpg">
-                    <img src="../img/imagen11.jpg">
-                    <img src="../img/imagen12.jpg">
-                    <img src="../img/imagen1.jpg">
-                    <img src="../img/imagen2.png">
-                    <img src="../img/imagen3.jpg">
-                    <img src="../img/imagen4.jpg">
-                    <img src="../img/imagen5.jpg">
-                    <img src="../img/imagen6.jpg">
-                    <img src="../img/imagen7.jpg">
-                    <img src="../img/imagen7.jpg"> 
-                    <img src="../img/imagen14.jpg">
-                    <img src="../img/imagen1.jpg">      
-                    <img src="../img/imagen3.jpg">
-                    <img src="../img/imagen4.jpg">
-                    <img src="../img/imagen5.jpg">
-                    <img src="../img/imagen6.jpg">
-                    <img src="../img/imagen1.jpg">
-                    <img src="../img/imagen2.png">
-                    <img src="../img/imagen3.jpg">
-                    <img src="../img/imagen4.jpg">
-                    <img src="../img/imagen5.jpg">
-                    <img src="../img/imagen6.jpg">
-                    <img src="../img/imagen1.jpg">
-                    <img src="../img/imagen2.png">
-                    <img src="../img/imagen3.jpg">
-                    <img src="../img/imagen4.jpg">
-                    <img src="../img/imagen5.jpg">
-                    <img src="../img/imagen6.jpg">
-                    <img src="../img/imagen7.jpg">
-                    <img src="../img/imagen8.jpg">
-                    <img src="../img/imagen9.jpg">
-                    <img src="../img/imagen10.jpg">
-                    <img src="../img/imagen11.jpg">
-                    <img src="../img/imagen12.jpg">
-                    <img src="../img/imagen1.jpg">
-                    <img src="../img/imagen2.png">
-                    <img src="../img/imagen3.jpg">
-                    <img src="../img/imagen4.jpg">
-                    <img src="../img/imagen5.jpg">
-                    <img src="../img/imagen6.jpg">
-
-
-                </div> 
-              </div>
-=======
         <br>
         <div class="container-fluid">
             <form style="text-align: center;">
                 <input type="text" class="searchbar long" name="search" placeholder="Buscar por nombre de imagen o etiquetas...">
             </form>
->>>>>>> cards
         </div>
         
     </div>
-<<<<<<< HEAD
-
-     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-=======
     <script>
         document.getElementById("myImgs-tab").click();
     </script>
->>>>>>> cards
 </body>
 </html>
