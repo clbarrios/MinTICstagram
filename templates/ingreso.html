@@ -25,11 +25,11 @@
                     <label>Contraseña</label>
                     <input type="password" placeholder = "Ingresa tu contraseña" size=25>
                     <br>
-                    <a href="reestablecerContra.html" style = "font-size:14px"> ¿Olvidaste tu contraseña?</a> 
+                    <a href="{{ url_for('reestablecerContra') }}" style = "font-size:14px"> ¿Olvidaste tu contraseña?</a> 
                     <br>                    
                     <input type="submit" Name = "Enviar" value = "Inicia sesion" class="boton" style="width:200px">
                     <br>
-                    <a href="registro.html" style = "font-size:14px"> ¿Aún no tienes una cuenta? Registrate  </a> 
+                    <a href="{{ url_for('registro') }}" style = "font-size:14px"> ¿Aún no tienes una cuenta? Registrate  </a> 
                 </Form>
             </div>
             
