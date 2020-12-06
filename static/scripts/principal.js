@@ -19,3 +19,4 @@ function openTab(id) {
     activeTab = document.getElementById(id + "-tab");
     activeTab.className += " active";
 }
+

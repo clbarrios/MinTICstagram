@@ -57,6 +57,29 @@ header {
     height: 75%;
     vertical-align: middle;
 }
+
+.textfield, textarea {
+    display: block;
+    font-size: 10pt;
+    font-family: "Courier New", Courier, monospace;
+    border-style: solid;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: #f7fade;
+    width:100%;
+    height:30px;
+    margin-bottom: 5%;
+}
+input[type=submit]{
+    width:50%;
+    cursor: pointer;
+    text-align: center;
+}
+textarea{
+    resize: none;
+    vertical-align: top;
+}
+
 /*
 Animated Button
 */
@@ -155,4 +178,16 @@ Customizing bootstrap
 
 .card-body {
     background-color: #f7fade;
+}
+
+.modal-header {
+    background-color: #f7fade;
+}
+
+.modal-body {
+    background-color: #d7eb5a;
+}
+
+.modal-footer {
+    background-color: #d7eb5a;
 }
