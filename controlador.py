@@ -26,9 +26,11 @@ def reestablecerContra():
 def reestablecimientoExitoso():
     return render_template("reestablecimientoExitoso.html")
 
+galeria = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg','img/imagen14.jpg', 'img/imagen15.jpg', 'img/imagen15.jpg' ]
+
 @app.route("/principal")
 def principal():
-    return render_template("principal.html")
+    return render_template("principal.html", galeria=galeria)
 
 @app.route("/actualizarImagen")
 def actualizarImagen():
