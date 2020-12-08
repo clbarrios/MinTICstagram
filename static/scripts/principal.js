@@ -22,3 +22,7 @@ function openTab(id) {
     activeTab.className += " active";
 }
 
+
+
+
+
