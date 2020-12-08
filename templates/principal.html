@@ -62,13 +62,13 @@
 
     <div class="tab-content" id="myImgs-content" style="display: none;">
         <div class="grid-container three-cols">
-            <div class="grid-item">
+            <div class="grid-item tab" id="privadas-tab" onclick="openTab('privadas');">
                 Privadas
             </div>
-            <div class="grid-item">
+            <div class="grid-item tab" id="publicas-tab" onclick="openTab('publicas');">
                 Publicas
             </div>
-            <div class="grid-item">
+            <div class="grid-item tab" id="guardadas-tab" onclick="openTab('guardadas');">
                 Guardadas
             </div>
         </div>
@@ -77,15 +77,6 @@
         <div class="container-fluid">
 
             <div class="row">
-                <!--<div class="col align-self-center center"> 
-                    <select class="custom-select" name="colecciones" id="colecciones" style="width:50%">
-                        <option selected> Mi Galería </option>
-                        <option value="1">Etiqueta 1</option>
-                        <option value="2">Etiqueta 2</option>
-                        <option value="3">Etiqueta 3</option>
-                    </select>    
-                    
-                </div>  -->
                 <div class="col align-self-center center">
                     <form>
                         <input type="text" class="searchbar" name="search" placeholder="Buscar...">

@@ -22,6 +22,7 @@ function openTab(id) {
     activeTab.className += " active";
 }
 
+<<<<<<< HEAD
 function displayImg(event) {
     // objeto imagen para consultar dimensiones antes de mostrarla
     var img = new Image();
@@ -46,3 +47,9 @@ function displayImg(event) {
     // asignar imagen cargada al objeto imagen
     img.src = URL.createObjectURL(event.target.files[0])
 }
+=======
+
+
+
+
+>>>>>>> dfd6a40eb08c5b369b08aa736d0ac91d2b89e3cb

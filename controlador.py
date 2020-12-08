@@ -32,13 +32,7 @@ galeria = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4
 def principal():
     return render_template("principal.html", galeria=galeria)
 
-@app.route("/actualizarImagen")
-def actualizarImagen():
-    return render_template("actualizarImagen.html")
 
-@app.route("/nuevaImagen")
-def nuevaImagen():
-    return render_template("nuevaImagen.html")
 
 # Activar el modo debug
 if __name__=="__main__":
