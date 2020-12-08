@@ -77,7 +77,7 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col align-self-center center"> 
+                <!--<div class="col align-self-center center"> 
                     <select class="custom-select" name="colecciones" id="colecciones" style="width:50%">
                         <option selected> Mi Galería </option>
                         <option value="1">Etiqueta 1</option>
@@ -85,7 +85,7 @@
                         <option value="3">Etiqueta 3</option>
                     </select>    
                     
-                </div>
+                </div>  -->
                 <div class="col align-self-center center">
                     <form>
                         <input type="text" class="searchbar" name="search" placeholder="Buscar...">
@@ -102,12 +102,12 @@
             </div>
             <br>
             <div class="row">
-                
+                {% for t in galeria %}
                 <div class="col-md-3">
-                    <div class="card mx-auto" style="width: 18rem;">
-                        <img src="{{ url_for('static', filename='img/imagen15.jpg') }}" class="card-img-top">
+                    <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
+                        <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
                         <div class="card-body">
-                            <h5 class="card-title">Nombre de la Imagen</h5>
+                            <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
                             <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
                             <!-- Botón de descarga -->
                             <button type="button" class="btn btn-primary">
@@ -131,6 +131,7 @@
                         </div>
                       </div>
                 </div>
+                {% endfor %}
             </div>
         </div>  
     </div>
