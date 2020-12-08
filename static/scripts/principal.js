@@ -1,5 +1,4 @@
 
-
 function openTab(id) {
     var i, tabcontents, tabs, activeTab;
     tabcontents = document.getElementsByClassName("tab-content");
@@ -22,7 +21,10 @@ function openTab(id) {
     activeTab.className += " active";
 }
 
-<<<<<<< HEAD
+/*
+ * Función para mostrar imagen al cargarla en modal de Agregar Imagen 
+ * 
+ */
 function displayImg(event) {
     // objeto imagen para consultar dimensiones antes de mostrarla
     var img = new Image();
@@ -44,12 +46,23 @@ function displayImg(event) {
         dispImg.style.display = "block";
         //dispImg.style.margin = "auto";
     }
-    // asignar imagen cargada al objeto imagen
-    img.src = URL.createObjectURL(event.target.files[0])
+    // asignar imagen cargada al objeto imagen luego de validar la extensión del archivo
+    var url = URL.createObjectURL(event.target.files[0])
+    if (validateImgURL(url)) {
+        img.src = URL.createObjectURL(event.target.files[0])
+    } else {
+        alert("Tipo de archivo no soportado. \nDebes cargar una imagen")
+        document.getElementById("imgInputFile").value = "";
+    }
+    
 }
-=======
 
-
-
-
->>>>>>> dfd6a40eb08c5b369b08aa736d0ac91d2b89e3cb
+function validateImgURL(url){
+    // regex
+    var extensionesPermitidas = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    if (extensionesPermitidas.exec(url)) {
+        return true;
+    } else {
+        return false;
+    }
+}
