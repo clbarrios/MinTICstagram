@@ -10,6 +10,8 @@ REQ_ACTIVATE = 'REQ_ACTIVATE'
 REQ_FORGOT = 'REQ_FORGOT'
 U_UNCONFIRMED = 'UNCONFIRMED'
 U_CONFIRMED = 'CONFIRMED'
+prueba_usuario = "Prueba"
+prueba_clave = "Prueba1234"
 
 
 def isEmailValid(email):
@@ -27,6 +29,19 @@ def isUsernameValid(user):
 
 def isPasswordValid(password):
     if re.search(pass_reguex, password):
+        return True
+    else:
+        return False
+
+def isUsernameValid2(user):
+    if prueba_usuario == user:
+        return True
+    else:
+        return False
+
+
+def isPasswordValid2(password):
+    if prueba_clave == password:
         return True
     else:
         return False
