@@ -96,12 +96,15 @@ Estilo para input type=file
 .inputfile + label {
     background-color: #ffe3ae;
     color: black;
-    font-size:15px;
+    font-size: 15px;
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 5px;
     border: 2px solid gray;
-    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     display: inline-block;
     cursor: pointer; /* "hand" cursor */
     margin: auto;

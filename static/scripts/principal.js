@@ -136,6 +136,9 @@ function displayImgOnUpdateModal(event) {
         dispImg.style.display = "block";
     }
 
-    img.src = card.querySelector("img").src;
-    
+    img.src = card.querySelector("img").src;   
+}
+
+function setRadioBtn(option) {
+    document.getElementById("radioBtn" + option).checked = true;
 }
