@@ -150,5 +150,4 @@ function toggleHeart(event) {
         heart.style.display = heart.style.display == "none" ? "inline" : "none";
     }
     
-
 }
