@@ -114,10 +114,8 @@ function displayImgOnUpdateModal(event) {
     botón, por lo que habrá que refenciar un parentElement más, si el event.target
     es el botón como tal se necesitan dos niveles de parentElement
     */
-    var card = event.target.parentElement.parentElement;
-    if (card.className == "card-body") {
-        card = card.parentElement;    
-    }
+    var card = event.target;
+    while (card.className !== "card mx-auto") {card = card.parentElement};
     
     var img = new Image();
     
@@ -143,8 +141,20 @@ function setRadioBtn(option) {
     document.getElementById("radioBtn" + option).checked = true;
 }
 
+
 //para redirigir con el boton de cerrar sesion
 
 function irIngreso(){
     location.href = "../";
+}
+
+function toggleHeart(event) {
+    var btn = event.target;
+    while (btn.nodeName != "BUTTON") {btn = btn.parentElement};
+    console.log(btn.className)
+   
+    for (var heart of btn.querySelectorAll("svg")) {
+        heart.style.display = heart.style.display == "none" ? "inline" : "none";
+    }
+    
 }

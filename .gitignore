@@ -145,3 +145,6 @@ cython_debug/
 
 # desktop.ini
 **/desktop.ini
+
+# vscode settings folder
+.vscode/
