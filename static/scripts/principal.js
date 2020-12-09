@@ -142,3 +142,9 @@ function displayImgOnUpdateModal(event) {
 function setRadioBtn(option) {
     document.getElementById("radioBtn" + option).checked = true;
 }
+
+//para redirigir con el boton de cerrar sesion
+
+function irIngreso(){
+    location.href = "../";
+}
