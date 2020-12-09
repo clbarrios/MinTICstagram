@@ -101,7 +101,7 @@ Estilo para input type=file
     cursor: pointer;
     border-radius: 5px;
     border: 2px solid gray;
-    padding: 5px;
+    padding: 2px;
     display: inline-block;
     cursor: pointer; /* "hand" cursor */
     margin: auto;
@@ -154,7 +154,7 @@ transition: width 0.4s ease-in-out;
 }
 
 .searchbar:focus {
-width: 100%;
+    width: 100%;
 }
 
 .long {

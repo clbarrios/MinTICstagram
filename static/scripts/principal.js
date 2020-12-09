@@ -55,7 +55,7 @@ function displayImg(event) {
     img.onload = function() {
         var h = img.height;
         var w = img.width;
-        console.log("img size: " + this.width + "x" + this.height);
+        //console.log("img size: " + this.width + "x" + this.height);
         var dispImg = document.getElementById("imgDisplay");
         dispImg.src = this.src;
         if (w >= h) {
@@ -67,7 +67,6 @@ function displayImg(event) {
         }
         document.getElementById("imgPlaceholder").style.display = "none";
         dispImg.style.display = "block";
-        //dispImg.style.margin = "auto";
     }
     // asignar imagen cargada al objeto imagen luego de validar la extensión del archivo
     var url = document.getElementById("imgInputFile").value;
@@ -102,4 +101,41 @@ function validateImgURL(url){
     } else {
         return false;
     }
+}
+
+/*
+ * Función para mostrar imagen diensionada de acuerdo a su relación de aspecto
+ * al abrir modal para actualizar imagen
+ */
+function displayImgOnUpdateModal(event) {
+    /*
+    Para obtener el elemento card y buscar la imagen, es necesario utilizar el 
+    atributo parentElement. Si se hizo click en el svg el parentElement será el
+    botón, por lo que habrá que refenciar un parentElement más, si el event.target
+    es el botón como tal se necesitan dos niveles de parentElement
+    */
+    var card = event.target.parentElement.parentElement;
+    if (card.className == "card-body") {
+        card = card.parentElement;    
+    }
+    
+    var img = new Image();
+    
+    img.onload = function() {
+        var w = img.width;
+        var h = img.height;
+        var dispImg = document.getElementById("imgUpdateDisplay");
+        dispImg.src = this.src;
+        if (w >= h) {
+            dispImg.style.width = "100%";
+            dispImg.style.heigt = "";
+        } else {
+            dispImg.style.width = "";
+            dispImg.style.heigt = "100%";
+        }
+        dispImg.style.display = "block";
+    }
+
+    img.src = card.querySelector("img").src;
+    
 }
