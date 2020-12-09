@@ -27,7 +27,6 @@ function openTab(id) {
 
 }
 
-
 function obtenerSubTab(id){
     if(contentImg!= null){
         contentImg.style.display = "none"
