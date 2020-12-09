@@ -22,6 +22,10 @@ def activacionExitosa():
 def reestablecerContra():
     return render_template("reestablecerContra.html")
 
+@app.route("/nuevaContra")
+def nuevaContra():
+    return render_template("nuevaContra.html")
+
 @app.route("/reestablecimientoExitoso")
 def reestablecimientoExitoso():
     return render_template("reestablecimientoExitoso.html")
