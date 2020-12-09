@@ -1,36 +1,47 @@
+let tabActual = null,tabImg = null ,contentActual = null, contentImg = null;
+window.onload = function(){    
+    document.getElementById("myImgs-tab").click();
+}
+
 
 function openTab(id) {
-    var i, tabcontents, tabs, activeTab, tabscon, tabss;
-    tabcontents = document.getElementsByClassName("tab-content");
+        if(contentActual != null){
+            contentActual.style.display = "none"
+            contentActual.className=contentActual.className.replace("active","")
+        }
 
-    for (i = 0; i < tabcontents.length; i++) {
-        tabcontents[i].style.display = "none";
+        contentActual = document.getElementById(id + "-content");
+        
+         if(contentActual.getAttribute("id") == "myImgs-content"){
+              obtenerSubTab("privadas")
+         }
+        
+        contentActual.style.display = "block"
+
+        if(tabActual != null){
+            
+            tabActual.className=tabActual.className.replace("active","")
+        }
+        tabActual= document.getElementById(id + "-tab")
+        tabActual.className += " active"
+
+}
+
+
+function obtenerSubTab(id){
+    if(contentImg!= null){
+        contentImg.style.display = "none"
+        contentImg.className=contentImg.className.replace("active","")
     }
 
-    tabs = document.getElementsByClassName("tab")
-    for (i = 0; i < tabs.length; i++) {
-        tabs[i].className = tabs[i].className.replace(" active", "");
+    contentImg = document.getElementById(id + "-content");
+    contentImg.style.display = "block"
+    if(tabImg!= null){
+        tabImg.className=tabImg.className.replace("active","")
     }
 
-    tabscon = document.getElementsByClassName("tabb-contentt");
-    for (i = 0; i < tabscon.length; i++) {
-        tabscon[i].style.display = "none";
-    }
-
-    tabss = document.getElementsByClassName("tabb")
-    for (i = 0; i < tabss.length; i++) {
-        tabss[i].className = tabss[i].className.replace(" active", "");
-    }
-
-
-    console.log(id+"-content");
-  
-        activeTab = document.getElementById(id + "-content");
-        activeTab.style.display = "block";
-
-        console.log(id+"-tab");
-        activeTab = document.getElementById(id + "-tab");
-        activeTab.className += " active";
+    tabImg =  document.getElementById(id + "-tab")
+    tabImg.className += " active"
 
 }
 
@@ -61,7 +72,7 @@ function displayImg(event) {
     }
     // asignar imagen cargada al objeto imagen luego de validar la extensión del archivo
     var url = URL.createObjectURL(event.target.files[0])
-    if (validateImgURL(url)) {
+    if (validateImgURL(event.target.files[0].name)) {
         img.src = URL.createObjectURL(event.target.files[0])
     } else {
         alert("Tipo de archivo no soportado. \nDebes cargar una imagen")
@@ -72,6 +83,7 @@ function displayImg(event) {
 
 function validateImgURL(url){
     // regex
+    console.log(url)
     var extensionesPermitidas = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     if (extensionesPermitidas.exec(url)) {
         return true;

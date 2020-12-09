@@ -18,7 +18,7 @@
     <!-- css del proyecto -->
     <script src="{{ url_for('static', filename='scripts/principal.js') }}"></script>
 </head>
-<body>
+<body >
     <header>
         <div id="wrapper">
             <div id="column1">
@@ -59,15 +59,15 @@
             Buscar
         </div>
     </div>
-    <div class="tabb-content" id="myImgs-content" style="display: none;">
+    <div class="tab-content" id="myImgs-content" style="display: none;">
         <div class="grid-container three-cols">
-            <div class="grid-item tab" id="privadas-tab" onclick="openTab('privadas');">
+            <div class="grid-item tab-img" id="privadas-tab" onclick="obtenerSubTab('privadas');">
                 Privadas
             </div>
-            <div class="grid-item tab" id="publicas-tab" onclick="openTab('publicas');">
+            <div class="grid-item tab-img" id="publicas-tab" onclick="obtenerSubTab('publicas');">
                 Publicas
             </div>
-            <div class="grid-item tab" id="guardadas-tab" onclick="openTab('guardadas');">
+            <div class="grid-item tab-img" id="guardadas-tab" onclick="obtenerSubTab('guardadas');">
                 Guardadas
             </div>
         </div>
@@ -326,12 +326,6 @@
         </div>
         </div>
     </div>
-
-
-    <script>
-        document.getElementById("myImgs-tab").click();
-        document.getElementById("privadas-tab").click();
-    </script>
     <!-- Bootsrap JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
