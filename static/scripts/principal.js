@@ -47,14 +47,27 @@ function displayImg(event) {
         //dispImg.style.margin = "auto";
     }
     // asignar imagen cargada al objeto imagen luego de validar la extensión del archivo
-    var url = URL.createObjectURL(event.target.files[0])
+    var url = document.getElementById("imgInputFile").value;
     if (validateImgURL(url)) {
-        img.src = URL.createObjectURL(event.target.files[0])
+        img.src = URL.createObjectURL(event.target.files[0]);
+
+        // codigo para cambiar la apariencia del label
+        var input = document.getElementById("imgInputFile");
+        var label = document.getElementById("imgInputLabel"),
+            defaultLabel = label.innerHTML;
+        var filename = "";
+        filename = input.value.split('\\').pop();
+        console.log(filename);
+
+        if (filename) {
+            label.querySelector("span").innerHTML = filename;
+        } else {
+            label.innerHTML = defaultLabel;
+        }
+
     } else {
         alert("Tipo de archivo no soportado. \nDebes cargar una imagen")
-        document.getElementById("imgInputFile").value = "";
     }
-    
 }
 
 function validateImgURL(url){
