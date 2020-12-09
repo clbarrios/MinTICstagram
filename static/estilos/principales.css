@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+.btn-group-sm>.btn, .btn-sm {
+    /* border-radius: .2rem; */
+    background-color: white;
+   
+}
+
+
+
 body {
     background-color: #d7eb5a;
     font-family: "Courier New", Courier, monospace;
@@ -81,11 +89,45 @@ textarea{
 }
 
 /*
+Estilo para input type=file
+*/
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    background-color: #ffe3ae;
+    color: black;
+    font-size: 15px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid gray;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+    margin: auto;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: goldenrod;
+}
+
+/*
 Animated Button
 */
 .boton {
     background-color: #ffe3ae;
-    border: none;
     color: black;
     text-align: center;
     text-decoration: none;
@@ -123,7 +165,7 @@ transition: width 0.4s ease-in-out;
 }
 
 .searchbar:focus {
-width: 100%;
+    width: 100%;
 }
 
 .long {

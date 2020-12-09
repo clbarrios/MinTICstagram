@@ -18,7 +18,7 @@
     <!-- css del proyecto -->
     <script src="{{ url_for('static', filename='scripts/principal.js') }}"></script>
 </head>
-<body>
+<body >
     <header>
         <div id="wrapper">
             <div id="column1">
@@ -39,12 +39,13 @@
                     </svg>
                 </div>  
                 
-                <div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                <div> 
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalCerrarSesion" >
                         Cerrar Sesión
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-door-open-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2v13h1V2.5a.5.5 0 0 0-.5-.5H11zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
                         </svg>
+                         
                     </button>
                 </div>
             </div>
@@ -59,40 +60,28 @@
             Buscar
         </div>
     </div>
-
     <div class="tab-content" id="myImgs-content" style="display: none;">
         <div class="grid-container three-cols">
-            <div class="grid-item">
+            <div class="grid-item tab-img" id="privadas-tab" onclick="obtenerSubTab('privadas');">
                 Privadas
             </div>
-            <div class="grid-item">
+            <div class="grid-item tab-img" id="publicas-tab" onclick="obtenerSubTab('publicas');">
                 Publicas
             </div>
-            <div class="grid-item">
+            <div class="grid-item tab-img" id="guardadas-tab" onclick="obtenerSubTab('guardadas');">
                 Guardadas
             </div>
         </div>
         <br>
-        
         <div class="container-fluid">
-
             <div class="row">
-                <!--<div class="col align-self-center center"> 
-                    <select class="custom-select" name="colecciones" id="colecciones" style="width:50%">
-                        <option selected> Mi Galería </option>
-                        <option value="1">Etiqueta 1</option>
-                        <option value="2">Etiqueta 2</option>
-                        <option value="3">Etiqueta 3</option>
-                    </select>    
-                    
-                </div>  -->
                 <div class="col align-self-center center">
                     <form>
                         <input type="text" class="searchbar" name="search" placeholder="Buscar...">
                     </form>
                 </div>
                 <div class="col align-self-center center">
-                    <button type="button" class="boton" data-toggle="modal" data-target="#imgModal">
+                    <button type="button" class="boton" data-toggle="modal" data-target="#nuevaImgModal">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                         </svg>
@@ -100,54 +89,163 @@
                     </button>   
                 </div>
             </div>
-            <br>
-            <div class="row">
-                {% for t in galeria %}
-                <div class="col-md-3">
-                    <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                        <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
-                        <div class="card-body">
-                            <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
-                            <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
-                            <!-- Botón de descarga -->
-                            <button type="button" class="btn btn-primary">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                    <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                </svg>
-                            </button>
-                            <!-- Botón de edición -->
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#actualizarImgModal">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                </svg>
-                            </button>
-                            <!-- Botón para eliminar -->
-                            <button type="button" class="btn btn-danger">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
-                                </svg>
-                            </button>
-                        </div>
-                      </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>  
-    </div>
-
-    <div class="tab-content" id="buscar-content" style="display: none;">
+        </div>
         
+
+        <div class="tab-content" id="privadas-content" style="display: none;">
+            <div class="container-fluid">
+                <br>
+                <div class="row">
+                    {% for t in galeria1 %}
+                    <div class="col-md-3">
+                        <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
+                            <div class="card-body">
+                                <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
+                                <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
+                                <!-- Botón de descarga -->
+                                
+                                <button type="button" class="btn btn-primary" >
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg>
+                                </button>
+                                <!-- Botón de edición -->
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#actualizarImgModal" 
+                                    onclick="displayImgOnUpdateModal(event); setRadioBtn('Privada');">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                </button>
+                                <!-- Botón para eliminar -->
+                                <button type="button" class="btn btn-danger">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div> 
+            
+        </div>
+        <div class="tab-content" id="publicas-content" style="display: none;">
+            <div class="container-fluid">
+                <br>
+                <div class="row">
+                    {% for t in galeria2 %}
+                    <div class="col-md-3">
+                        <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
+                            <div class="card-body">
+                                <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
+                                <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
+                                <!-- Botón de descarga -->
+                                <button type="button" class="btn btn-primary">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg>
+                                </button>
+                                <!-- Botón de edición -->
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#actualizarImgModal" 
+                                    onclick="displayImgOnUpdateModal(event); setRadioBtn('Publica');">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                </button>
+                                <!-- Botón para eliminar -->
+                                <button type="button" class="btn btn-danger">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div> 
+        </div>
+        <div class="tab-content" id="guardadas-content" style="display: none;">
+            <div class="container-fluid">
+                <br>
+                <div class="row">
+                    {% for t in galeria3 %}
+                    <div class="col-md-3">
+                        <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
+                            <div class="card-body">
+                                <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
+                                <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
+                                <!-- Botón de descarga -->
+                                <button type="button" class="btn btn-primary">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg>
+                                </button>
+                                <!-- Botón para eliminar -->
+                                <button type="button" class="btn btn-outline-danger" onclick="toggleHeart(event);">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" style="display: none;" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                    </svg>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" style="display: inline" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div> 
+        </div> 
+    </div>
+    <div class="tab-content" id="buscar-content" style="display: none;"> 
         <br>
         <div class="container-fluid">
             <form style="text-align: center;">
                 <input type="text" class="searchbar long" name="search" placeholder="Buscar por nombre de imagen o etiquetas...">
             </form>
         </div>
-        
     </div>
 
     <!-- Modals -->
+
+    <!--Modal de cerrar sesion-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalCerrarSesion" >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modalCerrarCenterTitle">¿Seguro que quieres cerrar sesion?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">         
+                <div class="row">
+                    <div class="col align-self-center center">
+                        <button id ="bi" type="button" class="bbtn btn-outline-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col align-self-center center">
+                        <button  id ="bi" type="button" class="btn btn-outline-secondary btn-sm" onclick="irIngreso();">Confirmar</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--Modal de agregar imagen -->
     
     <div class="modal fade" id="nuevaImgModal">
         <div class="modal-dialog">
@@ -162,19 +260,30 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
-                    <div class="col align-self-center center">
-                        <svg width="100%" viewBox="0 0 16 16" class="bi bi-image" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <div class="col-sm-6 my-auto">
+                        <img id="imgDisplay" style="display: none; margin: auto;">
+                        <svg id="imgPlaceholder" width="100%" viewBox="0 0 16 16" class="bi bi-image" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14.002 2h-12a1 1 0 0 0-1 1v9l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094L15.002 9.5V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm4 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                         </svg>
                     </div>
 
-                    <div class="col">
+                    <div class="col-sm-6">
                         <input type="text" class="textfield" id="nombre" placeholder="Nombre de la imagen">
                         <textarea id="etiquetas" style="height:150px" placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
                         <input type="checkbox" id="privada" value="Privada">
                         <label for="privada">Privada</label>
+                        
                     </div>
                 </div>
+                <br>                          
+                <input type="file" class="inputfile" accept="image/*" id="imgInputFile"  onchange="displayImg(event);">
+                <label for="imgInputFile" id="imgInputLabel">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                    </svg>
+                    <span> Escoge un archivo </span>
+                </label>
             </div>
     
             <!-- Modal footer -->
@@ -199,17 +308,17 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
-                    <div class="col align-self-center center">
-                        <svg width="100%" viewBox="0 0 16 16" class="bi bi-image" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M14.002 2h-12a1 1 0 0 0-1 1v9l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094L15.002 9.5V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm4 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                        </svg>
+                    <div class="col-sm-6 my-auto">
+                        <img id="imgUpdateDisplay" style="display: none; margin: auto;">
                     </div>
 
                     <div class="col">
                         <input type="text" class="textfield" id="nombre" placeholder="Nombre de la imagen">
                         <textarea id="etiquetas" style="height:150px" placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
-                        <input type="checkbox" id="privada" value="Privada">
-                        <label for="privada">Privada</label>
+                        <input type="radio" id="radioBtnPrivada" name="preg1" value="Privada" />
+                        <label for="radioBtnPrivada">Privada</label>
+                        <input type="radio" id="radioBtnPublica" name="preg1" value="Publica" />
+                        <label for="radioBtnPublica">Publica</label>
                     </div>
                 </div>
             </div>
@@ -222,11 +331,7 @@
         </div>
         </div>
     </div>
-
-
-    <script>
-        document.getElementById("myImgs-tab").click();
-    </script>
+    
     <!-- Bootsrap JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
