@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, request, redirect, render_template
+import yagmail as yagmail
+import utils
 
 app = Flask(__name__)
 
@@ -6,8 +8,26 @@ app = Flask(__name__)
 def ingreso():
     return render_template("ingreso.html")
 
-@app.route("/registro")
+@app.route('/registro', methods=('GET','POST'))
 def registro():
+    if request.method== 'POST':
+        username=request.form.get("nombre")
+        password=request.form.get("password")
+        email=request.form.get("correo")
+        
+        if not utils.isUsernameValid(username):
+            return render_template('registro.html')
+        
+        if not utils.isPasswordValid(password):
+            return render_template('registro.html')
+
+        if not utils.isEmailValid(email):
+            return render_template('registro.html')
+        
+        yag = yagmail.SMTP('ppruebamintic@gmail.com','')
+        yag.send(to=email,subject="Activa tu cuenta",contents="Bienvenido, usa el link para activar tu cuenta")
+        return redirect('/activacion')
+    
     return render_template("registro.html")
 
 @app.route("/activacion")
