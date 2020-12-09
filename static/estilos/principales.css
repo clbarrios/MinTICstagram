@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+.btn-group-sm>.btn, .btn-sm {
+    /* border-radius: .2rem; */
+    background-color: white;
+   
+}
+
+
+
 body {
     background-color: #d7eb5a;
     font-family: "Courier New", Courier, monospace;

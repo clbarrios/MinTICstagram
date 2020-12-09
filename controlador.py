@@ -1,13 +1,42 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, request, redirect, render_template
+import yagmail as yagmail
+import utils
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=("GET", "POST"))
 def ingreso():
+    if request.method == "POST":
+        usuario = request.form.get("usuario")
+        clave = request.form.get("clave")
+
+        if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
+            return redirect(url_for('principal'))
+        else:
+            flash("Error en los datos. Vuelve a intentar.")
     return render_template("ingreso.html")
 
-@app.route("/registro")
+@app.route('/registro', methods=('GET','POST'))
 def registro():
+    if request.method== 'POST':
+        username=request.form.get("nombre")
+        password=request.form.get("password")
+        email=request.form.get("correo")
+        
+        if not utils.isUsernameValid(username):
+            return render_template('registro.html')
+        
+        if not utils.isPasswordValid(password):
+            return render_template('registro.html')
+
+        if not utils.isEmailValid(email):
+            return render_template('registro.html')
+        
+        yag = yagmail.SMTP('ppruebamintic@gmail.com','')
+        yag.send(to=email,subject="Activa tu cuenta",contents="Bienvenido, usa el link para activar tu cuenta")
+        return redirect('/activacion')
+    
     return render_template("registro.html")
 
 @app.route("/activacion")
@@ -40,4 +69,5 @@ def principal():
 
 # Activar el modo debug
 if __name__=="__main__":
+    app.secret_key = 'super secret key'
     app.run(debug=True)

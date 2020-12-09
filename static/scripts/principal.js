@@ -141,6 +141,13 @@ function setRadioBtn(option) {
     document.getElementById("radioBtn" + option).checked = true;
 }
 
+
+//para redirigir con el boton de cerrar sesion
+
+function irIngreso(){
+    location.href = "../";
+}
+
 function toggleHeart(event) {
     var btn = event.target;
     while (btn.nodeName != "BUTTON") {btn = btn.parentElement};
