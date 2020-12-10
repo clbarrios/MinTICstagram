@@ -58,7 +58,7 @@ def reestablecerContra():
         correo=request.form.get("correoRes")
 
         if not utils.isEmailValid(correo):
-            flash("digita un correo valido")
+            flash("Escribe un correo valido")
             return render_template("reestablecerContra.html")
         yag = yagmail.SMTP(app_mail, app_password)
         yag.send(to=correo,subject="Reestablece tu contraseña",contents="Hola, Usa el link para cambiar tu contraseña")
