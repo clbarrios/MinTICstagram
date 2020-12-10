@@ -108,12 +108,6 @@ function validateImgURL(url){
  * al abrir modal para actualizar imagen
  */
 function displayImgOnUpdateModal(event) {
-    /*
-    Para obtener el elemento card y buscar la imagen, es necesario utilizar el 
-    atributo parentElement. Si se hizo click en el svg el parentElement será el
-    botón, por lo que habrá que refenciar un parentElement más, si el event.target
-    es el botón como tal se necesitan dos niveles de parentElement
-    */
     var card = event.target;
     while (card.className !== "card mx-auto") {card = card.parentElement};
     
@@ -148,6 +142,7 @@ function irIngreso(){
     location.href = "../";
 }
 
+// para hacer efecto de like/dislike con botón 
 function toggleHeart(event) {
     var btn = event.target;
     while (btn.nodeName != "BUTTON") {btn = btn.parentElement};
@@ -156,5 +151,44 @@ function toggleHeart(event) {
     for (var heart of btn.querySelectorAll("svg")) {
         heart.style.display = heart.style.display == "none" ? "inline" : "none";
     }
-    
+}
+
+/*
+Función para mostrar modal de imagen en pantalla completa
+*/
+function showImgModal(event) {
+    var sourceImg = event.target;
+
+    var card = event.target;
+    while (card.className !== "card mx-auto") {card = card.parentElement};
+
+
+    var img = new Image();
+    img.onload = function() {
+        var modal = document.getElementById("showImgModal");
+        var modalImg = modal.querySelector("img");
+        var imgTitle = card.querySelector(".card-title");
+        var modalCaption = modal.querySelector("#showImgModal-caption");
+
+        var h = this.height;
+        var w = this.width;
+
+        if (w >= h) {
+            modalImg.style.width = "80%";
+            modalImg.style.height = "";
+        } else {
+            modalImg.style.width = "";
+            modalImg.style.height = "100%";
+        }
+        
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        modalCaption.innerHTML = imgTitle.innerHTML;
+    }
+
+    img.src = sourceImg.src;
+}
+
+function closeImgModal() {
+    document.getElementById("showImgModal").style.display = "none";
 }

@@ -99,7 +99,7 @@
                     {% for t in galeria1 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
                                 <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -142,7 +142,7 @@
                     {% for t in galeria2 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
                                 <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -181,7 +181,7 @@
                     {% for t in galeria3 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top" width="300" height="300" >
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
                                 <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -296,7 +296,9 @@
         </div>
         </div>
     </div>
+    
 
+    <!-- Modal de actualizar Imagen -->
     <div class="modal fade" id="actualizarImgModal">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -333,6 +335,20 @@
         </div>
         </div>
     </div>
+
+    <!-- Modal de mostrar imagen -->
+    <div id="showImgModal" class="customModal">
+
+        <!-- The Close Button -->
+        <span class="showImgModal-close" onclick="closeImgModal();">&times;</span>
+      
+        <!-- Modal Content (The Image) -->
+        <div class="showImgModal-content my-auto center">
+            <img style="margin: auto;">
+        </div>
+      
+        <!-- Modal Caption (Image Text) -->
+        <div id="showImgModal-caption"></div>
     
     <!-- Bootsrap JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
