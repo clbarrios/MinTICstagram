@@ -49,9 +49,21 @@ def activacion():
 def activacionExitosa():
     return render_template("activacionExitosa.html")
 
-@app.route("/reestablecerContra")
+@app.route("/reestablecerContra", methods=('GET','POST'))
 def reestablecerContra():
+    if request.method== 'POST':
+        correo=request.form.get("correoRes")
+
+        if not utils.isEmailValid(correo):
+            flash("digita un correo valido")
+            return render_template("reestablecerContra.html")
+        yag = yagmail.SMTP(app_mail, app_password)
+        yag.send(to=correo,subject="Reestablece tu contraseña",contents="Hola, Usa el link para cambiar tu contraseña")
+        flash("Se envio un correo para que cambies tu contraseña")
     return render_template("reestablecerContra.html")
+    
+    
+
 
 @app.route("/nuevaContra")
 def nuevaContra():

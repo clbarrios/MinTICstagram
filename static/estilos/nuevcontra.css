@@ -40,10 +40,10 @@ input[type=text], textarea {
     background-color: #fefce0;
     text-align: center;   
     position: fixed;
-    top: 15%;
+    top: 30%;
     right: 25%;
     width: 700px;
-    height: 350px;
+    height: 200px;
 }
 .digito{
     width: 25px;

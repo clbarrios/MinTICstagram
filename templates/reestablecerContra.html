@@ -8,22 +8,13 @@
 </head>
 <body>
     <div class="boxedreg">
-        <form class="formulario" action="{{ url_for('nuevaContra') }}">
+        <form method="POST" class="formulario" action="{{ url_for('reestablecerContra') }}">
+            <br>
             <h1>Reestablecer Contraseña</h1>
             <br>
-            <input type="text" size=30 placeholder="Ingresa tu correo electrónico" >
-            <input type="submit" value="Enviar Código" class="boton">
+            <input id ="correoRes" name="correoRes" type="text" size=30 placeholder="Ingresa tu correo electrónico" >
+            <input type="submit" value="Restablecer contraseña" class="boton">
             <br>    
-            <p>Ingresa el código</p>
-            <br>
-            <input class="digito" type="text" size=1 maxlength=1 >
-            <input class="digito" type="text" size=1 maxlength=1>
-            <input class="digito" type="text" size=1 maxlength=1>
-            <input class="digito" type="text" size=1 maxlength=1>
-            <input class="digito" type="text" size=1 maxlength=1>    
-            <br>
-            <br>
-            <input type="submit" value="Restablecer" class="boton">
         </form>
     </div>
 </body>
