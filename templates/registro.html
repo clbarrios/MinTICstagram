@@ -18,6 +18,17 @@
     </style>
 </head>
 <body>
+    <section class="content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="error-msg">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </section>    
     <div class="boxedreg">
         <form method="POST" class="formulario" action="{{ url_for('registro') }}">
             <h1>Registro de Usuario</h1>

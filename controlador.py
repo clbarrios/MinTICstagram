@@ -27,12 +27,15 @@ def registro():
         email=request.form.get("correo")
         
         if not utils.isUsernameValid(username):
+            flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
             return render_template('registro.html')
         
         if not utils.isPasswordValid(password):
+            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
             return render_template('registro.html')
 
         if not utils.isEmailValid(email):
+            flash("El correo que escribiste no es un correo válido. Vuelve a intentar.")
             return render_template('registro.html')
         
         yag = yagmail.SMTP(app_mail, app_password)
