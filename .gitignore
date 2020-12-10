@@ -148,3 +148,6 @@ cython_debug/
 
 # vscode settings folder
 .vscode/
+
+# py file with credentials
+credenciales.py

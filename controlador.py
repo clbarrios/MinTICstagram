@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 from flask import Flask, request, redirect, render_template
 import yagmail as yagmail
 import utils
+from credenciales import app_mail, app_password
 
 app = Flask(__name__)
 
@@ -33,7 +34,7 @@ def registro():
         if not utils.isEmailValid(email):
             return render_template('registro.html')
         
-        yag = yagmail.SMTP('ppruebamintic@gmail.com','')
+        yag = yagmail.SMTP(app_mail, app_password)
         yag.send(to=email,subject="Activa tu cuenta",contents="Bienvenido, usa el link para activar tu cuenta")
         return redirect('/activacion')
     
@@ -71,4 +72,3 @@ def principal():
 if __name__=="__main__":
     app.secret_key = 'super secret key'
     app.run(debug=True)
-    
