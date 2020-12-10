@@ -3,6 +3,7 @@
     <head>
         <title>MinTICstagram | Iniciar Sesión</title>
         <meta charset="utf-8" />
+        
         <link rel="stylesheet" href="{{ url_for('static', filename='estilos/inicio.css') }}">
     </head>
 
@@ -11,7 +12,7 @@
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
-            <div class="flash">
+            <div class="error-msg">
                 {{ message }}
             </div>
             {% endfor %}
