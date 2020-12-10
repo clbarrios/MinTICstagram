@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, render_template
 import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
+import os
 
 app = Flask(__name__)
 
@@ -70,5 +71,5 @@ def principal():
 
 # Activar el modo debug
 if __name__=="__main__":
-    app.secret_key = 'super secret key'
+    app.secret_key = os.urandom(24)
     app.run(debug=True)
