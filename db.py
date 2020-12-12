@@ -152,9 +152,9 @@ def get_id_Etiqueta(nombre_etiqueta):
 
 #para guardar una imagen 
 def insert_guardadas(id_usuario,id_imagen):
-    query = f"insert into MeGusta (id_usuario, id_imagen) values({id_usuario},{id_imagen});"
+    query = f"INSERT INTO MeGusta (id_usuario, id_imagen) VALUES({id_usuario},{id_imagen});"
     try:
-        con = sql_connection()
+        con = conectar()
         cursorObj= con.cursor()
         cursorObj.execute(query)
         con.commit()
@@ -165,9 +165,9 @@ def insert_guardadas(id_usuario,id_imagen):
 
 #para eliminar una imagen de las que guardo
 def eliminar_guardadas(id_usuario,id_imagen):
-        query = f"delete from MeGusta where id_usuario = {id_usuario} and id_imagen = {id_imagen};"
+        query = f"DELETE FROM MeGusta WHERE id_usuario = {id_usuario} and id_imagen = {id_imagen};"
         try:
-            con = sql_connection()
+            con = conectar()
             cursorObj = con.cursor()
             cursorObj.execute(query)
             con.commit()
@@ -179,7 +179,7 @@ def eliminar_guardadas(id_usuario,id_imagen):
 def select_guardadas(id_usuario):
     query= f"SELECT Imagenes.* FROM Usuarios INNER JOIN MeGusta ON Usuarios.id = MeGusta.id_usuario INNER JOIN Imagenes  ON Imagenes.id = MeGusta.id_imagen WHERE id_usuario= {id_usuario};"
     try:
-        con=sql_connection()
+        con=conectar()
         cursorObj=con.cursor()
         cursorObj.execute(query)
         tusGuardadas = cursorObj.fetchall()
