@@ -69,24 +69,8 @@ def get_id_Usuario(nombre):
     except Error:
         print(Error)
 
-def get_publicas(usrId):
-    query = f"SELECT id, nombre, ruta FROM Imagenes WHERE id_usuario={usrId} AND privada=0;"
-    try:
-        con = conectar()
-        cursor = con.cursor()
-        cursor.execute(query)
-        imagenes = cursor.fetchall()
-        con.close()
-        for img in imagenes:
-            imgId = img[0]
-            etiquetas = get_etiquetas(imgId)
-            img.append(etiquetas)
-        return imagenes
-    except Error:
-        print(Error)
-
-def get_privadas(usrId):
-    query = f"SELECT id, nombre, ruta FROM Imagenes WHERE id_usuario={usrId} AND privada=1;"
+def get_imagenes(usrId, privada):
+    query = f"SELECT id, nombre, ruta FROM Imagenes WHERE id_usuario={usrId} AND privada={1 if privada else 0};"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -102,7 +86,7 @@ def get_privadas(usrId):
         print(Error)
 
 def get_guardadas(usrId):
-    query = f"SELECT id, nombre, ruta FROM Imagenes JOIN MeGusta ON MeGusta.id_imagen = Imagenes.id WHERE MeGusta.id_usuario={usrId};"
+    query = f"SELECT I.id, I.nombre, I.ruta FROM Imagenes I JOIN MeGusta MG ON MG.id_imagen = I.id WHERE MG.id_usuario={usrId};"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -118,7 +102,7 @@ def get_guardadas(usrId):
         print(Error)
 
 def get_etiquetas(imgId):
-    query = f"SELECT nombre FROM Etiquetas E JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id WHERE IE.id_imagen={imgId};"
+    query = f"SELECT E.nombre FROM Etiquetas E JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id WHERE IE.id_imagen={imgId};"
     try:
         con = conectar()
         cursor = con.cursor()
