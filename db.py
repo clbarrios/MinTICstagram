@@ -122,3 +122,29 @@ def get_etiquetas(imgId):
         return etiquetas
     except Error:
         print(Error)
+
+# Para insertar una etiqueta nueva
+def insertar_etiqueta(nombre_etiqueta):
+    query = "INSERT INTO Etiquetas (nombre_etiqueta) VALUES ('"+ nombre_etiqueta +"');"
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+# Para obtener el id de una etiqueta
+def get_id_Etiqueta(nombre_etiqueta):
+    query = "SELECT id FROM Etiquetas WHERE nombre_etiqueta='"+ nombre_etiqueta +"';"
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query)
+        res = cursor.fetchone()
+        con.close()
+        return res[0]
+        
+    except Error:
+        print(Error)

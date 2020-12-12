@@ -6,6 +6,7 @@ from credenciales import app_mail, app_password
 import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route("/", methods=("GET", "POST"))
 def ingreso():
