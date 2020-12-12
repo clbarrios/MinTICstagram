@@ -148,3 +148,42 @@ def get_id_Etiqueta(nombre_etiqueta):
         
     except Error:
         print(Error)
+
+
+#para guardar una imagen 
+def insert_guardadas(id_usuario,id_imagen):
+    query = f"insert into MeGusta (id_usuario, id_imagen) values({id_usuario},{id_imagen});"
+    try:
+        con = sql_connection()
+        cursorObj= con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+
+#para eliminar una imagen de las que guardo
+def eliminar_guardadas(id_usuario,id_imagen):
+        query = f"delete from MeGusta where id_usuario = {id_usuario} and id_imagen = {id_imagen};"
+        try:
+            con = sql_connection()
+            cursorObj = con.cursor()
+            cursorObj.execute(query)
+            con.commit()
+            con.close
+        except Error:
+            print(Error)
+
+#para saber la lista de imagenes guardadas que tiene un usuario 
+def select_guardadas(id_usuario):
+    query= f"SELECT Imagenes.* FROM Usuarios INNER JOIN MeGusta ON Usuarios.id = MeGusta.id_usuario INNER JOIN Imagenes  ON Imagenes.id = MeGusta.id_imagen WHERE id_usuario= {id_usuario};"
+    try:
+        con=sql_connection()
+        cursorObj=con.cursor()
+        cursorObj.execute(query)
+        tusGuardadas = cursorObj.fetchall()
+        con.close()
+        return tusGuardadas
+    except Error:
+        print(Error)
