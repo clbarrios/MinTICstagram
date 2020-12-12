@@ -56,7 +56,7 @@ def validar_nuevo_usuario(nombre, correo):
         print(Error)
 
 # Para obtener el id de un usuario
-def getIdUsuario(nombre):
+def get_id_Usuario(nombre):
     query = f"SELECT id FROM Usuario WHERE nombre='{nombre}';"
     try:
         con = conectar()
