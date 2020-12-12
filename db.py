@@ -15,6 +15,8 @@ def desconectar():
         db = g.pop('db', None)
         if db is not None:
             db.close()
+    except:
+        pass
 
 # Para insertar un usuario nuevo
 def insertar_usuario(nombre, correo, contraseña):
@@ -29,8 +31,8 @@ def insertar_usuario(nombre, correo, contraseña):
         print(Error)
 
 # Para autenticar un usuario
-def consultar_usuario(nombre, contraseña):
-    query = f"SELECT * FROM Usuarios WHERE nombre='{nombre}' contraseña='{contraseña}';"
+def autenticar_usuario(nombre, contraseña):
+    query = f"SELECT id FROM Usuarios WHERE nombre='{nombre}' contraseña='{contraseña}';"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -42,16 +44,24 @@ def consultar_usuario(nombre, contraseña):
         print(Error)
 
 # para validar si un correo o un nombre de usuario está registrado
+# devuelve una lista de mensajes
 def validar_nuevo_usuario(nombre, correo):
-    query = f"SELECT * FROM Usuarios WHERE nombre='{nombre}' OR correo='{correo}';"
+    query = f"SELECT nombre, correo FROM Usuarios WHERE nombre='{nombre}' OR correo='{correo}';"
     try:
         con = conectar()
         cursor = con.cursor()
         cursor.execute(query)
         usuarios = cursor.fetchall()
         con.close()
-        return True if (len(usuarios) > 0) else False
-        
+        msgs = []
+        for msg in msgs:
+            if usuarios[0] == nombre: 
+                msgs.append("El nombre ya se encuentra registrado")
+            if usuarios[1] == correo:
+                msgs.append("El correo ya se encuentra registrado")
+        if len(msgs) == 0:
+            msgs.append("OK")
+        return msgs        
     except Error:
         print(Error)
 
