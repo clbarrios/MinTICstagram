@@ -5,7 +5,7 @@ from flask import current_app, g
 def conectar():
     try:
         if 'db' not in g:
-            g.db = sqlite3.connect('BaseDeDatos')
+            g.db = sqlite3.connect('MinTICstagram.db')
             return g.db
     except Error:
         print(Error)
