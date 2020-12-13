@@ -1,4 +1,47 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="boxedreg">
+
+    <form method="POST" class="formulario" action="{{ url_for('registro') }}">
+        <h1>Registro de Usuario</h1>
+        {{ form.hidden_tag() }}
+    
+        {{ form.nombre.label }}
+        {{ form.nombre(placeholder="Elige tu nombre de usuario") }}
+        <br>
+        {{ form.correo.label }}
+        {{ form.correo(placeholder="Ingresa tu correo electrónico") }}
+        <br>    
+        {{ form.contraseña.label }}
+        {{ form.contraseña(placeholder="Elige tu contraseña") }}
+        <br>
+        {{ form.conf_contraseña.label }}
+        {{ form.conf_contraseña(placeholder="Confirma tu contraseña") }}
+        <br>    
+        {{ form.registrar }}
+    
+    </form>
+    <section class="content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="error-msg">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </section>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -55,4 +98,4 @@
         </section> 
     </div>
 </body>
-</html>
+</html>-->
