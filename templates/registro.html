@@ -4,21 +4,22 @@
 
     <form method="POST" class="formulario" action="{{ url_for('registro') }}">
         <h1>Registro de Usuario</h1>
+        <br><br>
         {{ form.hidden_tag() }}
     
         {{ form.nombre.label }}
-        {{ form.nombre(placeholder="Elige tu nombre de usuario") }}
-        <br>
+        {{ form.nombre(placeholder="Elige tu nombre de usuario", size=30) }}
+        <br><br>
         {{ form.correo.label }}
-        {{ form.correo(placeholder="Ingresa tu correo electrónico") }}
-        <br>    
+        {{ form.correo(placeholder="Ingresa tu correo electrónico", size=30) }}
+        <br><br>
         {{ form.contraseña.label }}
-        {{ form.contraseña(placeholder="Elige tu contraseña") }}
-        <br>
+        {{ form.contraseña(placeholder="Elige tu contraseña", size=30) }}
+        <br><br>
         {{ form.conf_contraseña.label }}
-        {{ form.conf_contraseña(placeholder="Confirma tu contraseña") }}
-        <br>    
-        {{ form.registrar }}
+        {{ form.conf_contraseña(placeholder="Confirma tu contraseña", size=30) }}
+        <br><br><br>
+        {{ form.registrar(class_="boton") }}
     
     </form>
     <section class="content">
@@ -34,68 +35,3 @@
     </section>
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>"MinTICstagram | Registro"</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='estilos/estaticas.css') }}">
-    <style>
-        label {
-            display: inline-block;
-            width: 150px
-        }
-
-        .formulario {
-            margin: 0 auto;
-            display: block;
-        }
-        
-    </style>
-</head>
-<body>
-       
-    <div class="boxedreg">
-        
-        <form method="POST" class="formulario" action="{{ url_for('registro') }}">
-            <h1>Registro de Usuario</h1>
-            <label for="nombre">Nombre de Usuario</label> 
-            <input id="nombre" type="text" size=30 placeholder="Elige tu nombre de usuario" name="nombre">
-            <br>
-            <br>
-            <label for="correo">Correo</label> 
-            <input id="correo" type="text" size=30 placeholder="Ingresa tu correo electrónico" name="correo">
-            <br>
-            <br>
-            <label for="password">Contraseña</label> 
-            <input id="password" type="password" size=30 placeholder="Elige tu contraseña" name="password">
-            <p style="font-size: 10pt;">Tu contraseña debe contener por lo menos un número y un caracter especial</p>
-            <br>
-            <br>
-            <label for="confirm-pass">Confirmar Contraseña</label> 
-            <input id="confirm-pass" type="password" size=30 placeholder="Confirma tu contraseña" name="confirmpass">
-            <br>
-            <br>
-            <input type="submit" value="¡Únete!" class="boton">
-        </form>
-        <section class="content">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <div class="error-msg">
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-        </section> 
-    </div>
-</body>
-</html>-->

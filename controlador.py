@@ -5,6 +5,7 @@ import utils
 from credenciales import app_mail, app_password
 from forms import FormRegistro
 import os
+from db import *
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -30,7 +31,7 @@ def registro():
         username = form.nombre.data
         email = form.correo.data
         password = form.contraseña.data
-        conf_password = form.conf_contraseña
+        conf_password = form.conf_contraseña.data
         
         if not utils.isUsernameValid(username):
             flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
@@ -45,11 +46,16 @@ def registro():
             return render_template('registro.html', title=titulo, form=form)
         
         if password != conf_password:
-            flash("Las contraseñas no coinciden. Vuelve a intentar.")
+            flash("Las contraseñas no coinciden")
             return render_template('registro.html', title=titulo, form=form)
+
         
         yag = yagmail.SMTP(app_mail, app_password)
         yag.send(to=email,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br> <a href='http://127.0.0.1:5000/activacionExitosa' >ACTIVA TU CUENTA </a>")
+        nom = request.form.get('nombre')
+        cor = request.form.get('correo')
+        con = request.form.get('contraseña')
+        insertar_usuario(nom, cor, con)
 
         return redirect('/activacion')
     
