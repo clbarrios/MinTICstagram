@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='estilos/estaticas.css')}}">
+        <script src="{{url_for('static', filename='scripts/principal.js')}}"></script>
+        <style>
+            label {
+                display: inline-block;
+                width: 150px
+            }
+    
+            .formulario {
+                margin: 0 auto;
+                display: block;
+            }
+            
+        </style>
+    </head>
+    <body>
+        {% block content %}
+        
+        {% endblock %}
+    </body>
+</html>

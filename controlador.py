@@ -3,10 +3,37 @@ from flask import Flask, request, redirect, render_template
 import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
+from forms import FormRegistro
 import os
+from werkzeug import secure_filename
+from db import *
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.config['UPLOAD_FOLDER'] = "./static/img"
+
+galeria1 = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg','img/imagen14.jpg', 'img/imagen15.jpg', 'img/imagen15.jpg' ]
+galeria2 = ['img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen7.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg','img/imagen15.jpg', 'img/imagen1.jpg', 'img/imagen2.png' ]
+galeria3 = ['img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg', 'img/imagen15.jpg','img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg' ]
+
+
+@app.route("/upload", methods=('GET', 'POST'))
+def upload():
+    if request.method == 'GET':
+        return redirect('/principal')
+    else:
+        f = request.files['archivo']
+        filename = secure_filename(f.filename)
+        if(not filename):
+            flash("no hay ningun archivo cargado")
+            return None
+        flash("Se ha agregado su imagen con exito")
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'OK'
+
+
+
 
 @app.route("/", methods=("GET", "POST"))
 def ingreso():
@@ -22,28 +49,41 @@ def ingreso():
 
 @app.route('/registro', methods=('GET','POST'))
 def registro():
-    if request.method== 'POST':
-        username=request.form.get("nombre")
-        password=request.form.get("password")
-        email=request.form.get("correo")
+    form = FormRegistro()
+    titulo = 'MinTICstagram | Registro'
+    if form.validate_on_submit():
+        
+        username = form.nombre.data
+        email = form.correo.data
+        password = form.contraseña.data
+        conf_password = form.conf_contraseña.data
         
         if not utils.isUsernameValid(username):
             flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
-            return render_template('registro.html')
+            return render_template('registro.html', title=titulo, form=form)
         
         if not utils.isPasswordValid(password):
             flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
-            return render_template('registro.html')
+            return render_template('registro.html', title=titulo, form=form)
 
         if not utils.isEmailValid(email):
             flash("El correo que escribiste no es un correo válido. Vuelve a intentar.")
-            return render_template('registro.html')
+            return render_template('registro.html', title=titulo, form=form)
+        
+        if password != conf_password:
+            flash("Las contraseñas no coinciden")
+            return render_template('registro.html', title=titulo, form=form)
+
         
         yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=email,subject="Activa tu cuenta",contents="Bienvenido, usa el link para activar tu cuenta")
+        yag.send(to=email,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='http://127.0.0.1:5000/activacionExitosa' >ACTIVA TU CUENTA </a>")
+        nom = request.form.get('nombre')
+        cor = request.form.get('correo')
+        con = request.form.get('contraseña')
+        insertar_usuario(nom, cor, con)
         return redirect('/activacion')
     
-    return render_template("registro.html")
+    return render_template('registro.html', title=titulo, form=form)
 
 @app.route("/activacion")
 def activacion():
@@ -77,9 +117,6 @@ def nuevaContra():
 def reestablecimientoExitoso():
     return render_template("reestablecimientoExitoso.html")
 
-galeria1 = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg','img/imagen14.jpg', 'img/imagen15.jpg', 'img/imagen15.jpg' ]
-galeria2 = ['img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen7.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg','img/imagen15.jpg', 'img/imagen1.jpg', 'img/imagen2.png' ]
-galeria3 = ['img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg', 'img/imagen15.jpg','img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg' ]
 
 @app.route("/principal/")
 def principal():
