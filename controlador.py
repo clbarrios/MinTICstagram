@@ -40,7 +40,8 @@ def registro():
             return render_template('registro.html')
         
         yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=email,subject="Activa tu cuenta",contents="Bienvenido, usa el link para activar tu cuenta")
+        yag.send(to=email,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br> <a href='http://127.0.0.1:5000/activacionExitosa' >ACTIVA TU CUENTA </a>")
+
         return redirect('/activacion')
     
     return render_template("registro.html")
