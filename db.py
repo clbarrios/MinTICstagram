@@ -9,6 +9,7 @@ def conectar():
             return g.db
     except Error:
         print(Error)
+        
 
 def desconectar():
     try:
@@ -18,9 +19,10 @@ def desconectar():
     except:
         pass
 
+
 # Para insertar un usuario nuevo
 def insertar_usuario(nombre, correo, contraseña):
-    query = f"INSERT INTO Usuarios (nombre, correo, contraseña) VALUES ('{nombre}', '{correo}', '{contraseña}');"
+    query = f"INSERT INTO Usuarios (nombre_usuario, correo, contraseña) VALUES ('{nombre}', '{correo}', '{contraseña}');"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -30,9 +32,10 @@ def insertar_usuario(nombre, correo, contraseña):
     except Error:
         print(Error)
 
+
 # Para autenticar un usuario
 def autenticar_usuario(nombre, contraseña):
-    query = f"SELECT id FROM Usuarios WHERE nombre='{nombre}' contraseña='{contraseña}';"
+    query = f"SELECT id FROM Usuarios WHERE nombre_usuario='{nombre}' contraseña='{contraseña}';"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -43,10 +46,11 @@ def autenticar_usuario(nombre, contraseña):
     except Error:
         print(Error)
 
+
 # para validar si un correo o un nombre de usuario está registrado
 # devuelve una lista de mensajes
 def validar_nuevo_usuario(nombre, correo):
-    query = f"SELECT nombre, correo FROM Usuarios WHERE nombre='{nombre}' OR correo='{correo}';"
+    query = f"SELECT nombre_usuario, correo FROM Usuarios WHERE nombre='{nombre}' OR correo='{correo}';"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -65,6 +69,7 @@ def validar_nuevo_usuario(nombre, correo):
     except Error:
         print(Error)
 
+
 # Para obtener el id de un usuario
 def get_id_Usuario(nombre):
     query = f"SELECT id FROM Usuario WHERE nombre='{nombre}';"
@@ -78,6 +83,7 @@ def get_id_Usuario(nombre):
         
     except Error:
         print(Error)
+
 
 def get_imagenes(usrId, privada):
     query = f"SELECT id, nombre, ruta FROM Imagenes WHERE id_usuario={usrId} AND privada={1 if privada else 0};"
@@ -95,8 +101,9 @@ def get_imagenes(usrId, privada):
     except Error:
         print(Error)
 
+
 def get_guardadas(usrId):
-    query = f"SELECT I.id, I.nombre, I.ruta FROM Imagenes I JOIN MeGusta MG ON MG.id_imagen = I.id WHERE MG.id_usuario={usrId};"
+    query = f"SELECT I.id, I.nombre, I.ruta FROM Imagenes AS I INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id WHERE MG.id_usuario={usrId};"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -111,8 +118,9 @@ def get_guardadas(usrId):
     except Error:
         print(Error)
 
+
 def get_etiquetas(imgId):
-    query = f"SELECT E.nombre FROM Etiquetas E JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id WHERE IE.id_imagen={imgId};"
+    query = f"SELECT E.nombre FROM Etiquetas AS E INNER JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id WHERE IE.id_imagen={imgId};"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -122,6 +130,7 @@ def get_etiquetas(imgId):
         return etiquetas
     except Error:
         print(Error)
+
 
 # Para insertar una etiqueta nueva
 def insertar_etiqueta(nombre_etiqueta):
@@ -134,6 +143,7 @@ def insertar_etiqueta(nombre_etiqueta):
         con.close()
     except Error:
         print(Error)
+
 
 # Para obtener el id de una etiqueta
 def get_id_Etiqueta(nombre_etiqueta):
@@ -165,25 +175,12 @@ def insert_guardadas(id_usuario,id_imagen):
 
 #para eliminar una imagen de las que guardo
 def eliminar_guardadas(id_usuario,id_imagen):
-        query = f"DELETE FROM MeGusta WHERE id_usuario = {id_usuario} and id_imagen = {id_imagen};"
-        try:
-            con = conectar()
-            cursorObj = con.cursor()
-            cursorObj.execute(query)
-            con.commit()
-            con.close
-        except Error:
-            print(Error)
-
-#para saber la lista de imagenes guardadas que tiene un usuario 
-def select_guardadas(id_usuario):
-    query= f"SELECT Imagenes.* FROM Usuarios INNER JOIN MeGusta ON Usuarios.id = MeGusta.id_usuario INNER JOIN Imagenes  ON Imagenes.id = MeGusta.id_imagen WHERE id_usuario= {id_usuario};"
+    query = f"DELETE FROM MeGusta WHERE id_usuario = {id_usuario} AND id_imagen = {id_imagen};"
     try:
-        con=conectar()
-        cursorObj=con.cursor()
+        con = conectar()
+        cursorObj = con.cursor()
         cursorObj.execute(query)
-        tusGuardadas = cursorObj.fetchall()
-        con.close()
-        return tusGuardadas
+        con.commit()
+        con.close
     except Error:
         print(Error)
