@@ -134,7 +134,7 @@ def get_etiquetas(imgId):
 
 # Para insertar una etiqueta nueva
 def insertar_etiqueta(nombre_etiqueta):
-    query = "INSERT INTO Etiquetas (nombre_etiqueta) VALUES ('"+ nombre_etiqueta +"');"
+    query = f"INSERT INTO Etiquetas (nombre_etiqueta) VALUES ('{nombre_etiqueta}');"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -147,7 +147,7 @@ def insertar_etiqueta(nombre_etiqueta):
 
 # Para obtener el id de una etiqueta
 def get_id_Etiqueta(nombre_etiqueta):
-    query = "SELECT id FROM Etiquetas WHERE nombre_etiqueta='"+ nombre_etiqueta +"';"
+    query = f"SELECT id FROM Etiquetas WHERE nombre_etiqueta='{nombre_etiqueta}';"
     try:
         con = conectar()
         cursor = con.cursor()
@@ -182,5 +182,38 @@ def eliminar_guardadas(id_usuario,id_imagen):
         cursorObj.execute(query)
         con.commit()
         con.close
+    except Error:
+        print(Error)
+
+def sql_insert_imagen(nombre_imagen, ruta, privada, etiquetas):
+    query = f"INSERT INTO Imagenes (nombre_imagen, ruta, privada) VALUES('{nombre_imagen}','{ruta}',{1 if privada else 0});"
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+def sql_update_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
+    query = f"UPDATE Imagenes SET nombre_imagen='{nombre_imagen}', ruta='{ruta}', privada={1 if privada else 0} WHERE id ={id_};"
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+def sql_delete_imagen(id_):
+    query = f"DELETE FROM Imagenes WHERE id={id_};"
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
     except Error:
         print(Error)
