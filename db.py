@@ -9,6 +9,7 @@ def conectar():
             return g.db
     except Error:
         print(Error)
+        
 
 def desconectar():
     try:
@@ -17,6 +18,7 @@ def desconectar():
             db.close()
     except:
         pass
+
 
 # Para insertar un usuario nuevo
 def insertar_usuario(nombre, correo, contraseña):
@@ -30,6 +32,7 @@ def insertar_usuario(nombre, correo, contraseña):
     except Error:
         print(Error)
 
+
 # Para autenticar un usuario
 def autenticar_usuario(nombre, contraseña):
     query = f"SELECT id FROM Usuarios WHERE nombre_usuario='{nombre}' contraseña='{contraseña}';"
@@ -42,6 +45,7 @@ def autenticar_usuario(nombre, contraseña):
         return True if (len(usuario) > 0) else False
     except Error:
         print(Error)
+
 
 # para validar si un correo o un nombre de usuario está registrado
 # devuelve una lista de mensajes
@@ -65,6 +69,7 @@ def validar_nuevo_usuario(nombre, correo):
     except Error:
         print(Error)
 
+
 # Para obtener el id de un usuario
 def get_id_Usuario(nombre):
     query = f"SELECT id FROM Usuario WHERE nombre='{nombre}';"
@@ -78,6 +83,7 @@ def get_id_Usuario(nombre):
         
     except Error:
         print(Error)
+
 
 def get_imagenes(usrId, privada):
     query = f"SELECT id, nombre, ruta FROM Imagenes WHERE id_usuario={usrId} AND privada={1 if privada else 0};"
@@ -95,9 +101,6 @@ def get_imagenes(usrId, privada):
     except Error:
         print(Error)
 
-# [
-# [id, nombre, ruta [etiquetas]]
-# ]
 
 def get_guardadas(usrId):
     query = f"SELECT I.id, I.nombre, I.ruta FROM Imagenes AS I INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id WHERE MG.id_usuario={usrId};"
@@ -115,6 +118,7 @@ def get_guardadas(usrId):
     except Error:
         print(Error)
 
+
 def get_etiquetas(imgId):
     query = f"SELECT E.nombre FROM Etiquetas AS E INNER JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id WHERE IE.id_imagen={imgId};"
     try:
@@ -127,6 +131,7 @@ def get_etiquetas(imgId):
     except Error:
         print(Error)
 
+
 # Para insertar una etiqueta nueva
 def insertar_etiqueta(nombre_etiqueta):
     query = "INSERT INTO Etiquetas (nombre_etiqueta) VALUES ('"+ nombre_etiqueta +"');"
@@ -138,6 +143,7 @@ def insertar_etiqueta(nombre_etiqueta):
         con.close()
     except Error:
         print(Error)
+
 
 # Para obtener el id de una etiqueta
 def get_id_Etiqueta(nombre_etiqueta):
