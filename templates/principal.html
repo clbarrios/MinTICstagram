@@ -87,6 +87,7 @@
                         </svg>
                         Agregar Imagen
                     </button>   
+                    
                 </div>
             </div>
         </div>
@@ -258,6 +259,17 @@
         <div class="modal-content">
     
             <!-- Modal Header -->
+            <section class="content">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="error-msg">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </section>
             <div class="modal-header">
             <h4 class="modal-title" style="font-weight: bold;">Agregar Imagen</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -290,12 +302,18 @@
                     </svg>
                     <span> Escoge un archivo </span>
                 </label>
+                <form action="{{ url_for('upload') }}" method = "POST" enctype="multipart/form-data">
+                    <input type="file" name="archivo">
+                    <input type="submit" value="Guardar">
+                </form>
             </div>
     
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="boton" data-dismiss="modal">Agregar</button>
             </div>
+
+
     
         </div>
         </div>
