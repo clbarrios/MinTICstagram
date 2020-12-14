@@ -4,9 +4,9 @@ from flask import current_app, g
 
 def conectar():
     try:
-        if 'db' not in g:
-            g.db = sqlite3.connect('MinTICstagram.db')
-            return g.db
+        #if 'db' not in g:
+        g.db = sqlite3.connect('MinTICstagram.db')
+        return g.db
     except Error:
         print(Error)
         
@@ -151,8 +151,8 @@ def insertar_etiqueta(nombre_etiqueta):
     query = f"INSERT OR IGNORE INTO Etiquetas (nombre_etiqueta) VALUES ('{nombre_etiqueta}');"
     try:
         con = conectar()
-        cursor = con.cursor()
-        cursor.execute(query)
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
         con.commit()
         con.close()
     except Error as e:
@@ -223,18 +223,14 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
     except Error as e:
         print(e)
 
-def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
-    query = f"INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada) VALUES('{nombre_imagen}', {id_usuario} '{ruta}',{1 if privada else 0});"
+def insertar_imagen(nombre_imagen, id_usuario, ruta, privada):
+    query = f"INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada) VALUES('{nombre_imagen}', {id_usuario}, '{ruta}',{1 if privada else 0});"
     try:
         con = conectar()
-        cursor = con.cursor()
-        cursor.execute(query)            
+        cursorObj = con.cursor()
+        cursorObj.execute(query)            
         con.commit()
         con.close()
-        
-        for etiqueta in etiquetas:
-            insertar_etiqueta(etiqueta)
-            insertar_imagen_etiqueta(get_id_imagen(ruta), get_id_etiqueta(etiqueta))
 
     except Error as e:
         print(e)

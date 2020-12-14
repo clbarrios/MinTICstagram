@@ -31,9 +31,21 @@ def upload():
             flash("no hay ningun archivo cargado")
             return redirect('/principal')
         
+        nom_imagen =  request.form.get("nombre")
+        ruta = str(filename)
+        etiquetas =  request.form.get("etiquetas")
+        if(request.form.get("privadas")):
+            privada=1
+        else:
+            privada=0
+        
+        insertar_imagen(nom_imagen, 1, ruta, privada)
+        for etiqueta in etiquetas:
+             insertar_etiqueta(etiqueta)
+
         flash("Se ha agregado su imagen con exito")
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'OK'
+        return 'ok'
 
 
 
