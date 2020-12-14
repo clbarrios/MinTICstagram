@@ -184,3 +184,52 @@ def eliminar_guardadas(id_usuario,id_imagen):
         con.close
     except Error:
         print(Error)
+
+#agregar una imagen 
+def sql_insert_imagen(nombre_imagen, ruta, privada):
+    query = "insert into Imagenes (nombre_imagen, ruta, privada) values('" + nombre_imagen + "','" + ruta + "'," + privada + " )"
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+#editar imagenes 
+def sql_update_imagen(id, nombre_imagen, ruta, privada):
+    query = "update Imagenes set nombre_imagen = '" + nombre_imagen + "', ruta = '" + ruta + "', privada = '" + privada + "' where id = '" + id
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+#eliminar una imagen 
+def sql_delete_imagen(id):
+    query = "delete from Imagenes where id = " + id
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        con.commit()
+        con.close()
+    except Error:
+        print(Error)
+
+def sql_select_imagen():
+    query = "select * from Imagenes"
+    try:
+        con = conectar()
+        cursorObj = con.cursor()
+        cursorObj.execute(query)
+        imagenes = cursorObj.fetchall()
+        con.close()
+        return imagenes    
+    except Error:
+        print(Error)
+
