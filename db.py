@@ -103,6 +103,7 @@ def validar_nuevo_usuario(nombre, correo):
     except Error as e:
         print(e)
 
+
 def get_id_usuario(nombre):
     '''
     obtener el id de un usuario por su nombre de usuario
