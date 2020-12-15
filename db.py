@@ -306,6 +306,22 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
     except Error as e:
         print(e)
 
+def validar_ruta(ruta):
+    '''
+    Retorna False si la ruta se encuentra en el servidor y True si no está.
+    '''
+    query = "SELECT id from Imagenes WHERE ruta=?;"
+    values = (f'{ruta}',)
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query, values)
+        res = cursor.fetchone()
+        desconectar()
+        return True if res is None else False
+    except Error as e:
+        print(e)
+
 
 def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
     '''
