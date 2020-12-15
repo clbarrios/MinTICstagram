@@ -34,7 +34,7 @@
             </div>
             <div class="formulario">
                 <Form method="POST" class=fum style="width:500px" action="{{url_for('ingreso')}}">
-                    <label>Usuario</label>
+                    <!--<label>Usuario</label>
                     <input type="text" name="usuario" placeholder="Ingresa tu usuario" size=25>
                     <br>
                     <label>Contraseña</label>
@@ -44,7 +44,19 @@
                     <br>
                     <input type="submit" Name="Enviar" value="Inicia sesion" class="boton" style="width:200px">
                     <br>
-                    <a href="{{ url_for('registro') }}" style="font-size:14px"> ¿Aún no tienes una cuenta? Registrate </a>
+                    <a href="{{ url_for('registro') }}" style="font-size:14px"> ¿Aún no tienes una cuenta? Registrate </a>-->
+                    {{ form.hidden_tag() }}
+                    {{form.usuario.label}}
+                    {{form.usuario(placeholder="Ingresa tu usuario", size=25)}}
+                    <br>
+                    {{form.contraseña.label}}
+                    {{form.contraseña (placeholder="Ingresa tu contraseña", size=25)}}
+                    <br>
+                    <a href="{{ url_for('reestablecerContra') }}" style="font-size:14px"> ¿Olvidaste tu contraseña?</a>
+                    <br>
+                    {{form.enviar(class_="boton", style="width:200px") }}
+                    <br>
+                    <a href="{{ url_for('registro') }}" style="font-size:14px"> ¿Aún no tienes una cuenta? Registrate </a>                    
                 </Form>
             </div>
 

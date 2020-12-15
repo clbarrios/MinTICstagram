@@ -4,6 +4,7 @@ import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
 from forms import FormRegistro
+from forms import FormInicio
 import os
 from werkzeug import secure_filename
 from db import *
@@ -18,6 +19,7 @@ app.config['UPLOAD_FOLDER'] = "./static/img"
 galeria1 = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg','img/imagen14.jpg', 'img/imagen15.jpg', 'img/imagen15.jpg' ]
 galeria2 = ['img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen7.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg','img/imagen15.jpg', 'img/imagen1.jpg', 'img/imagen2.png' ]
 galeria3 = ['img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg', 'img/imagen15.jpg','img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg' ]
+
 
 
 @app.route("/upload", methods=('GET', 'POST'))
@@ -50,7 +52,7 @@ def upload():
 
 @app.route("/", methods=("GET", "POST"))
 def ingreso():
-    if request.method == "POST":
+    '''if request.method == "POST":
         usuario = request.form.get("usuario")
         clave = request.form.get("clave")
 
@@ -58,7 +60,18 @@ def ingreso():
             return redirect(url_for('principal'))
         else:
             flash("Error en los datos. Vuelve a intentar.")
-    return render_template("ingreso.html")
+    return render_template("ingreso.html")'''
+    form= FormInicio()
+    if form.validate_on_submit():
+        usuario=form.usuario.data
+        clave=form.contraseña.data
+        if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
+            return redirect(url_for('principal'))
+        else:
+            flash("Error en los datos. Vuelve a intentar.")
+            return render_template('ingreso.html', form= form)
+    return render_template('ingreso.html', form= form)   
+  
 
 @app.route('/registro', methods=('GET','POST'))
 def registro():
@@ -133,8 +146,11 @@ def reestablecimientoExitoso():
 
 @app.route("/principal/")
 def principal():
-  
-    return render_template("principal.html", galeria1=galeria1, galeria2=galeria2, galeria3=galeria3)
+    img_privadas = get_imagenes(1, 1)
+    img_publicas = get_imagenes(1, 0)
+    img_guardadas = None
+    
+    return render_template("principal.html",  img_privadas=img_privadas, galeria2=galeria2, galeria3=galeria3)
 
 # Activar el modo debug
 if __name__=="__main__":
