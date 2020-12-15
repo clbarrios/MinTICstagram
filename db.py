@@ -5,19 +5,11 @@ from flask import current_app, g
 
 def conectar():
     try:
-<<<<<<< HEAD
         if 'db' not in g:
             g.db = sqlite3.connect('MinTICstagram.db')
         return g.db
     except Error as e:
         print(e)
-=======
-        #if 'db' not in g:
-        g.db = sqlite3.connect('MinTICstagram.db')
-        return g.db
-    except Error:
-        print(Error)
->>>>>>> a788f3f331564be9215a900ec58e524d87315d7c
         
 
 def desconectar():
@@ -219,13 +211,8 @@ def insertar_etiqueta(nombre_etiqueta):
     values = (nombre_etiqueta,)
     try:
         con = conectar()
-<<<<<<< HEAD
         cursor = con.cursor()
         cursor.execute(query, values)
-=======
-        cursorObj = con.cursor()
-        cursorObj.execute(query)
->>>>>>> a788f3f331564be9215a900ec58e524d87315d7c
         con.commit()
         con.close()
     except Error as e:
@@ -284,11 +271,7 @@ def eliminar_guardadas(id_usuario, id_imagen):
     except Error:
         print(Error)
 
-<<<<<<< HEAD
 
-=======
-#agregar una imagen 
->>>>>>> a788f3f331564be9215a900ec58e524d87315d7c
 def insertar_imagen_etiqueta(id_imagen, id_etiqueta):
     '''
     Asocia una imagen a una etiqueta en la base de datos
@@ -322,7 +305,6 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
     except Error as e:
         print(e)
 
-<<<<<<< HEAD
 
 def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
     '''
@@ -335,14 +317,6 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
         con = conectar()
         cursor = con.cursor()
         cursor.execute(query, values)            
-=======
-def insertar_imagen(nombre_imagen, id_usuario, ruta, privada):
-    query = f"INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada) VALUES('{nombre_imagen}', {id_usuario}, '{ruta}',{1 if privada else 0});"
-    try:
-        con = conectar()
-        cursorObj = con.cursor()
-        cursorObj.execute(query)            
->>>>>>> a788f3f331564be9215a900ec58e524d87315d7c
         con.commit()
         con.close()
 
