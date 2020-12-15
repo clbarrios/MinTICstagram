@@ -9,6 +9,11 @@ class FormRegistro(FlaskForm):
     conf_contraseña = PasswordField('Confirmar Contraseña', validators= [DataRequired(message="Confirme la contraseña")])
     registrar = SubmitField('¡Únete!')
 
+class FormInicio(FlaskForm):
+    usuario = StringField('Usuario', validators= [DataRequired(message="Ingresa tu usuario")])
+    contraseña = PasswordField('Contraseña', validators= [DataRequired(message="Ingresa tu contraseña")])
+    enviar = SubmitField('Inicia sesión')
+
 #class formAgregar(FlaskForm):
 #    titulo=StringField("Titulo de la Imagen")
 #    descripcion=TextAreaField("Descripcion")
