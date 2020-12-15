@@ -320,6 +320,10 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
         cursor.execute(query, values)            
         con.commit()
         con.close()
+        
+        for etiqueta in etiquetas:
+            insertar_etiqueta(etiqueta)
+            insertar_imagen_etiqueta(get_id_imagen(ruta), get_id_etiqueta(etiqueta))
 
     except Error as e:
         print(e)
