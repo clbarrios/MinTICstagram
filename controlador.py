@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, session, current_app, g, send_file
 from flask import Flask, request, redirect, render_template
 import yagmail as yagmail
 import utils
@@ -7,13 +7,38 @@ from forms import FormRegistro
 import os
 from werkzeug import secure_filename
 from db import *
-
+import functools
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import make_response
+from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = "./static/img"
 
+'''def login_required(view):
+    @wraps(view)
+    def wrapped_view():
+        if g.user is None:
+            return redirect(url_for('login'))
+        return view()
+    return wrapped_view
 
+@app.before_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute('SELECT * FROM usuario WHERE id = ?', (user_id,)).fetchone()
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+    
+#guiarnos con lo del profe para obtener el session.get('user_id')'''
 
 galeria1 = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg','img/imagen14.jpg', 'img/imagen15.jpg', 'img/imagen15.jpg' ]
 galeria2 = ['img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen7.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg','img/imagen15.jpg', 'img/imagen1.jpg', 'img/imagen2.png' ]
@@ -102,8 +127,8 @@ def registro():
 def activacion():
     return render_template("activacion.html")
 
-@app.route("/activacionExitosa")
-def activacionExitosa():
+@app.route("/activacionExitosa/<string:tk>")
+def activacionExitosa(tk):
     return render_template("activacionExitosa.html")
 
 @app.route("/reestablecerContra", methods=('GET','POST'))
