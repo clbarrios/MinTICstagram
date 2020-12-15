@@ -4,6 +4,7 @@ import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
 from forms import FormRegistro
+from forms import FormInicio
 import os
 from werkzeug import secure_filename
 from db import *
@@ -75,7 +76,7 @@ def upload():
 
 @app.route("/", methods=("GET", "POST"))
 def ingreso():
-    if request.method == "POST":
+    '''if request.method == "POST":
         usuario = request.form.get("usuario")
         clave = request.form.get("clave")
 
@@ -83,7 +84,18 @@ def ingreso():
             return redirect(url_for('principal'))
         else:
             flash("Error en los datos. Vuelve a intentar.")
-    return render_template("ingreso.html")
+    return render_template("ingreso.html")'''
+    form= FormInicio()
+    if form.validate_on_submit():
+        usuario=form.usuario.data
+        clave=form.contraseña.data
+        if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
+            return redirect(url_for('principal'))
+        else:
+            flash("Error en los datos. Vuelve a intentar.")
+            return render_template('ingreso.html', form= form)
+    return render_template('ingreso.html', form= form)   
+  
 
 @app.route('/registro', methods=('GET','POST'))
 def registro():
