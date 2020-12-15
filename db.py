@@ -2,13 +2,14 @@ import sqlite3
 from sqlite3 import Error
 from flask import current_app, g
 
+
 def conectar():
     try:
         if 'db' not in g:
             g.db = sqlite3.connect('MinTICstagram.db')
-            return g.db
-    except Error:
-        print(Error)
+        return g.db
+    except Error as e:
+        print(e)
         
 
 def desconectar():
@@ -16,13 +17,18 @@ def desconectar():
         db = g.pop('db', None)
         if db is not None:
             db.close()
-    except:
-        pass
+    except Error as e:
+        print(e)
 
 
-# Para insertar un usuario nuevo, se inserta como inactivo, i.e. activo = 0
 def insertar_usuario(nombre, correo, contraseña):
-    query = f"INSERT INTO Usuarios (nombre_usuario, correo, contraseña, activado) VALUES ('{nombre}', '{correo}', '{contraseña}', 0);"
+    '''
+    Inserta un nuevo usuario a la base de datos, por defecto con la cuenta sin
+    activar
+    '''
+    query = """INSERT INTO Usuarios (nombre_usuario, correo, contraseña, activado)
+               VALUES ('?', '?', '?', 0);"""
+    values = (nombre, correo, contraseña)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -33,38 +39,56 @@ def insertar_usuario(nombre, correo, contraseña):
         print(e)
 
 
-# Para autenticar un usuario
 def autenticar_usuario(nombre, contraseña):
-    query = f"SELECT id FROM Usuarios WHERE nombre_usuario='{nombre}' AND contraseña='{contraseña}';"
+    '''
+    retorna None si el las credenciales no coinciden con la base de datos,
+    y un diccionario con las llaves id, nombre_usuario, correo y contraseña si
+    las credenciales coinciden
+    '''
+    query = """SELECT id, nombre_usuario 
+               FROM Usuarios 
+               WHERE nombre_usuario='?' AND contraseña='?';"""
+    values = (nombre, contraseña)
+    keys = ['id', 'nombre_usuario']
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         res = cursor.fetchone()
         con.close()
-        return False if res is None else True
+        return None if res is None else {k:v for k,v in zip(keys, res)}
     except Error as e:
         print(e)
 
+
 def activar_usuario(nombre):
-    query = f"UPDATE Usuarios SET activado=1 WHERE nombre_usuario='{nombre}';"
+    '''
+    Activar la cuenta de un usuario
+    '''
+    query = "UPDATE Usuarios SET activado=1 WHERE nombre_usuario='?';"
+    values = (nombre,)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         con.commit()
         con.close()
     except Error as e:
         print(e)
 
-# para validar si un correo o un nombre de usuario está registrado
-# devuelve una lista de mensajes
+
 def validar_nuevo_usuario(nombre, correo):
-    query = f"SELECT nombre_usuario, correo FROM Usuarios WHERE nombre_usuario='{nombre}' OR correo='{correo}';"
+    '''
+    Retorna una lista de mensajes indicando si el nombre de usuario o el
+    '''
+    query = """SELECT nombre_usuario, correo 
+               FROM Usuarios 
+               WHERE nombre_usuario='?' OR correo='?';"""
+    values = (nombre, correo)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         usuarios = cursor.fetchall()
         con.close()
         msgs = []
@@ -79,14 +103,16 @@ def validar_nuevo_usuario(nombre, correo):
     except Error as e:
         print(e)
 
-
-# Para obtener el id de un usuario
 def get_id_usuario(nombre):
-    query = f"SELECT id FROM Usuario WHERE nombre='{nombre}';"
+    '''
+    obtener el id de un usuario por su nombre de usuario
+    '''
+    query = "SELECT id FROM Usuario WHERE nombre='?';"
+    values = (nombre,)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         res = cursor.fetchone()
         con.close()
         return res[0]
@@ -96,11 +122,20 @@ def get_id_usuario(nombre):
 
 
 def get_imagenes(usrId, privada):
-    query = f"SELECT id, nombre_imagen, ruta FROM Imagenes WHERE id_usuario={usrId} AND privada={1 if privada else 0};"
+    '''
+    Consultar lista de imagenes para el usario de id usrId, privada es un
+    booleano que indica si se desea consultar las imagenes privadas o publicas.
+    Se retorna una lista de diccionarios con las llaves: id, nombre, ruta y
+    etiquetas, siendo esta última una lista
+    '''
+    query = """SELECT id, nombre_imagen, ruta 
+               FROM Imagenes 
+               WHERE id_usuario=? AND privada=?;"""
+    values = (usrId, 1 if privada else 0)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         imagenes = cursor.fetchall()
         con.close()
         # convertir el resultado a una lista de diccionarios
@@ -115,11 +150,22 @@ def get_imagenes(usrId, privada):
 
 
 def get_guardadas(usrId):
-    query = f"SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id WHERE MG.id_usuario={usrId};"
+    '''
+    Consultar lista de imagenes guardadas para el usario de id usrId.
+    Sólo retorna imagenes de otros usuarios a las que se les dio 'me gusta'.
+    Se retorna una lista de diccionarios con las llaves: id, nombre, ruta y
+    etiquetas, siendo esta última una lista
+    '''
+    query = """SELECT I.id, I.nombre_imagen, I.ruta 
+               FROM Imagenes AS I 
+               INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id 
+               WHERE MG.id_usuario=?;"""
+    values = (usrId,)
+    
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         imagenes = cursor.fetchall()
         con.close()
         # convertir el resultado a una lista de diccionarios
@@ -134,11 +180,19 @@ def get_guardadas(usrId):
 
 
 def get_etiquetas(imgId):
-    query = f"SELECT E.nombre_etiqueta FROM Etiquetas AS E INNER JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id WHERE IE.id_imagen={imgId};"
+    '''
+    Retorna una lista con las etiquetas asociadas a la imagen identificada con
+    el id imgId
+    '''
+    query = """SELECT E.nombre_etiqueta 
+               FROM Etiquetas AS E 
+               INNER JOIN Imagenes_Etiquetas IE ON IE.id_etiqueta=E.id 
+               WHERE IE.id_imagen=?;"""
+    values = (imgId,)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         etiquetas = cursor.fetchall()
         con.close()
         return [e[0] for e in etiquetas]
@@ -146,26 +200,36 @@ def get_etiquetas(imgId):
         print(e)
 
 
-# Para insertar una etiqueta nueva
 def insertar_etiqueta(nombre_etiqueta):
-    query = f"INSERT OR IGNORE INTO Etiquetas (nombre_etiqueta) VALUES ('{nombre_etiqueta}');"
+    '''
+    Inserta una etiqueta en la base de datos, si la etiqueta ya se encuentra en
+    la base de datos se ignora la inserción 
+    '''
+    query = """INSERT OR IGNORE 
+               INTO Etiquetas (nombre_etiqueta) 
+               VALUES ('?');"""
+    values = (nombre_etiqueta,)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         con.commit()
         con.close()
     except Error as e:
         print(e)
 
 
-# Para obtener el id de una etiqueta
 def get_id_etiqueta(nombre_etiqueta):
-    query = f"SELECT id FROM Etiquetas WHERE nombre_etiqueta='{nombre_etiqueta}';"
+    '''
+    Obtener el id de una etiqueta dado su nombre. Si no se encuentra en la base
+    de datos retorna None
+    '''
+    query = "SELECT id FROM Etiquetas WHERE nombre_etiqueta='?';"
+    values = (nombre_etiqueta,)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         res = cursor.fetchone()
         con.close()
         return res if res is None else res[0]
@@ -174,60 +238,85 @@ def get_id_etiqueta(nombre_etiqueta):
         print(e)
 
 
-#para guardar una imagen 
 def insertar_guardadas(id_usuario,id_imagen):
-    query = f"INSERT INTO MeGusta (id_usuario, id_imagen) VALUES({id_usuario},{id_imagen});"
+    '''
+    Guarda en la base de datos que un usuario le dio 'me gusta' a una imagen
+    de otro usuario
+    '''
+    query = "INSERT INTO MeGusta (id_usuario, id_imagen) VALUES(?,?);"
+    values = (id_usuario, id_imagen)
     try:
         con = conectar()
         cursorObj= con.cursor()
-        cursorObj.execute(query)
+        cursorObj.execute(query, values)
         con.commit()
         con.close()
     except Error as e:
         print(e)
 
 
-#para eliminar una imagen de las que guardo
 def eliminar_guardadas(id_usuario, id_imagen):
-    query = f"DELETE FROM MeGusta WHERE id_usuario={id_usuario} AND id_imagen={id_imagen};"
+    '''
+    Registra en la base de datos que a un usuario ya no le gusta una imagen
+    de otro usuario
+    '''
+    query = "DELETE FROM MeGusta WHERE id_usuario=? AND id_imagen=?;"
+    values = (id_usuario, id_imagen)
     try:
         con = conectar()
         cursorObj = con.cursor()
-        cursorObj.execute(query)
+        cursorObj.execute(query, values)
         con.commit()
         con.close
     except Error as e:
         print(e)
+
 
 def insertar_imagen_etiqueta(id_imagen, id_etiqueta):
-    query = f"INSERT INTO Imagenes_Etiquetas (id_imagen, id_etiqueta) VALUES ({id_imagen}, {id_etiqueta});"
+    '''
+    Asocia una imagen a una etiqueta en la base de datos
+    '''
+    query = """INSERT INTO Imagenes_Etiquetas (id_imagen, id_etiqueta) 
+               VALUES (?, ?);"""
+    values = (id_imagen, id_etiqueta)
     try:
         con = conectar()
         cursorObj = con.cursor()
-        cursorObj.execute(query)
+        cursorObj.execute(query, values)
         con.commit()
         con.close
     except Error as e:
         print(e)
 
+
 def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
-    query = f"DELETE Imagenes_Etiquetas WHERE id_imagen={id_etiqueta} AND id_etiqueta={id_etiqueta});"
+    '''
+    Elimina la asociación entre una imagen y una etiqueta
+    '''
+    query = "DELETE Imagenes_Etiquetas WHERE id_imagen=? AND id_etiqueta=?);"
+    values = (id_imagen, id_etiqueta)
     try:
         con = conectar()
         cursorObj = con.cursor()
-        cursorObj.execute(query)
+        cursorObj.execute(query, values)
         con.commit()
         con.close
         
     except Error as e:
         print(e)
 
+
 def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
-    query = f"INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada) VALUES('{nombre_imagen}', {id_usuario} '{ruta}',{1 if privada else 0});"
+    '''
+    Inserta una imagen en la base de datos
+    '''
+    query = """INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada)
+               VALUES('?', ?, '?', ?);"""
+    values = (nombre_imagen, id_usuario, ruta, 1 if privada else 0)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)            
+        cursor.execute(query, values)            
         con.commit()
         con.close()
         
@@ -238,12 +327,17 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
     except Error as e:
         print(e)
 
+
 def get_id_imagen(ruta):
-    query = f"SELECT id FROM Imagenes WHERE ruta='{ruta}';"
+    '''
+    Retorna el id de una imagen dada su ruta
+    '''
+    query = "SELECT id FROM Imagenes WHERE ruta='?';"
+    values = (ruta,)
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query, values)
         res = cursor.fetchone()
         con.close()
         return res if res is None else res[0]
@@ -253,11 +347,17 @@ def get_id_imagen(ruta):
 
 
 def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
-    query = f"UPDATE Imagenes SET nombre_imagen='{nombre_imagen}', ruta='{ruta}', privada={1 if privada else 0} WHERE id ={id_};"
+    '''
+    Actualiza los datos de una imagen en la base de datos
+    '''
+    query = """UPDATE Imagenes 
+               SET nombre_imagen='?', ruta='?', privada=?
+               WHERE id=?;"""
+    values = (nombre_imagen, ruta, 1 if privada else 0, id_)
     try:
         con = conectar()
         cursorObj = con.cursor()
-        cursorObj.execute(query)
+        cursorObj.execute(query, values)
         con.commit()
         con.close()
         # obtener lista de etiquetas antes de la actualizacion
@@ -280,20 +380,26 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
     except Error as e:
         print(e)
 
+
 def eliminar_imagen(id_):
+    '''
+    Elimina los datos de una imagen de la base de datos, incluyendo sus
+    asociaciones a etiquetas y a usuarios que le dieron 'me gusta'
+    '''
     # 1. Eliminar referencias a la imagen en la tabla MeGusta
     # 2. Eliminar referencias a la imagen en la tabla Imagenes_etiquetas
     # 3. Eliminar registro en tabla Imagenes
     queries =  [
-        f"DELETE FROM MeGusta WHERE id_imagen={id_};",
-        f"DELETE FROM Imagenes_Etiquetas WHERE id_imagen={id_};",
-        f"DELETE FROM Imagenes WHERE id={id_};"
+        "DELETE FROM MeGusta WHERE id_imagen=?;",
+        "DELETE FROM Imagenes_Etiquetas WHERE id_imagen=?;",
+        "DELETE FROM Imagenes WHERE id=?;"
     ]
+    values = (id_,)
     try:
         con = conectar()
         cursorObj = con.cursor()
         for query in queries: 
-            cursorObj.execute(query)
+            cursorObj.execute(query, values)
         con.commit()
         con.close()
     except Error as e:
