@@ -34,7 +34,7 @@ def insertar_usuario(nombre, correo, contraseña):
         cursor = con.cursor()
         cursor.execute(query)
         con.commit()
-        #con.close()
+        desconectar()
     except Error as e:
         print(e)
 
@@ -55,7 +55,7 @@ def autenticar_usuario(nombre, contraseña):
         cursor = con.cursor()
         cursor.execute(query, values)
         res = cursor.fetchone()
-        #con.close()
+        desconectar()
         return None if res is None else {k:v for k,v in zip(keys, res)}
     except Error as e:
         print(e)
@@ -72,7 +72,7 @@ def activar_usuario(nombre):
         cursor = con.cursor()
         cursor.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
     except Error as e:
         print(e)
 
@@ -90,7 +90,7 @@ def validar_nuevo_usuario(nombre, correo):
         cursor = con.cursor()
         cursor.execute(query, values)
         usuarios = cursor.fetchall()
-        #con.close()
+        desconectar()
         msgs = []
         for usuario in usuarios:
             if usuario[0] == nombre: 
@@ -115,7 +115,7 @@ def get_id_usuario(nombre):
         cursor = con.cursor()
         cursor.execute(query, values)
         res = cursor.fetchone()
-        #con.close()
+        desconectar()
         return res[0]
         
     except Error as e:
@@ -138,7 +138,7 @@ def get_imagenes(usrId, privada):
         cursor = con.cursor()
         cursor.execute(query, values)
         imagenes = cursor.fetchall()
-        #con.close()
+        desconectar()
         # convertir el resultado a una lista de diccionarios
         keys = ['id', 'nombre', 'ruta']
         imagenes = [{k:v for k,v in zip(keys,img)} for img in imagenes]
@@ -168,7 +168,7 @@ def get_guardadas(usrId):
         cursor = con.cursor()
         cursor.execute(query, values)
         imagenes = cursor.fetchall()
-        #con.close()
+        desconectar()
         # convertir el resultado a una lista de diccionarios
         keys = ['id', 'nombre', 'ruta']
         imagenes = [{k:v for k,v in zip(keys,img)} for img in imagenes]
@@ -195,7 +195,7 @@ def get_etiquetas(imgId):
         cursor = con.cursor()
         cursor.execute(query, values)
         etiquetas = cursor.fetchall()
-        #con.close()
+        desconectar()
         return [e[0] for e in etiquetas]
     except Error as e:
         print(e)
@@ -215,7 +215,7 @@ def insertar_etiqueta(nombre_etiqueta):
         cursor = con.cursor()
         cursor.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
     except Error as e:
         print(e)
 
@@ -232,7 +232,7 @@ def get_id_etiqueta(nombre_etiqueta):
         cursor = con.cursor()
         cursor.execute(query, values)
         res = cursor.fetchone()
-        #con.close()
+        desconectar()
         return res if res is None else res[0]
         
     except Error as e:
@@ -251,7 +251,7 @@ def insertar_guardadas(id_usuario,id_imagen):
         cursorObj= con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
     except Error as e:
         print(e)
 
@@ -268,7 +268,7 @@ def eliminar_guardadas(id_usuario, id_imagen):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
     except Error:
         print(Error)
 
@@ -285,7 +285,7 @@ def insertar_imagen_etiqueta(id_imagen, id_etiqueta):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
     except Error as e:
         print(e)
 
@@ -301,7 +301,7 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
         
     except Error as e:
         print(e)
@@ -319,7 +319,7 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
         cursor = con.cursor()
         cursor.execute(query, values)            
         con.commit()
-        #con.close()
+        desconectar()
         
         imgId = get_id_imagen(ruta)
         for etiqueta in etiquetas:
@@ -341,7 +341,7 @@ def get_id_imagen(ruta):
         cursor = con.cursor()
         cursor.execute(query, values)
         res = cursor.fetchone()
-        #con.close()
+        desconectar()
         return res if res is None else res[0]
         
     except Error as e:
@@ -361,7 +361,7 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
         # obtener lista de etiquetas antes de la actualizacion
         etiquetas_old = get_etiquetas(id_)
         # recorrer la lista de etiquetas más corta entre la nueva y la anterior
@@ -403,6 +403,6 @@ def eliminar_imagen(id_):
         for query in queries: 
             cursorObj.execute(query, values)
         con.commit()
-        #con.close()
+        desconectar()
     except Error as e:
         print(e)
