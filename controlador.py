@@ -33,7 +33,7 @@ def upload():
         
         nom_imagen =  request.form.get("nombre")
         ruta = str(filename)
-        etiquetas =  request.form.get("etiquetas")
+        etiquetas =  request.form.get("etiquetas").split()
         if(request.form.get("privadas")):
             privada=1
         else:
