@@ -27,8 +27,8 @@ def insertar_usuario(nombre, correo, contraseña):
     activar
     '''
     query = """INSERT INTO Usuarios (nombre_usuario, correo, contraseña, activado)
-               VALUES ('?', '?', '?', 0);"""
-    values = (nombre, correo, contraseña)
+               VALUES (?, ?, ?, 0);"""
+    values = (f'{nombre}', f'{correo}', f'{contraseña}')
     try:
         con = conectar()
         cursor = con.cursor()
@@ -47,8 +47,8 @@ def autenticar_usuario(nombre, contraseña):
     '''
     query = """SELECT id, nombre_usuario 
                FROM Usuarios 
-               WHERE nombre_usuario='?' AND contraseña='?';"""
-    values = (nombre, contraseña)
+               WHERE nombre_usuario=? AND contraseña=?;"""
+    values = (f'{nombre}', f'{contraseña}')
     keys = ['id', 'nombre_usuario']
     try:
         con = conectar()
@@ -65,8 +65,8 @@ def activar_usuario(nombre):
     '''
     Activar la cuenta de un usuario
     '''
-    query = "UPDATE Usuarios SET activado=1 WHERE nombre_usuario='?';"
-    values = (nombre,)
+    query = "UPDATE Usuarios SET activado=1 WHERE nombre_usuario=?;"
+    values = (f'{nombre}',)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -83,8 +83,8 @@ def validar_nuevo_usuario(nombre, correo):
     '''
     query = """SELECT nombre_usuario, correo 
                FROM Usuarios 
-               WHERE nombre_usuario='?' OR correo='?';"""
-    values = (nombre, correo)
+               WHERE nombre_usuario=? OR correo=?;"""
+    values = (f'{nombre}', f'{correo}')
     try:
         con = conectar()
         cursor = con.cursor()
@@ -108,8 +108,8 @@ def get_id_usuario(nombre):
     '''
     obtener el id de un usuario por su nombre de usuario
     '''
-    query = "SELECT id FROM Usuario WHERE nombre='?';"
-    values = (nombre,)
+    query = "SELECT id FROM Usuario WHERE nombre=?;"
+    values = (f'{nombre}',)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -208,8 +208,8 @@ def insertar_etiqueta(nombre_etiqueta):
     '''
     query = """INSERT OR IGNORE 
                INTO Etiquetas (nombre_etiqueta) 
-               VALUES ('?');"""
-    values = (nombre_etiqueta,)
+               VALUES (?);"""
+    values = (f'{nombre_etiqueta}',)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -225,8 +225,8 @@ def get_id_etiqueta(nombre_etiqueta):
     Obtener el id de una etiqueta dado su nombre. Si no se encuentra en la base
     de datos retorna None
     '''
-    query = "SELECT id FROM Etiquetas WHERE nombre_etiqueta='?';"
-    values = (nombre_etiqueta,)
+    query = "SELECT id FROM Etiquetas WHERE nombre_etiqueta=?;"
+    values = (f'{nombre_etiqueta}',)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -268,7 +268,7 @@ def eliminar_guardadas(id_usuario, id_imagen):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        con.close
+        con.close()
     except Error:
         print(Error)
 
@@ -285,7 +285,7 @@ def insertar_imagen_etiqueta(id_imagen, id_etiqueta):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        con.close
+        con.close()
     except Error as e:
         print(e)
 
@@ -301,7 +301,7 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
         con.commit()
-        con.close
+        con.close()
         
     except Error as e:
         print(e)
@@ -312,8 +312,8 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
     Inserta una imagen en la base de datos
     '''
     query = """INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada)
-               VALUES('?', ?, '?', ?);"""
-    values = (nombre_imagen, id_usuario, ruta, 1 if privada else 0)
+               VALUES(?, ?, ?, ?);"""
+    values = (f'{nombre_imagen}', id_usuario, f'{ruta}', 1 if privada else 0)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -321,9 +321,10 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
         con.commit()
         con.close()
         
+        imgId = get_id_imagen(ruta)
         for etiqueta in etiquetas:
             insertar_etiqueta(etiqueta)
-            insertar_imagen_etiqueta(get_id_imagen(ruta), get_id_etiqueta(etiqueta))
+            insertar_imagen_etiqueta(imgId, get_id_etiqueta(etiqueta))
 
     except Error as e:
         print(e)
@@ -333,8 +334,8 @@ def get_id_imagen(ruta):
     '''
     Retorna el id de una imagen dada su ruta
     '''
-    query = "SELECT id FROM Imagenes WHERE ruta='?';"
-    values = (ruta,)
+    query = "SELECT id FROM Imagenes WHERE ruta=?;"
+    values = (f'{ruta}',)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -352,9 +353,9 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
     Actualiza los datos de una imagen en la base de datos
     '''
     query = """UPDATE Imagenes 
-               SET nombre_imagen='?', ruta='?', privada=?
+               SET nombre_imagen=?, ruta=?, privada=?
                WHERE id=?;"""
-    values = (nombre_imagen, ruta, 1 if privada else 0, id_)
+    values = (f'{nombre_imagen}', f'{ruta}', 1 if privada else 0, id_)
     try:
         con = conectar()
         cursorObj = con.cursor()
