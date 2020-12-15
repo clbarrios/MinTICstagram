@@ -39,16 +39,15 @@ def insertar_usuario(nombre, correo, contraseña):
         print(e)
 
 
-def autenticar_usuario(nombre, contraseña):
+def get_usuario(nombre):
     '''
-    retorna None si el las credenciales no coinciden con la base de datos,
-    y un diccionario con las llaves id, nombre, correo y contraseña si
-    las credenciales coinciden
+    Retorna un diccionario que represnta un usuario con las llaves id, nombre,
+    correo y contraseña si, None si no se encuentra en la base de datos.
     '''
     query = """SELECT id, nombre_usuario, correo, contraseña 
                FROM Usuarios 
-               WHERE nombre_usuario=? AND contraseña=?;"""
-    values = (f'{nombre}', f'{contraseña}')
+               WHERE nombre_usuario=?;"""
+    values = (f'{nombre}',)
     keys = ['id', 'nombre', 'correo', 'contraseña']
     try:
         con = conectar()
