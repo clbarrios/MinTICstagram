@@ -274,8 +274,10 @@
             <h4 class="modal-title" style="font-weight: bold;">Agregar Imagen</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-    
+
+            
             <!-- Modal body -->
+            <form action="{{ url_for('upload') }}" method = "POST" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-6 my-auto">
@@ -286,15 +288,15 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <input type="text" class="textfield" id="nombre" placeholder="Nombre de la imagen">
-                        <textarea id="etiquetas" style="height:150px" placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
-                        <input type="checkbox" id="privada" value="Privada">
+                        <input type="text" class="textfield" id="nombre" name="nombre" placeholder="Nombre de la imagen">
+                        <textarea id="etiquetas" style="height:150px" name= "etiquetas" placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
+                        <input type="checkbox" id="privada" name="privadas" value="privada">
                         <label for="privada">Privada</label>
                         
                     </div>
                 </div>
                 <br>                          
-                <input type="file" class="inputfile" accept="image/*" id="imgInputFile"  onchange="displayImg(event);">
+                <input type="file" name="archivo" class="inputfile" accept="image/*" id="imgInputFile"  onchange="displayImg(event);">
                 <label for="imgInputFile" id="imgInputLabel">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -302,16 +304,19 @@
                     </svg>
                     <span> Escoge un archivo </span>
                 </label>
-                <form action="{{ url_for('upload') }}" method = "POST" enctype="multipart/form-data">
-                    <input type="file" name="archivo">
-                    <input type="submit" value="Guardar">
-                </form>
+                   
+                   
+                    
+               
             </div>
     
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="boton" data-dismiss="modal">Agregar</button>
+                <input type="submit" value="Guardar">
             </div>
+                </form>
+               
+
 
 
     
