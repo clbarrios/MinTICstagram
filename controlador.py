@@ -39,9 +39,7 @@ def upload():
         else:
             privada=0
         
-        insertar_imagen(nom_imagen, 1, ruta, privada)
-        for etiqueta in etiquetas:
-             insertar_etiqueta(etiqueta)
+        insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
 
         flash("Se ha agregado su imagen con exito")
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
