@@ -76,6 +76,20 @@ def activar_usuario(nombre):
     except Error as e:
         print(e)
 
+def actualizar_contraseña(id_, contraseña):
+    '''
+    Actualizar la contraseña del usuario identificado con id_ en la base de datos
+    '''
+    query = "UPDATE Usuarios SET contraseña=? WHERE id=?;"
+    values = (f'{contraseña}', id_)
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query, values)
+        con.commit()
+        desconectar()
+    except Error as e:
+        print(e)
 
 def validar_nuevo_usuario(nombre, correo):
     '''
