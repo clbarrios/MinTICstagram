@@ -6,9 +6,10 @@ from forms import FormRegistro
 from forms import FormInicio
 import os
 from functools import wraps
-#from werkzeug import secure_filename
+from werkzeug import secure_filename
 from db import *
 from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
 
 
 app = Flask(__name__)
@@ -21,9 +22,16 @@ galeria1 = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen
 galeria2 = ['img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen7.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg','img/imagen15.jpg', 'img/imagen1.jpg', 'img/imagen2.png' ]
 galeria3 = ['img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg', 'img/imagen15.jpg','img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg' ]
 
-
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(*arg, **kwargs):
+        if g.user is None:
+            return redirect(url_for( 'ingreso' ))
+        return view(*arg, **kwargs)
+    return wrapped_view
 
 @app.route("/upload", methods=('GET', 'POST'))
+@login_required
 def upload():
     if request.method == 'GET':
         return redirect('/principal')
@@ -55,27 +63,19 @@ def upload():
 
 
 @app.route("/delete/<int:id>", methods=('GET', 'POST'))
+@login_required
 def delete(id):
     eliminar_imagen(id)
     return redirect('/principal')
 
 @app.route("/deleteGusta/<int:id_imagen>", methods=('GET', 'POST'))
+@login_required
 def deleteGusta(id_imagen):
     eliminar_guardadas(1, id_imagen)
     return redirect('/principal')
 
 
-def login_required(view):
-    @wraps(view)
-    def wrapped_view():
-        if g.user is None:
-            return redirect(url_for( 'ingreso' ))
-        return view()
-    return wrapped_view
 
-@app.route("/delete", methods=('GET', 'POST'))
-def delete():
-    return "OK"
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
@@ -96,7 +96,7 @@ def ingreso():
                 session.clear()
                 session['user_id'] = user['id']
                 return redirect(url_for('principal'))
-        flash( error )
+        #flash( error )
         
     
     return render_template('ingreso.html', form= form)   
