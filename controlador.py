@@ -79,16 +79,18 @@ def ingreso():
         clave = request.form.get('contraseña')
         db = conectar()
               
-        user = db.execute('SELECT * FROM Usuarios WHERE nombre_usuario = ? ', (usuario,)).fetchone()
-        #user = get_usuario(usuario)
+        #user = db.execute('SELECT * FROM Usuarios WHERE nombre_usuario = ? ', (usuario,)).fetchone()
+        user = get_usuario(usuario)
+        print(user)
+        
         
 
         if user is None:
                 error = 'Usuario o contraseña inválidos'
         else:
-            if check_password_hash(user[3], clave):
+            if check_password_hash(user['contraseña'], clave):
                 session.clear()
-                session['user_id'] = user[0]
+                session['user_id'] = user['id']
                 return redirect(url_for('principal'))
         flash( error )
         
