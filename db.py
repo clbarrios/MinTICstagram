@@ -353,7 +353,7 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
     '''
     Elimina la asociación entre una imagen y una etiqueta
     '''
-    query = "DELETE Imagenes_Etiquetas WHERE id_imagen=? AND id_etiqueta=?;"
+    query = "DELETE FROM Imagenes_Etiquetas WHERE id_imagen=? AND id_etiqueta=?;"
     values = (id_imagen, id_etiqueta)
     try:
         con = conectar()
@@ -445,7 +445,8 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
         # obtener lista de etiquetas antes de la actualizacion
         etiquetas_old = get_etiquetas(id_)
         # recorrer la lista de etiquetas más corta entre la nueva y la anterior
-        etiquetas_aux = etiquetas_old if len(etiquetas_old) < len(etiquetas) else etiquetas
+        etiquetas_aux = etiquetas_old.copy() if len(etiquetas_old) < len(etiquetas) else etiquetas.copy()
+
         for e in etiquetas_aux:
             # si un elemento está en ambas listas, eliminarlo de ambas
             if (e in etiquetas_old) and (e in etiquetas):
