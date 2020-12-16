@@ -56,7 +56,6 @@ def upload():
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], "1" + filename))
         return 'ok'
 
-<<<<<<< HEAD
 
 def login_required(view):
     @wraps(view)
@@ -66,11 +65,9 @@ def login_required(view):
         return view()
     return wrapped_view
 
-=======
 @app.route("/delete", methods=('GET', 'POST'))
 def delete():
     return "OK"
->>>>>>> 0f31129019765fbd2cf1e740366f75c33b57b5f2
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
