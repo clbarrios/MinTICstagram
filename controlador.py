@@ -34,7 +34,7 @@ def upload():
             return redirect('/principal')
         
         nom_imagen =  request.form.get("nombre")
-        ruta = "img/"+str(filename)
+        ruta = os.path.join('img',str(filename))
         etiquetas =  request.form.get("etiquetas").split()
         if(request.form.get("privadas")):
             privada=1

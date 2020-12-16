@@ -272,7 +272,7 @@ def insertar_guardadas(id_usuario,id_imagen):
 def eliminar_guardadas(id_usuario, id_imagen):
     '''
     Registra en la base de datos que a un usuario ya no le gusta una imagen
-    de otro usuario
+    de otro usuario.
     '''
     query = "DELETE FROM MeGusta WHERE id_usuario=? AND id_imagen=?;"
     values = (id_usuario, id_imagen)
@@ -389,8 +389,12 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
         con = conectar()
         cursorObj = con.cursor()
         cursorObj.execute(query, values)
+        # retirar asociaciones a la imagen de MeGusta si se vuelve privada
+        if privada:
+            cursorObj.execute("DELETE FROM MeGusta WHERE id_imagen=?;", (id_,)) 
         con.commit()
         desconectar()
+        
         # obtener lista de etiquetas antes de la actualizacion
         etiquetas_old = get_etiquetas(id_)
         # recorrer la lista de etiquetas más corta entre la nueva y la anterior

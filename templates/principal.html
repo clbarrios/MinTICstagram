@@ -185,7 +185,7 @@
                     {% for t in galeria3 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
+                            <img src="{{ url_for('static', filename= f'{t}' ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
                                 <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
