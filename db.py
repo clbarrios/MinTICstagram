@@ -537,7 +537,7 @@ def buscar_imagenes(palabras_clave, context="plataforma", usrId=None):
             INNER JOIN MeGusta AS MG ON MG.id_imagen=I.id
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE (I.nombre_imagen OR E.nombre_etiqueta LIKE ?) AND privada=0 AND id_usuario=?;
+            WHERE (I.nombre_imagen OR E.nombre_etiqueta LIKE ?) AND I.privada=0 AND I.id_usuario=?;
         """
                 
         values = [(f'%{kw}%', usrId) for kw in palabras_clave]
