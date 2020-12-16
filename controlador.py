@@ -74,14 +74,10 @@ def ingreso():
     if request.method == "POST":
         usuario = request.form.get('usuario')
         clave = request.form.get('contraseña')
-        db = conectar()
               
-        #user = db.execute('SELECT * FROM Usuarios WHERE nombre_usuario = ? ', (usuario,)).fetchone()
         user = get_usuario(usuario)
         print(user)
         
-        
-
         if user is None:
                 error = 'Usuario o contraseña inválidos'
         else:
@@ -91,11 +87,6 @@ def ingreso():
                 return redirect(url_for('principal'))
         flash( error )
         
-        #if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
-        #    return redirect(url_for('principal'))
-        #else:
-        #    flash("Error en los datos. Vuelve a intentar.")
-        #    return render_template('ingreso.html', form= form)
     
     return render_template('ingreso.html', form= form)   
   
