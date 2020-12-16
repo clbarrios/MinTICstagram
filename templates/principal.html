@@ -114,9 +114,11 @@
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5><br>
-                                {% for q in t['etiquetas'] %}
-                                <p class="card-text">{{ q }}</p>
-                                {% endfor %}
+                                <ul class="list-group list-group-flush">
+                                    {% for q in t['etiquetas'] %}
+                                        <li class="list-group-item">{{ q }}</li>
+                                    {% endfor %}
+                                </ul>
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
@@ -454,9 +456,9 @@
                                     value="">
                                 <textarea name="etiquetas" style="height:150px"
                                     placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
-                                <input type="radio" id="radioBtnPrivada" name="preg1" value="Privada" />
+                                <input type="radio" id="radioBtnPrivada" name="privada" value="Privada" />
                                 <label for="radioBtnPrivada">Privada</label>
-                                <input type="radio" id="radioBtnPublica" name="preg1" value="Publica" />
+                                <input type="radio" id="radioBtnPublica" name="privada" value="Publica" />
                                 <label for="radioBtnPublica">Publica</label>
                             </div>
     
@@ -465,7 +467,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="boton" data-dismiss="modal">Actualizar</button>
+                        <input type="submit" class="boton" data-dismiss="modal" value="Actualizar">
                     </div>
                 </form>
                 

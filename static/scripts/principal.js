@@ -132,18 +132,18 @@ function displayImgOnUpdateModal(event, id, ruta) {
 
     // cargar datos de la imagen en el formulario
     var modal = document.getElementById("actualizarImgModal")
-    
+
     // nombre de la imagen
-    document.forms["actualizar_imagen"]["nombre"].value = card.querySelector("#card-title").innerHTML;
+    document.forms["actualizar_imagen"]["nombre"].value = card.querySelector(".card-title").innerHTML;
 
     // etiquetas
-    var etiquetas = modal.querySelectorAll("#list-group-item");
     var etiquetas_str = "";
-    for (e of etiquetas) {
-        etiquetas_str = String.concat(etiquetas_str, " ", e.innerHTML);
+    for (var e of card.querySelectorAll("li")) {
+        etiquetas_str = etiquetas_str + " " + e.innerHTML;
+        console.log(e.innerHTML);
     }
-
-    document.forms["actualizar_imagen"]["etiquetas"].value = etiquetas;
+    
+    document.forms["actualizar_imagen"]["etiquetas"].innerHTML = etiquetas_str;
 
     document.forms["actualizar_imagen"]["id"].value = id;
     document.forms["actualizar_imagen"]["ruta"].value = ruta;   
