@@ -486,6 +486,12 @@ def eliminar_imagen(id_):
     except Error as e:
         print(e)
 
+
+# 1. Pestaña Buscar imagenes: imagenes = buscar_imagenes(palabras_clave)
+# 2. subpestañas
+#   2.1 privadas de un usario dado: imagenes = buscar_imagenes(palabras_clave, context="privadas", usrId=id_)
+
+
 def buscar_imagenes(palabras_clave, context="plataforma", usrId=None):
     '''
     Recibe una lista de palabras clave para buscar por nombre y etiqueta en 
