@@ -43,14 +43,11 @@ def upload():
             privada=0
         
         # Verifiacion de rutas duplicadas
-        listaImg=get_todas_imagenes(1)
-
-        for i in listaImg:
-            if i['ruta'] == ruta:
-                flash("Ya subiste esta imagen")
-                return redirect('/principal')
-
-        insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
+        if validar_ruta(ruta):
+            insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
+        else:
+            flash("Ya subiste esta imagen")
+            return redirect('/principal')
 
         flash("Se ha agregado su imagen con exito")
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], "1" + filename))
