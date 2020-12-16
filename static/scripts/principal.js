@@ -107,7 +107,7 @@ function validateImgURL(url){
  * Función para mostrar imagen diensionada de acuerdo a su relación de aspecto
  * al abrir modal para actualizar imagen
  */
-function displayImgOnUpdateModal(event) {
+function displayImgOnUpdateModal(event, id, ruta) {
     var card = event.target;
     while (card.className !== "card mx-auto") {card = card.parentElement};
     
@@ -128,7 +128,26 @@ function displayImgOnUpdateModal(event) {
         dispImg.style.display = "block";
     }
 
-    img.src = card.querySelector("img").src;   
+    img.src = card.querySelector("img").src;
+
+    // cargar datos de la imagen en el formulario
+    var modal = document.getElementById("actualizarImgModal")
+    
+    // nombre de la imagen
+    document.forms["actualizar_imagen"]["nombre"].value = card.querySelector("#card-title").innerHTML;
+
+    // etiquetas
+    var etiquetas = modal.querySelectorAll("#list-group-item");
+    var etiquetas_str = "";
+    for (e of etiquetas) {
+        etiquetas_str = String.concat(etiquetas_str, " ", e.innerHTML);
+    }
+
+    document.forms["actualizar_imagen"]["etiquetas"].value = etiquetas;
+
+    document.forms["actualizar_imagen"]["id"].value = id;
+    document.forms["actualizar_imagen"]["ruta"].value = ruta;   
+
 }
 
 function setRadioBtn(option) {
