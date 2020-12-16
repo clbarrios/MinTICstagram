@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
-from flask import Flask, request, redirect, render_template
+from flask import Flask, render_template, request, redirect, flash, url_for, current_app, g, send_file, session
 import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
 from forms import FormRegistro
 from forms import FormInicio
 import os
-from werkzeug import secure_filename
+from functools import wraps
+#from werkzeug import secure_filename
 from db import *
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
@@ -48,28 +49,44 @@ def upload():
         return 'ok'
 
 
+def login_required(view):
+    @wraps(view)
+    def wrapped_view():
+        if g.user is None:
+            return redirect(url_for( 'ingreso' ))
+        return view()
+    return wrapped_view
 
 
-@app.route("/", methods=("GET", "POST"))
+@app.route('/', methods=("GET", "POST"))
 def ingreso():
-    '''if request.method == "POST":
-        usuario = request.form.get("usuario")
-        clave = request.form.get("clave")
-
-        if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
-            return redirect(url_for('principal'))
-        else:
-            flash("Error en los datos. Vuelve a intentar.")
-    return render_template("ingreso.html")'''
     form= FormInicio()
-    if form.validate_on_submit():
-        usuario=form.usuario.data
-        clave=form.contraseña.data
-        if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
-            return redirect(url_for('principal'))
+    if g.user:
+        return redirect(url_for( 'principal' ))
+    if request.method == "POST":
+        usuario = request.form.get('usuario')
+        clave = request.form.get('contraseña')
+        db = conectar()
+              
+        user = db.execute('SELECT * FROM Usuarios WHERE nombre_usuario = ? ', (usuario,)).fetchone()
+        #user = get_usuario(usuario)
+        
+
+        if user is None:
+                error = 'Usuario o contraseña inválidos'
         else:
-            flash("Error en los datos. Vuelve a intentar.")
-            return render_template('ingreso.html', form= form)
+            if check_password_hash(user[3], clave):
+                session.clear()
+                session['user_id'] = user[0]
+                return redirect(url_for('principal'))
+        flash( error )
+        
+        #if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
+        #    return redirect(url_for('principal'))
+        #else:
+        #    flash("Error en los datos. Vuelve a intentar.")
+        #    return render_template('ingreso.html', form= form)
+    
     return render_template('ingreso.html', form= form)   
   
 
@@ -77,36 +94,40 @@ def ingreso():
 def registro():
     form = FormRegistro()
     titulo = 'MinTICstagram | Registro'
-    if form.validate_on_submit():
-        
-        username = form.nombre.data
-        email = form.correo.data
-        password = form.contraseña.data
-        conf_password = form.conf_contraseña.data
-        
-        if not utils.isUsernameValid(username):
-            flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
-            return render_template('registro.html', title=titulo, form=form)
-        
-        if not utils.isPasswordValid(password):
-            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
-            return render_template('registro.html', title=titulo, form=form)
+    if request.method == "POST":
 
-        if not utils.isEmailValid(email):
-            flash("El correo que escribiste no es un correo válido. Vuelve a intentar.")
-            return render_template('registro.html', title=titulo, form=form)
-        
-        if password != conf_password:
-            flash("Las contraseñas no coinciden")
-            return render_template('registro.html', title=titulo, form=form)
-
-        
-        yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=email,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='http://127.0.0.1:5000/activacionExitosa' >ACTIVA TU CUENTA </a>")
         nom = request.form.get('nombre')
         cor = request.form.get('correo')
         con = request.form.get('contraseña')
-        insertar_usuario(nom, cor, con)
+        cfcon = request.form.get('conf_contraseña')
+
+        if validar_nuevo_usuario(nom,cor)[0] != "OK":
+            flash(validar_nuevo_usuario(nom,cor)[0])
+            return render_template('registro.html', title=titulo, form=form)
+        
+        if not utils.isUsernameValid(nom):
+            flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
+            return render_template('registro.html', title=titulo, form=form)
+        
+        if not utils.isPasswordValid(con):
+            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
+            return render_template('registro.html', title=titulo, form=form)
+
+        if not utils.isEmailValid(cor):
+            flash("El correo que escribiste no es un correo válido. Vuelve a intentar.")
+            return render_template('registro.html', title=titulo, form=form)
+        
+        if con != cfcon:
+            flash("Las contraseñas no coinciden")
+            return render_template('registro.html', title=titulo, form=form)
+        
+        hash_password = generate_password_hash(con)
+        print(nom, cor, hash_password)
+        insertar_usuario(nom, cor, hash_password)
+
+        yag = yagmail.SMTP(app_mail, app_password)
+        yag.send(to=cor,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='http://127.0.0.1:5000/activacionExitosa' >ACTIVA TU CUENTA </a>")
+        
         return redirect('/activacion')
     
     return render_template('registro.html', title=titulo, form=form)
@@ -145,12 +166,28 @@ def reestablecimientoExitoso():
 
 
 @app.route("/principal/")
+@login_required
 def principal():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = None
     
     return render_template("principal.html",  img_privadas=img_privadas, galeria2=galeria2, galeria3=galeria3)
+
+@app.before_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_usuario_byID(user_id)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('ingreso'))
+
 
 # Activar el modo debug
 if __name__=="__main__":

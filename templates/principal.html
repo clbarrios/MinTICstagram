@@ -30,7 +30,8 @@
                   </svg>
             </div>
             <div id="column2">
-                <h1 style="font-weight: bold;">MinTICstagram</h1>  
+                <h1 style="font-weight: bold;">MinTICstagram</h1>
+                <a href="{{ url_for('logout') }}">Cerrar Sesión</a>  
             </div>
             <div id="column3">
                 <div class="logo">
@@ -185,7 +186,7 @@
                     {% for t in galeria3 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= f'{t}' ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
+                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
                                 <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
@@ -244,7 +245,7 @@
                         <button id ="bi" type="button" class="bbtn btn-outline-secondary btn-sm" data-dismiss="modal">Cancelar</button>
                     </div>
                     <div class="col align-self-center center">
-                        <button  id ="bi" type="button" class="btn btn-outline-secondary btn-sm" onclick="irIngreso();">Confirmar</button>
+                        <button  id ="bi" type="button" class="btn btn-outline-secondary btn-sm" submit="{{ url_for('logout') }}">Confirmar</button>
                     </div>
                 
                 </div>

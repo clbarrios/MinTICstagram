@@ -32,7 +32,7 @@ def insertar_usuario(nombre, correo, contraseña):
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.execute(query)
+        cursor.execute(query,values)
         con.commit()
         desconectar()
     except Error as e:
@@ -48,6 +48,26 @@ def get_usuario(nombre):
                FROM Usuarios 
                WHERE nombre_usuario=?;"""
     values = (f'{nombre}',)
+    keys = ['id', 'nombre', 'correo', 'contraseña']
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query, values)
+        res = cursor.fetchone()
+        desconectar()
+        return None if res is None else {k:v for k,v in zip(keys, res)}
+    except Error as e:
+        print(e)
+
+def get_usuario_byID(id):
+    '''
+    Retorna un diccionario que represnta un usuario con las llaves id, nombre,
+    correo y contraseña si, None si no se encuentra en la base de datos.
+    '''
+    query = """SELECT id, nombre_usuario, correo, contraseña 
+               FROM Usuarios 
+               WHERE id=?;"""
+    values = (f'{id}',)
     keys = ['id', 'nombre', 'correo', 'contraseña']
     try:
         con = conectar()
