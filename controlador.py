@@ -74,8 +74,10 @@ def deleteGusta(id_imagen):
     eliminar_guardadas(1, id_imagen)
     return redirect('/principal')
 
-
-
+@app.route("/actualizarImg")
+@login_required
+def actualizarImg():
+    return "OK"
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
