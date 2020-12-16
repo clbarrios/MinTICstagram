@@ -214,9 +214,11 @@
                                     </button>
                                 </a>
                                 <!-- Botón de edición -->
+                                {% set id = t['id'] %}
+                                {% set ruta = t['ruta'] %}
                                 <button type="button" class="btn btn-secondary" data-toggle="modal"
                                     data-target="#actualizarImgModal"
-                                    onclick="displayImgOnUpdateModal(event); setRadioBtn('Publica');">
+                                    onclick="displayImgOnUpdateModal(event, '{{ id }}', '{{ ruta }}'); setRadioBtn('Publica');">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -441,7 +443,7 @@
                 </div>
 
                 
-                <form name="actualizar_imagen" action="">
+                <form name="actualizar_imagen" action="{{ url_for('actualizarImg') }}" method="POST">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="row">
@@ -467,7 +469,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <input type="submit" class="boton" data-dismiss="modal" value="Actualizar">
+                        <input type="submit" class="boton" value="Actualizar">
                     </div>
                 </form>
                 
