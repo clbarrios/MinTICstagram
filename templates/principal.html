@@ -103,7 +103,7 @@
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
                             <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
-                                <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5></br>
+                                <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5><br>
                                 <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename='img/imagen1.jpg' ) }}">
@@ -134,8 +134,7 @@
                     </div>
                     {% endfor %}
                 </div>
-            </div> 
-            
+            </div>             
         </div>
         <div class="tab-content" id="publicas-content" style="display: none;">
             <div class="container-fluid">
@@ -316,11 +315,6 @@
                 <input type="submit" value="Guardar">
             </div>
                 </form>
-               
-
-
-
-    
         </div>
         </div>
     </div>

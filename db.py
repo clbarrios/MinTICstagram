@@ -28,7 +28,7 @@ def insertar_usuario(nombre, correo, contraseña):
     '''
     query = """INSERT INTO Usuarios (nombre_usuario, correo, contraseña, activado)
                VALUES (?, ?, ?, 0);"""
-    values = (f'{nombre}', f'{correo}', f'{contraseña}')
+    values = (f"'{nombre}'", f"'{correo}'", f"'{contraseña}'")
     try:
         con = conectar()
         cursor = con.cursor()
@@ -47,7 +47,7 @@ def get_usuario(nombre):
     query = """SELECT id, nombre_usuario, correo, contraseña 
                FROM Usuarios 
                WHERE nombre_usuario=?;"""
-    values = (f'{nombre}',)
+    values = (f"'{nombre}'",)
     keys = ['id', 'nombre', 'correo', 'contraseña']
     try:
         con = conectar()
@@ -65,7 +65,7 @@ def activar_usuario(nombre):
     Activar la cuenta de un usuario
     '''
     query = "UPDATE Usuarios SET activado=1 WHERE nombre_usuario=?;"
-    values = (f'{nombre}',)
+    values = (f"'{nombre}'",)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -80,7 +80,7 @@ def actualizar_contraseña(id_, contraseña):
     Actualizar la contraseña del usuario identificado con id_ en la base de datos
     '''
     query = "UPDATE Usuarios SET contraseña=? WHERE id=?;"
-    values = (f'{contraseña}', id_)
+    values = (f"'{contraseña}'", id_)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -97,7 +97,7 @@ def validar_nuevo_usuario(nombre, correo):
     query = """SELECT nombre_usuario, correo 
                FROM Usuarios 
                WHERE nombre_usuario=? OR correo=?;"""
-    values = (f'{nombre}', f'{correo}')
+    values = (f"'{nombre}'", f"'{correo}'")
     try:
         con = conectar()
         cursor = con.cursor()
@@ -122,7 +122,7 @@ def get_id_usuario(nombre):
     obtener el id de un usuario por su nombre de usuario
     '''
     query = "SELECT id FROM Usuario WHERE nombre=?;"
-    values = (f'{nombre}',)
+    values = (f"'{nombre}'",)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -222,7 +222,7 @@ def insertar_etiqueta(nombre_etiqueta):
     query = """INSERT OR IGNORE 
                INTO Etiquetas (nombre_etiqueta) 
                VALUES (?);"""
-    values = (f'{nombre_etiqueta}',)
+    values = (f"'{nombre_etiqueta}'",)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -239,7 +239,7 @@ def get_id_etiqueta(nombre_etiqueta):
     de datos retorna None
     '''
     query = "SELECT id FROM Etiquetas WHERE nombre_etiqueta=?;"
-    values = (f'{nombre_etiqueta}',)
+    values = (f"'{nombre_etiqueta}'",)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -319,12 +319,13 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
     except Error as e:
         print(e)
 
+
 def validar_ruta(ruta):
     '''
     Retorna False si la ruta se encuentra en el servidor y True si no está.
     '''
     query = "SELECT id from Imagenes WHERE ruta=?;"
-    values = (f'{ruta}',)
+    values = (f"'{ruta}'",)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -342,7 +343,7 @@ def insertar_imagen(nombre_imagen, id_usuario, ruta, privada, etiquetas):
     '''
     query = """INSERT INTO Imagenes (nombre_imagen, id_usuario, ruta, privada)
                VALUES(?, ?, ?, ?);"""
-    values = (f'{nombre_imagen}', id_usuario, f'{ruta}', 1 if privada else 0)
+    values = (f"'{nombre_imagen}'", id_usuario, f"'{ruta}'", 1 if privada else 0)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -364,7 +365,7 @@ def get_id_imagen(ruta):
     Retorna el id de una imagen dada su ruta
     '''
     query = "SELECT id FROM Imagenes WHERE ruta=?;"
-    values = (f'{ruta}',)
+    values = (f"'{ruta}'",)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -384,7 +385,7 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
     query = """UPDATE Imagenes 
                SET nombre_imagen=?, ruta=?, privada=?
                WHERE id=?;"""
-    values = (f'{nombre_imagen}', f'{ruta}', 1 if privada else 0, id_)
+    values = (f"'{nombre_imagen}'", f"'{ruta}'", 1 if privada else 0, id_)
     try:
         con = conectar()
         cursorObj = con.cursor()
@@ -437,5 +438,37 @@ def eliminar_imagen(id_):
             cursorObj.execute(query, values)
         con.commit()
         desconectar()
+    except Error as e:
+        print(e)
+
+def buscar_imagenes(palabras_clave):
+    '''
+    Recibe una lista de palabras clave para buscar por nombre y etiqueta en 
+    la base de datos y retorna una lista de imagenes, donde cada imagen es un 
+    diccionario con las llaves id, nombre, ruta y etiquetas; siendo ésta última
+    una lista. Solo se retornan imagenes publicas
+    '''
+    query = """SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+               WHERE  I.nombre_imagen LIKE ? AND privada=0
+               UNION
+               SELECT I.id, I.nombre_imagen I.ruta FROM Imagenes AS I
+               INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
+               INNER JOIN Etiquetas AS E ON E.id_etiqueta = IE.id_etiqueta
+               WHERE E.nombre_etiqueta LIKE ? AND privada=0;"""
+    values = [(f"'%{kw}%'", f"'%{kw}%'") for kw in palabras_clave]
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.executemany(query, values)
+        imagenes = cursor.fetchall()
+        desconectar()
+        desconectar()
+        # convertir el resultado a una lista de diccionarios
+        keys = ['id', 'nombre', 'ruta']
+        imagenes = [{k:v for k,v in zip(keys,img)} for img in imagenes]
+        for img in imagenes: 
+            img['etiquetas'] = get_etiquetas(img['id'])
+
+        return imagenes
     except Error as e:
         print(e)
