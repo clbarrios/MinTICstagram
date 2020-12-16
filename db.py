@@ -162,6 +162,32 @@ def get_imagenes(usrId, privada):
     except Error as e:
         print(e)
 
+def get_todas_imagenes(usrId):
+    '''
+    Consultar lista de imagenes para el usario de id usrId, privada es un
+    booleano que indica si se desea consultar las imagenes privadas o publicas.
+    Se retorna una lista de diccionarios con las llaves: id, nombre, ruta y
+    etiquetas, siendo esta última una lista
+    '''
+    query = """SELECT id, nombre_imagen, ruta 
+               FROM Imagenes 
+               WHERE id_usuario=?;"""
+    values = (usrId,)
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query, values)
+        imagenes = cursor.fetchall()
+        desconectar()
+        # convertir el resultado a una lista de diccionarios
+        keys = ['id', 'nombre', 'ruta']
+        imagenes = [{k:v for k,v in zip(keys,img)} for img in imagenes]
+        for img in imagenes: 
+            img['etiquetas'] = get_etiquetas(img['id'])
+
+        return imagenes
+    except Error as e:
+        print(e)
 
 def get_guardadas(usrId):
     '''
@@ -414,7 +440,6 @@ def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
 
     except Error as e:
         print(e)
-
 
 def eliminar_imagen(id_):
     '''

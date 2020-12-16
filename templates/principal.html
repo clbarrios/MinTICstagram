@@ -97,16 +97,19 @@
             <div class="container-fluid">
                 <br>
                 <div class="row">
-                    {% for t in img_privadas %}
+                    {% for t in galeria1 %}
                     <div class="col-md-3">
                         
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
                             <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5></br>
-                                <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
+                                {% for q in t['etiquetas'] %}
+                                <p class="card-text">{{ q }}</p>
+                                {% endfor %}
                                 <!-- Botón de descarga -->
-                                <a download="imagen.jpg" href="{{ url_for('static', filename='img/imagen1.jpg' ) }}">
+                                <form method="POST" action="{{url_for('delete')}}">
+                                    <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary" >
                                         
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -124,7 +127,7 @@
                                     </svg>
                                 </button>
                                 <!-- Botón para eliminar -->
-                                <button type="button" class="btn btn-danger">
+                                <button type="submit" class="btn btn-danger">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                     </svg>
@@ -144,12 +147,16 @@
                     {% for t in galeria2 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= t ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
+                            <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
-                                <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
-                                <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
+                                <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
+                                <br>
+                                {% for q in t['etiquetas'] %}
+                                <p class="card-text">{{ q }}</p>
+                                {% endfor %}
+                                <br>
                                 <!-- Botón de descarga -->
-                                <a download="imagen.jpg" href="{{ url_for('static', filename= t ) }}">
+                                <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -185,12 +192,13 @@
                     {% for t in galeria3 %}
                     <div class="col-md-3">
                         <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;" >
-                            <img src="{{ url_for('static', filename= f'{t}' ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">
-                            <div class="card-body">
-                                <h5 class="card-title" style="float: left;">Nombre de la Imagen </h5>
-                                <p class="card-text">Espacio para mostrar las etiquetas de la imagen.</p>
+                            <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg" width="300" height="300" onclick="showImgModal(event);">                            <div class="card-body">
+                                <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
+                                {% for q in t['etiquetas'] %}
+                                <p class="card-text">{{ q }}</p>
+                                {% endfor %}
                                 <!-- Botón de descarga -->
-                                <a download="imagen.jpg" href="{{ url_for('static', filename= t ) }}">
+                                <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
