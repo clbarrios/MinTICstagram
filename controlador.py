@@ -54,6 +54,17 @@ def upload():
         return 'ok'
 
 
+@app.route("/delete/<int:id>", methods=('GET', 'POST'))
+def delete(id):
+    eliminar_imagen(id)
+    return redirect('/principal')
+
+@app.route("/deleteGusta/<int:id_imagen>", methods=('GET', 'POST'))
+def deleteGusta(id_imagen):
+    eliminar_guardadas(1, id_imagen)
+    return redirect('/principal')
+
+
 def login_required(view):
     @wraps(view)
     def wrapped_view():
