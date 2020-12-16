@@ -35,19 +35,28 @@ def upload():
             return redirect('/principal')
         
         nom_imagen =  request.form.get("nombre")
-        ruta = os.path.join('img',str(filename))
+        ruta = "img/1" + str(filename)
         etiquetas =  request.form.get("etiquetas").split()
         if(request.form.get("privadas")):
             privada=1
         else:
             privada=0
         
+        # Verifiacion de rutas duplicadas
+        listaImg=get_todas_imagenes(1)
+
+        for i in listaImg:
+            if i['ruta'] == ruta:
+                flash("Ya subiste esta imagen")
+                return redirect('/principal')
+
         insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
 
         flash("Se ha agregado su imagen con exito")
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], "1" + filename))
         return 'ok'
 
+<<<<<<< HEAD
 
 def login_required(view):
     @wraps(view)
@@ -57,6 +66,11 @@ def login_required(view):
         return view()
     return wrapped_view
 
+=======
+@app.route("/delete", methods=('GET', 'POST'))
+def delete():
+    return "OK"
+>>>>>>> 0f31129019765fbd2cf1e740366f75c33b57b5f2
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
@@ -170,9 +184,9 @@ def reestablecimientoExitoso():
 def principal():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
-    img_guardadas = None
+    img_guardadas = get_guardadas(1)
     
-    return render_template("principal.html",  img_privadas=img_privadas, galeria2=galeria2, galeria3=galeria3)
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
 @app.before_request
 def load_logged_in_user():
