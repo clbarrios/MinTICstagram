@@ -553,7 +553,8 @@ def buscar_imagenes(palabras_clave, context="plataforma", usrId=None):
     try:
         con = conectar()
         cursor = con.cursor()
-        cursor.executemany(query, values)
+        for v in values:
+            cursor.execute(query, v)
         imagenes = cursor.fetchall()
         desconectar()
         desconectar()
