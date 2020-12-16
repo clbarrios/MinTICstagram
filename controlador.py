@@ -184,7 +184,7 @@ def load_logged_in_user():
     else:
         g.user = get_usuario_byID(user_id)
 
-@app.route('/logout')
+@app.route('/logout', methods=('GET', 'POST'))
 def logout():
     session.clear()
     return redirect(url_for('ingreso'))
