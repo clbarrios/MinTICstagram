@@ -85,10 +85,10 @@ def ingreso():
     if request.method == "POST":
         usuario = request.form.get('usuario')
         clave = request.form.get('contraseña')
-        db = conectar()
               
         user = get_usuario(usuario)
-
+        print(user)
+        
         if user is None:
                 error = 'Usuario o contraseña inválidos'
         else:
@@ -98,11 +98,6 @@ def ingreso():
                 return redirect(url_for('principal'))
         #flash( error )
         
-        #if utils.isUsernameValid2(usuario) and utils.isPasswordValid2(clave):
-        #    return redirect(url_for('principal'))
-        #else:
-        #    flash("Error en los datos. Vuelve a intentar.")
-        #    return render_template('ingreso.html', form= form)
     
     return render_template('ingreso.html', form= form)   
   
@@ -200,7 +195,7 @@ def load_logged_in_user():
     else:
         g.user = get_usuario_byID(user_id)
 
-@app.route('/logout')
+@app.route('/logout', methods=('GET', 'POST'))
 def logout():
     session.clear()
     return redirect(url_for('ingreso'))
