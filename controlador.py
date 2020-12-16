@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, flash, url_for, cur
 import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
+from validate_email import validate_email
 from forms import FormRegistro
 from forms import FormInicio
 import os
