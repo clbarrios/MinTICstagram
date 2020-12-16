@@ -18,8 +18,12 @@
         <br><br>
         {{ form.conf_contraseña.label }}
         {{ form.conf_contraseña(placeholder="Confirma tu contraseña", size=30) }}
-        <br><br><br>
+        <br><br>
+        <a href="{{ url_for('ingreso') }}" style="font-size:14px"> ¿Ya tienes una cuenta? Ingresa</a>
+        <br><br>
+        
         {{ form.registrar(class_="boton") }}
+        
     
     </form>
     <section class="content">
