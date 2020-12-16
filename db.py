@@ -59,7 +59,7 @@ def get_usuario(nombre):
     except Error as e:
         print(e)
 
-def get_usuario_byID(id):
+def get_usuario_byID(id_):
     '''
     Retorna un diccionario que represnta un usuario con las llaves id, nombre,
     correo y contraseña si, None si no se encuentra en la base de datos.
@@ -67,7 +67,7 @@ def get_usuario_byID(id):
     query = """SELECT id, nombre_usuario, correo, contraseña 
                FROM Usuarios 
                WHERE id=?;"""
-    values = (f'{id}',)
+    values = (f'{id_}',)
     keys = ['id', 'nombre', 'correo', 'contraseña']
     try:
         con = conectar()
@@ -517,3 +517,4 @@ def buscar_imagenes(palabras_clave):
         return imagenes
     except Error as e:
         print(e)
+        

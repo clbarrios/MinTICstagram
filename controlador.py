@@ -43,14 +43,11 @@ def upload():
             privada=0
         
         # Verifiacion de rutas duplicadas
-        listaImg=get_todas_imagenes(1)
-
-        for i in listaImg:
-            if i['ruta'] == ruta:
-                flash("Ya subiste esta imagen")
-                return redirect('/principal')
-
-        insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
+        if validar_ruta(ruta):
+            insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
+        else:
+            flash("Ya subiste esta imagen")
+            return redirect('/principal')
 
         flash("Se ha agregado su imagen con exito")
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], "1" + filename))
@@ -79,16 +76,14 @@ def ingreso():
         clave = request.form.get('contraseña')
         db = conectar()
               
-        user = db.execute('SELECT * FROM Usuarios WHERE nombre_usuario = ? ', (usuario,)).fetchone()
-        #user = get_usuario(usuario)
-        
+        user = get_usuario(usuario)
 
         if user is None:
                 error = 'Usuario o contraseña inválidos'
         else:
-            if check_password_hash(user[3], clave):
+            if check_password_hash(user['contraseña'], clave):
                 session.clear()
-                session['user_id'] = user[0]
+                session['user_id'] = user['id']
                 return redirect(url_for('principal'))
         flash( error )
         
