@@ -79,6 +79,12 @@ def deleteGusta(id_imagen):
 def actualizarImg():
     return "OK"
 
+@app.route("/buscarGeneral")
+@login_required
+def buscarGeneral():
+    lista_etiquetas_buscadas =  request.form.get("search").split()
+    imagenes_buscadas = buscar_imagenes(lista_etiquetas_buscadas)
+    return "OK"
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():

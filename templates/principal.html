@@ -307,10 +307,11 @@
             </div>
         </div>
     </div>
+    <!-- Pestaña de buscar -->
     <div class="tab-content" id="buscar-content" style="display: none;">
         <br>
         <div class="container-fluid">
-            <form style="text-align: center;">
+            <form style="text-align: center;" action="{{ url_for('buscarGeneral') }}">
                 <input type="text" class="searchbar long" name="search"
                     placeholder="Buscar por nombre de imagen o etiquetas...">
             </form>
