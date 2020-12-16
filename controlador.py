@@ -109,12 +109,20 @@ def actualizarImg():
     actualizar_imagen(id_, nombre_imagen, ruta, priv, etiquetas)
     return redirect('/principal')
 
-@app.route("/buscarGeneral")
+@app.route("/buscarGeneral", methods=('GET', 'POST'))
 @login_required
 def buscarGeneral():
-    lista_etiquetas_buscadas =  request.form.get("search").split()
-    imagenes_buscadas = buscar_imagenes(lista_etiquetas_buscadas)
-    return "OK"
+    busqueda =  request.form.get("search").split()
+    imagenes_buscadas = buscar_imagenes(busqueda)
+    print(imagenes_buscadas)
+
+    img_privadas = get_imagenes(1, 1)
+    img_publicas = get_imagenes(1, 0)
+    img_guardadas = get_guardadas(1)
+    img_buscadas = imagenes_buscadas
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
+
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
