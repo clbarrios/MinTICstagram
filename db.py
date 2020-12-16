@@ -21,14 +21,14 @@ def desconectar():
         print(e)
 
 
-def insertar_usuario(nombre, correo, contraseña):
+def insertar_usuario(nombre, correo, contraseña,token):
     '''
     Inserta un nuevo usuario a la base de datos, por defecto con la cuenta sin
     activar
     '''
-    query = """INSERT INTO Usuarios (nombre_usuario, correo, contraseña, activado)
-               VALUES (?, ?, ?, 0);"""
-    values = (nombre, correo, contraseña)
+    query = """INSERT INTO Usuarios (nombre_usuario, correo, contraseña, token, activado)
+               VALUES (?, ?, ?, ?, 0);"""
+    values = (nombre, correo, contraseña,token)
     try:
         con = conectar()
         cursor = con.cursor()
@@ -44,11 +44,11 @@ def get_usuario(nombre):
     Retorna un diccionario que represnta un usuario con las llaves id, nombre,
     correo y contraseña si, None si no se encuentra en la base de datos.
     '''
-    query = """SELECT id, nombre_usuario, correo, contraseña 
+    query = """SELECT id, nombre_usuario, correo, contraseña, activado 
                FROM Usuarios 
                WHERE nombre_usuario=?;"""
     values = (nombre,)
-    keys = ['id', 'nombre', 'correo', 'contraseña']
+    keys = ['id', 'nombre', 'correo', 'contraseña', 'activado']
     try:
         con = conectar()
         cursor = con.cursor()
@@ -80,12 +80,12 @@ def get_usuario_byID(id_):
         print(e)
 
 
-def activar_usuario(nombre):
+def activar_usuario(token):
     '''
     Activar la cuenta de un usuario
     '''
-    query = "UPDATE Usuarios SET activado=1 WHERE nombre_usuario=?;"
-    values = (nombre,)
+    query = "UPDATE Usuarios SET activado=1 WHERE token=?;"
+    values = (token,)
     try:
         con = conectar()
         cursor = con.cursor()
