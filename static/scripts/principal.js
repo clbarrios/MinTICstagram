@@ -146,8 +146,7 @@ function displayImgOnUpdateModal(event, id, ruta) {
     document.forms["actualizar_imagen"]["etiquetas"].innerHTML = etiquetas_str;
 
     document.forms["actualizar_imagen"]["id"].value = id;
-    document.forms["actualizar_imagen"]["ruta"].value = ruta;   
-
+    document.forms["actualizar_imagen"]["ruta"].value = ruta; 
 }
 
 function setRadioBtn(option) {
