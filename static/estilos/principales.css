@@ -213,6 +213,22 @@ Grid layout para las pestañas
     background-color: grey;
     font-weight: bold;
 }
+/*
+Estilo para mensajes de error
+*/
+.error-msg {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    width: 99%;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    text-align: center;
+}
 
 /*
 Modal para mostar imagenes en "pantalla completa"
