@@ -123,6 +123,7 @@ input[type=text], input[type=password], textarea {
 }
 .error-msg {
     position: absolute;
+    display: block;
     left: 0;
     top: 0;
     padding-bottom: 15px;

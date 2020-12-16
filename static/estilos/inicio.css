@@ -67,6 +67,7 @@ img {
 
 .error-msg {
     position: absolute;
+    display: block;
     left: 0;
     top: 0;
     padding: 15px;
