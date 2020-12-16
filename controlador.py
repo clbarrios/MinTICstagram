@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for, current_app, g, send_file, session
+from flask import Flask, render_template, request, redirect, flash, url_for, current_app, g, send_file, session, make_response
 import yagmail as yagmail
 import utils
 from credenciales import app_mail, app_password
@@ -6,7 +6,7 @@ from forms import FormRegistro
 from forms import FormInicio
 import os
 from functools import wraps
-from werkzeug import secure_filename
+#from werkzeug import secure_filename
 from db import *
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
@@ -75,8 +75,6 @@ def deleteGusta(id_imagen):
     return redirect('/principal')
 
 
-
-
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
     form= FormInicio()
@@ -85,20 +83,24 @@ def ingreso():
     if request.method == "POST":
         usuario = request.form.get('usuario')
         clave = request.form.get('contraseña')
-              
+
         user = get_usuario(usuario)
-        print(user)
         
         if user is None:
-                error = 'Usuario o contraseña inválidos'
+            error = 'Usuario o contraseña inválidos'
+        elif user['activado']==0:
+            error = 'La cuenta no ha sido activada aún'
         else:
             if check_password_hash(user['contraseña'], clave):
                 session.clear()
                 session['user_id'] = user['id']
-                return redirect(url_for('principal'))
-        #flash( error )
+                resp = make_response(redirect(url_for('principal')))
+                resp.set_cookie('usuario', usuario)
+                return resp
+            else:
+                error = 'Contraseña Incorrecta'
+        flash( error )
         
-    
     return render_template('ingreso.html', form= form)   
   
 
@@ -134,11 +136,12 @@ def registro():
             return render_template('registro.html', title=titulo, form=form)
         
         hash_password = generate_password_hash(con)
-        print(nom, cor, hash_password)
-        insertar_usuario(nom, cor, hash_password)
+        token = secrets.token_urlsafe(50)
+        insertar_usuario(nom, cor, hash_password,token)
+
 
         yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=cor,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='http://127.0.0.1:5000/activacionExitosa' >ACTIVA TU CUENTA </a>")
+        yag.send(to=cor,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='http://127.0.0.1:5000/activacionExitosa/"+ token +"' >ACTIVA TU CUENTA </a>")
         
         return redirect('/activacion')
     
@@ -148,8 +151,12 @@ def registro():
 def activacion():
     return render_template("activacion.html")
 
-@app.route("/activacionExitosa")
-def activacionExitosa():
+@app.route("/activacionExitosa/<string:tk>", methods=('GET','POST'))
+def activacionExitosa(tk):
+    if request.method== 'POST':
+        return redirect(url_for('ingreso'))
+    else:
+        activar_usuario(tk)
     return render_template("activacionExitosa.html")
 
 @app.route("/reestablecerContra", methods=('GET','POST'))
@@ -183,6 +190,8 @@ def principal():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
+
+    username = request.cookies.get('username')
     
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
