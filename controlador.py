@@ -34,20 +34,32 @@ def upload():
             return redirect('/principal')
         
         nom_imagen =  request.form.get("nombre")
-        ruta = "img/"+str(filename)
+        ruta = "img/1" + str(filename)
         etiquetas =  request.form.get("etiquetas").split()
         if(request.form.get("privadas")):
             privada=1
         else:
             privada=0
         
+        # Verifiacion de rutas duplicadas
+        listaImg=get_todas_imagenes(1)
+        
+        for i in listaImg:
+            if i['ruta'] == ruta:
+                flash("Ya subiste esta imagen")
+                return redirect('/principal')
+            
+
         insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
 
         flash("Se ha agregado su imagen con exito")
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], "1" + filename))
         return 'ok'
 
-
+@app.route("/delete", methods=('GET', 'POST'))
+def delete(rutaImg):
+    idImg = get_id_imagen(rutaImg)
+    eliminar_imagen(idImg)
 
 
 @app.route("/", methods=("GET", "POST"))
@@ -148,9 +160,9 @@ def reestablecimientoExitoso():
 def principal():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
-    img_guardadas = None
+    img_guardadas = get_guardadas(1)
     
-    return render_template("principal.html",  img_privadas=img_privadas, galeria2=galeria2, galeria3=galeria3)
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
 # Activar el modo debug
 if __name__=="__main__":
