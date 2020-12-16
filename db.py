@@ -353,7 +353,7 @@ def eliminar_imagen_etiqueta(id_imagen, id_etiqueta):
     '''
     Elimina la asociación entre una imagen y una etiqueta
     '''
-    query = "DELETE Imagenes_Etiquetas WHERE id_imagen=? AND id_etiqueta=?);"
+    query = "DELETE Imagenes_Etiquetas WHERE id_imagen=? AND id_etiqueta=?;"
     values = (id_imagen, id_etiqueta)
     try:
         con = conectar()
