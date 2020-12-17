@@ -505,7 +505,7 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
     usuarios de la plataforma
     '''
 
-    like_str = "I.nombre_imagen OR E.nombre_etiqueta LIKE ?"
+    like_str = "I.nombre_imagen LIKE ? OR E.nombre_etiqueta LIKE ?"
     if len(palabras_clave) > 1:
         like_str = " OR ".join([like_str]*len(palabras_clave))
 
@@ -546,8 +546,10 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
             WHERE I.privada = 0 AND MG.id_usuario = ? AND ({});
         """.format(like_str)    
 
-    values = [f'%{kw}%' for kw in palabras_clave]
-    values.insert(0, usrId)
+    values = [usrId]
+    for kw in palabras_clave:
+        values.append(f'%{kw}%')
+        values.append(f'%{kw}%')
     values = tuple(values)
 
     try:
