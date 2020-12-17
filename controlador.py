@@ -116,7 +116,7 @@ def buscarPrivadas():
     busqueda =  request.form.get("search").split()
   
 
-    img_privadas=buscar_imagenes(busqueda, context="privadas", usrId=1)
+    img_privadas=buscar_imagenes(busqueda, usrId=1, context="privadas")
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
    
@@ -132,7 +132,7 @@ def buscarPublicas():
    
 
     img_privadas = get_imagenes(1, 1)
-    img_publicas = buscar_imagenes(busqueda, context="publicas", usrId=1)
+    img_publicas = buscar_imagenes(busqueda, usrId=1, context="publicas")
     img_guardadas = get_guardadas(1)
   
     
@@ -143,12 +143,11 @@ def buscarPublicas():
 @login_required
 def buscarGuardadas():
     busqueda =  request.form.get("search").split()
-    imagenes_buscadas = buscar_imagenes(busqueda)
 
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
-    img_guardadas = buscar_imagenes(busqueda, context="guardadas", usrId=1)
-    
+    img_guardadas = buscar_imagenes(busqueda, usrId=1, context="guardadas")
+    print(img_guardadas)
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
 
@@ -156,13 +155,12 @@ def buscarGuardadas():
 @login_required
 def buscarGeneral():
     busqueda =  request.form.get("search").split()
-    imagenes_buscadas = buscar_imagenes(busqueda)
 
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
-    img_buscadas = imagenes_buscadas
-    
+    img_buscadas = buscar_imagenes(busqueda, usrId=1)
+    #print(img_buscadas)
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
 
 
