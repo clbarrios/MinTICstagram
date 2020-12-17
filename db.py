@@ -521,7 +521,7 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
     elif context == "publicas":
 
         query = """
-            SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+            SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
             WHERE I.privada = 0 AND I.id_usuario = ? AND ({});
@@ -530,7 +530,7 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
     elif context == "privadas":
 
         query = """
-            SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+            SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
             WHERE I.privada = 1 AND I.id_usuario = ? AND ({});
@@ -539,7 +539,7 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
     elif context == "guardadas":
 
         query = """
-            SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+            SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
             INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
