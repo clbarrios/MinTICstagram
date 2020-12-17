@@ -533,7 +533,7 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
             SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE I.privada = 0 AND I.id_usuario = ? AND ({});
+            WHERE I.privada = 1 AND I.id_usuario = ? AND ({});
         """.format(like_str)
 
     elif context == "guardadas":
@@ -543,7 +543,7 @@ def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
             INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE I.privada = 0 AND I.id_usuario = ? AND ({});
+            WHERE I.privada = 0 AND MG.id_usuario = ? AND ({});
         """.format(like_str)    
 
     values = [f'%{kw}%' for kw in palabras_clave]
