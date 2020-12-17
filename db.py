@@ -1,7 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 from flask import current_app, g
-
+import random
 
 def conectar():
     try:
@@ -488,11 +488,37 @@ def eliminar_imagen(id_):
         print(e)
 
 
+def descubir_imagenes(usrId):
+    '''
+    Retorna las imagenes publicas de otros usuarios en orden aleatorio como un
+    diccionario con las llaves id, nombre, ruta y etiquetas, siendo éste último
+    una lista
+    '''
+    query = """
+        SELECT id, nombre_imagen, ruta FROM Imagenes
+        WHERE id_usuario!=?;
+    """
+    values = (usrId,)
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query, values)
+        imagenes = cursor.fetchall()
+        desconectar()
+        # convertir el resultado a una lista de diccionarios
+        keys = ['id', 'nombre', 'ruta']
+        imagenes = [{k:v for k,v in zip(keys,img)} for img in imagenes]
+        for img in imagenes: 
+            img['etiquetas'] = get_etiquetas(img['id'])
+
+        return random.shuffle(imagenes)
+    except Error as e:
+        print(e)
+
+
 # 1. Pestaña Buscar imagenes: imagenes = buscar_imagenes(palabras_clave, usrId)
 # 2. subpestañas
 #   2.1 privadas de un usario dado: imagenes = buscar_imagenes(palabras_clave, usrId=id_, context="privadas")
-
-
 def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
     '''
     Recibe una lista de palabras clave para buscar por nombre y etiqueta en 
