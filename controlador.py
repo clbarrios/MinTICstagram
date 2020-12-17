@@ -201,7 +201,7 @@ def ingreso():
                 resp.set_cookie('usuario', usuario)
                 return resp
             else:
-                error = 'Contraseña Incorrecta'
+                error = 'Usuario o contraseña inválidos'
         flash( error )
         
     return render_template('ingreso.html', form= form)   
@@ -226,12 +226,12 @@ def registro():
             flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
             return render_template('registro.html', title=titulo, form=form)
         
-        if not utils.isPasswordValid(con):
-            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
-            return render_template('registro.html', title=titulo, form=form)
-
         if not utils.isEmailValid(cor):
             flash("El correo que escribiste no es un correo válido. Vuelve a intentar.")
+            return render_template('registro.html', title=titulo, form=form)
+        
+        if not utils.isPasswordValid(con):
+            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
             return render_template('registro.html', title=titulo, form=form)
         
         if con != cfcon:
@@ -266,6 +266,12 @@ def activacionExitosa(tk):
 def reestablecerContra():
     if request.method== 'POST':
         correo=request.form.get("correoRes")
+
+        nom_usuario = get_usuario_byCorreo(correo)
+
+        if nom_usuario is None:
+            flash("Ese correo no se encuentra registrado")
+            return render_template("reestablecerContra.html")
 
         if not utils.isEmailValid(correo):
             flash("Escribe un correo valido")
