@@ -78,8 +78,17 @@
             </div>
         </div>
         <br>
-
-
+        <section>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="error-msg">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </section>
 
         <div class="tab-content" id="privadas-content" style="display: none;">
             <div class="container-fluid">
@@ -461,15 +470,6 @@
 
                     <!-- Modal Header -->
                     <section class="content">
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        {% for message in messages %}
-                        <div class="error-msg">
-                            {{ message }}
-                        </div>
-                        {% endfor %}
-                        {% endif %}
-                        {% endwith %}
                     </section>
                     <div class="modal-header">
                         <h4 class="modal-title" style="font-weight: bold;">Agregar Imagen</h4>
