@@ -325,11 +325,11 @@ def principal():
     img_privadas = get_imagenes(session['user_id'], 1)
     img_publicas = get_imagenes(session['user_id'], 0)
     img_guardadas = get_guardadas(session['user_id'])
-    #img_buscadas = imagenes_buscadas
+    img_descubrir = descubir_imagenes(session['user_id'])
 
     username = request.cookies.get('usuario')
     
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4=img_descubrir)
 
 @app.before_request
 def load_logged_in_user():

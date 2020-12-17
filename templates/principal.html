@@ -62,7 +62,7 @@
             Mis Imagenes
         </div>
         <div class="grid-item tab" id="buscar-tab" onclick="openTab('buscar');">
-            Buscar
+            Descubrir
         </div>
     </div>
     <div class="tab-content" id="myImgs-content" style="display: none;">
@@ -134,7 +134,7 @@
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5><br>
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
                                     {% for q in t['etiquetas'] %}
                                         <li class="list-group-item">{{ q }}</li>
                                     {% endfor %}
@@ -226,7 +226,7 @@
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
                                 <br>
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
                                     {% for q in t['etiquetas'] %}
                                         <li class="list-group-item">{{ q }}</li>
                                     {% endfor %}
@@ -317,7 +317,7 @@
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
                                     {% for q in t['etiquetas'] %}
                                         <li class="list-group-item">{{ q }}</li>
                                     {% endfor %}
@@ -392,11 +392,13 @@
                             height="300" onclick="showImgModal(event);">
                         <div class="card-body">
                             <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                            <ul class="list-group list-group-flush">
+                            <br>
+                            <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
                                 {% for q in t['etiquetas'] %}
                                     <li class="list-group-item">{{ q }}</li>
                                 {% endfor %}
                             </ul>
+                                
                             <!-- Botón de descarga -->
                             <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                 <button type="button" class="btn btn-primary">

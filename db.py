@@ -504,7 +504,8 @@ def descubir_imagenes(usrId):
         for img in imagenes: 
             img['etiquetas'] = get_etiquetas(img['id'])
 
-        return random.shuffle(imagenes)
+        random.shuffle(imagenes)
+        return imagenes
     except Error as e:
         print(e)
 
