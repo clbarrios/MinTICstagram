@@ -86,7 +86,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col align-self-center center">
-                            <form>
+                            <form style="text-align: center;" action="{{ url_for('buscarPrivadas') }}" method="POST" enctype="multipart/form-data">
                                 <input type="text" class="searchbar" name="search" placeholder="Buscar...">
                             </form>
                         </div>
@@ -168,7 +168,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col align-self-center center">
-                            <form>
+                            <form style="text-align: center;" action="{{ url_for('buscarPublicas') }}" method="POST" enctype="multipart/form-data">
                                 <input type="text" class="searchbar" name="search" placeholder="Buscar...">
                             </form>
                         </div>
@@ -249,7 +249,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col align-self-center center">
-                            <form>
+                            <form style="text-align: center;" action="{{ url_for('buscarGuardadas') }}" method="POST" enctype="multipart/form-data">
                                 <input type="text" class="searchbar" name="search" placeholder="Buscar...">
                             </form>
                         </div>

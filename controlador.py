@@ -109,12 +109,54 @@ def actualizarImg():
     actualizar_imagen(id_, nombre_imagen, ruta, priv, etiquetas)
     return redirect('/principal')
 
+
+@app.route("/buscarPrivadas", methods=('GET', 'POST'))
+@login_required
+def buscarPrivadas():
+    busqueda =  request.form.get("search").split()
+  
+
+    img_privadas=buscar_imagenes(busqueda, context="privadas", usrId=1)
+    img_publicas = get_imagenes(1, 0)
+    img_guardadas = get_guardadas(1)
+   
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+
+
+
+@app.route("/buscarPublicas", methods=('GET', 'POST'))
+@login_required
+def buscarPublicas():
+    busqueda =  request.form.get("search").split()
+   
+
+    img_privadas = get_imagenes(1, 1)
+    img_publicas = buscar_imagenes(busqueda, context="publicas", usrId=1)
+    img_guardadas = get_guardadas(1)
+  
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+
+
+@app.route("/buscarGuardadas", methods=('GET', 'POST'))
+@login_required
+def buscarGuardadas():
+    busqueda =  request.form.get("search").split()
+    imagenes_buscadas = buscar_imagenes(busqueda)
+
+    img_privadas = get_imagenes(1, 1)
+    img_publicas = get_imagenes(1, 0)
+    img_guardadas = buscar_imagenes(busqueda, context="guardadas", usrId=1)
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+
+
 @app.route("/buscarGeneral", methods=('GET', 'POST'))
 @login_required
 def buscarGeneral():
     busqueda =  request.form.get("search").split()
     imagenes_buscadas = buscar_imagenes(busqueda)
-    print(imagenes_buscadas)
 
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
@@ -239,6 +281,7 @@ def principal():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
+    #img_buscadas = imagenes_buscadas
 
     username = request.cookies.get('username')
     
