@@ -160,7 +160,7 @@ def buscarGeneral():
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
     img_buscadas = buscar_imagenes(busqueda, usrId=1)
-    print(img_buscadas)
+    #print(img_buscadas)
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
 
 
