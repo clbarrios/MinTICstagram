@@ -14,6 +14,11 @@ class FormInicio(FlaskForm):
     contraseña = PasswordField('Contraseña', validators= [DataRequired(message="Ingresa tu contraseña")])
     enviar = SubmitField('Inicia sesión')
 
+class FormNuevaContra(FlaskForm):
+    contranueva = PasswordField('Contraseña', validators= [DataRequired(message="Se requiere una contraseña")])
+    contranuevaconf = PasswordField('Confirmar Contraseña', validators= [DataRequired(message="Confirme la contraseña")])
+    restablecer = SubmitField('Restablecer')
+
 #class formAgregar(FlaskForm):
 #    titulo=StringField("Titulo de la Imagen")
 #    descripcion=TextAreaField("Descripcion")
