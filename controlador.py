@@ -114,9 +114,12 @@ def actualizarImg():
 @login_required
 def buscarPrivadas():
     busqueda =  request.form.get("search").split()
-  
-
-    img_privadas=buscar_imagenes(busqueda, usrId=1, context="privadas")
+    
+    if len(busqueda) == 0:
+        img_privadas = get_imagenes(1, 1)
+    else:
+        img_privadas=buscar_imagenes(busqueda,1, context="privadas")
+    
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
    
@@ -132,7 +135,7 @@ def buscarPublicas():
    
 
     img_privadas = get_imagenes(1, 1)
-    img_publicas = buscar_imagenes(busqueda, usrId=1, context="publicas")
+    img_publicas = buscar_imagenes(busqueda, 1, context="publicas")
     img_guardadas = get_guardadas(1)
   
     
@@ -146,7 +149,7 @@ def buscarGuardadas():
 
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
-    img_guardadas = buscar_imagenes(busqueda, usrId=1, context="guardadas")
+    img_guardadas = buscar_imagenes(busqueda, 1, context="guardadas")
     print(img_guardadas)
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
@@ -159,7 +162,7 @@ def buscarGeneral():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
-    img_buscadas = buscar_imagenes(busqueda, usrId=1)
+    img_buscadas = buscar_imagenes(busqueda, 1)
     #print(img_buscadas)
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
 
