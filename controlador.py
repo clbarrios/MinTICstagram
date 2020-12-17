@@ -118,9 +118,6 @@ def actualizarImg():
 
 @app.route("/buscarPrivadas", methods=('GET', 'POST'))
 @login_required
-<<<<<<< HEAD
-def buscarGeneral():
-=======
 def buscarPrivadas():
     busqueda =  request.form.get("search").split()
     
@@ -140,7 +137,6 @@ def buscarPrivadas():
 @app.route("/buscarPublicas", methods=('GET', 'POST'))
 @login_required
 def buscarPublicas():
->>>>>>> cb8bab72448e545e3b923896a57e9cf6e75df2dc
     busqueda =  request.form.get("search").split()
    
     if len(busqueda) == 0:
@@ -171,8 +167,6 @@ def buscarGuardadas():
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
 
-<<<<<<< HEAD
-=======
 @app.route("/buscarGeneral", methods=('GET', 'POST'))   
 @login_required
 def buscarGeneral():
@@ -188,7 +182,6 @@ def buscarGeneral():
     else:
         return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
     
->>>>>>> cb8bab72448e545e3b923896a57e9cf6e75df2dc
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
@@ -238,12 +231,12 @@ def registro():
             flash("El usuario que escogiste no es un usuario válido. Vuelve a intentar.")
             return render_template('registro.html', title=titulo, form=form)
         
-        if not utils.isPasswordValid(con):
-            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
-            return render_template('registro.html', title=titulo, form=form)
-
         if not utils.isEmailValid(cor):
             flash("El correo que escribiste no es un correo válido. Vuelve a intentar.")
+            return render_template('registro.html', title=titulo, form=form)
+        
+        if not utils.isPasswordValid(con):
+            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
             return render_template('registro.html', title=titulo, form=form)
         
         if con != cfcon:
@@ -278,6 +271,12 @@ def activacionExitosa(tk):
 def reestablecerContra():
     if request.method== 'POST':
         correo=request.form.get("correoRes")
+
+        nom_usuario = get_usuario_byCorreo(correo)
+
+        if nom_usuario is None:
+            flash("Ese correo no se encuentra registrado")
+            return render_template("reestablecerContra.html")
 
         if not utils.isEmailValid(correo):
             flash("Escribe un correo valido")
