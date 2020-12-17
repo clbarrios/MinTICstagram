@@ -83,6 +83,12 @@ def deleteGusta(id_imagen):
     eliminar_guardadas(1, id_imagen)
     return redirect('/principal')
 
+@app.route("/insertarGusta/<int:id_imagen>",  methods=('GET', 'POST'))
+@login_required
+def insertarGusta(id_imagen):
+    insertar_guardadas(1,id_imagen)
+    return redirect('/principal')
+
 @app.route("/actualizarImg", methods=('GET', 'POST'))
 @login_required
 def actualizarImg():
@@ -133,9 +139,12 @@ def buscarPrivadas():
 def buscarPublicas():
     busqueda =  request.form.get("search").split()
    
+    if len(busqueda) == 0:
+        img_publicas = get_imagenes(1, 0)
+    else:
+        img_publicas=buscar_imagenes(busqueda,1, context="publicas")
 
     img_privadas = get_imagenes(1, 1)
-    img_publicas = buscar_imagenes(busqueda, 1, context="publicas")
     img_guardadas = get_guardadas(1)
   
     
@@ -147,10 +156,14 @@ def buscarPublicas():
 def buscarGuardadas():
     busqueda =  request.form.get("search").split()
 
+    if len(busqueda) == 0:
+        img_guardadas = get_guardadas(1)
+    else:
+        img_guardadas = buscar_imagenes(busqueda, 1, context="guardadas")
+
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
-    img_guardadas = buscar_imagenes(busqueda, 1, context="guardadas")
-    print(img_guardadas)
+    
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
 
@@ -163,9 +176,12 @@ def buscarGeneral():
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
     img_buscadas = buscar_imagenes(busqueda, 1)
-    #print(img_buscadas)
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
 
+    if len(busqueda) == 0:
+        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+    else:
+        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
+    
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
@@ -302,7 +318,7 @@ def reestablecimientoExitoso():
     return render_template("reestablecimientoExitoso.html")
 
 
-@app.route("/principal/")
+@app.route("/principal/", methods=('GET', 'POST'))
 @login_required
 def principal():
     img_privadas = get_imagenes(1, 1)
