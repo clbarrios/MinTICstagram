@@ -151,7 +151,7 @@ def buscarGuardadas():
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
 
-@app.route("/buscarGeneral", methods=('GET', 'POST'))
+@app.route("/buscarGeneral", methods=('GET', 'POST'))   
 @login_required
 def buscarGeneral():
     busqueda =  request.form.get("search").split()
