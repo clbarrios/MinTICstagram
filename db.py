@@ -488,12 +488,12 @@ def eliminar_imagen(id_):
         print(e)
 
 
-# 1. Pestaña Buscar imagenes: imagenes = buscar_imagenes(palabras_clave)
+# 1. Pestaña Buscar imagenes: imagenes = buscar_imagenes(palabras_clave, usrId)
 # 2. subpestañas
-#   2.1 privadas de un usario dado: imagenes = buscar_imagenes(palabras_clave, context="privadas", usrId=id_)
+#   2.1 privadas de un usario dado: imagenes = buscar_imagenes(palabras_clave, usrId=id_, context="privadas")
 
 
-def buscar_imagenes(palabras_clave, context="plataforma", usrId=None):
+def buscar_imagenes(palabras_clave, usrId, context="plataforma"):
     '''
     Recibe una lista de palabras clave para buscar por nombre y etiqueta en 
     la base de datos y retorna una lista de imagenes, donde cada imagen es un 
@@ -501,62 +501,68 @@ def buscar_imagenes(palabras_clave, context="plataforma", usrId=None):
     una lista. Solo se retornan imagenes publicas. Context puede tomar los valores
     "publicas", "privadas", "guardadas" y "plataforma", siendo éste último el valor
     por defecto. El parametro context indica si se buscan imagenes entre las 
-    publicas, privadas o guardadas del usuario, o entre las publicas de todos los
-    usuarios en la plataforma
+    publicas, privadas o guardadas del usuario, o entre las publicas de los otros
+    usuarios de la plataforma
     '''
+
+    like_str = "I.nombre_imagen LIKE ? OR E.nombre_etiqueta LIKE ?"
+    if len(palabras_clave) > 1:
+        like_str = " OR ".join([like_str]*len(palabras_clave))
+
+    values = [usrId]
+    for kw in palabras_clave:
+        values.extend([f'%{kw}%']*2)
+
     if context == "plataforma":
 
         query = """
             SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
-            INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen=I.id
+            INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE I.privada=0 AND (I.nombre_imagen OR E.nombre_etiqueta LIKE ?);
-        """
+            WHERE I.privada = 0 AND I.id_usuario != ? AND ({})
+            EXCEPT
+            SELECT I.id, I.nombre_imagen, I.ruta 
+            FROM Imagenes AS I 
+            INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id 
+            WHERE MG.id_usuario=?;
+        """.format(like_str)
 
-        values = [(f'%{kw}%',) for kw in palabras_clave]
+        values.append(usrId)
 
     elif context == "publicas":
 
         query = """
-            SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
-            INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen=I.id
+            SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+            INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE (I.nombre_imagen OR E.nombre_etiqueta LIKE ?) AND I.privada=0 AND I.id_usuario=?;
-        """
-
-        values = [(f'%{kw}%', usrId) for kw in palabras_clave]
+            WHERE I.privada = 0 AND I.id_usuario = ? AND ({});
+        """.format(like_str)
 
     elif context == "privadas":
 
         query = """
-            SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
-            INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen=I.id
+            SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+            INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE (I.nombre_imagen OR E.nombre_etiqueta LIKE ?) AND I.privada=1 AND I.id_usuario=?;
-        """
+            WHERE I.privada = 1 AND I.id_usuario = ? AND ({});
+        """.format(like_str)
 
-        values = [(f'%{kw}%', usrId) for kw in palabras_clave]
-        
     elif context == "guardadas":
 
         query = """
-            SELECT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
-            INNER JOIN MeGusta AS MG ON MG.id_imagen=I.id
+            SELECT DISTINCT I.id, I.nombre_imagen, I.ruta FROM Imagenes AS I
+            INNER JOIN MeGusta AS MG ON MG.id_imagen = I.id
             INNER JOIN Imagenes_Etiquetas AS IE ON IE.id_imagen = I.id
             INNER JOIN Etiquetas AS E ON E.id = IE.id_etiqueta
-            WHERE (I.nombre_imagen OR E.nombre_etiqueta LIKE ?) AND I.privada=0 AND I.id_usuario=?;
-        """
-                
-        values = [(f'%{kw}%', usrId) for kw in palabras_clave]
+            WHERE I.privada = 0 AND MG.id_usuario = ? AND ({});
+        """.format(like_str)    
 
-    
+    values = tuple(values)
     try:
         con = conectar()
         cursor = con.cursor()
-        for v in values:
-            cursor.execute(query, v)
+        cursor.execute(query, values)
         imagenes = cursor.fetchall()
-        desconectar()
         desconectar()
         # convertir el resultado a una lista de diccionarios
         keys = ['id', 'nombre', 'ruta']
@@ -567,5 +573,3 @@ def buscar_imagenes(palabras_clave, context="plataforma", usrId=None):
         return imagenes
     except Error as e:
         print(e)
-
-        

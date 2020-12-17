@@ -86,8 +86,21 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col align-self-center center">
-                            <form>
+                            <form style="text-align: center;" action="{{ url_for('buscarPrivadas') }}" method="POST"
+                                enctype="multipart/form-data">
                                 <input type="text" class="searchbar" name="search" placeholder="Buscar...">
+                            </form>
+                        </div>
+                        <div class="col align-self-center center">
+                            <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
+                                <button type="submit" class="boton">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                    </svg>
+                                    Eliminar filtros
+                                </button>
                             </form>
                         </div>
                         <div class="col align-self-center center">
@@ -168,8 +181,21 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col align-self-center center">
-                            <form>
+                            <form style="text-align: center;" action="{{ url_for('buscarPublicas') }}" method="POST"
+                                enctype="multipart/form-data">
                                 <input type="text" class="searchbar" name="search" placeholder="Buscar...">
+                            </form>
+                        </div>
+                        <div class="col align-self-center center">
+                            <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
+                                <button type="submit" class="boton">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                    </svg>
+                                    Eliminar filtros
+                                </button>
                             </form>
                         </div>
                         <div class="col align-self-center center">
@@ -199,7 +225,7 @@
                                     {% for q in t['etiquetas'] %}
                                         <li class="list-group-item">{{ q }}</li>
                                     {% endfor %}
-                                </ul>                               
+                                </ul>
                                 <br>
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
@@ -249,8 +275,21 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col align-self-center center">
-                            <form>
+                            <form style="text-align: center;" action="{{ url_for('buscarGuardadas') }}" method="POST"
+                                enctype="multipart/form-data">
                                 <input type="text" class="searchbar" name="search" placeholder="Buscar...">
+                            </form>
+                        </div>
+                        <div class="col align-self-center center">
+                            <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
+                                <button type="submit" class="boton">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                    </svg>
+                                    Eliminar filtros
+                                </button>
                             </form>
                         </div>
                         <div class="col align-self-center center">
@@ -275,9 +314,11 @@
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                                {% for q in t['etiquetas'] %}
-                                <p class="card-text">{{ q }}</p>
-                                {% endfor %}
+                                <ul class="list-group list-group-flush">
+                                    {% for q in t['etiquetas'] %}
+                                        <li class="list-group-item">{{ q }}</li>
+                                    {% endfor %}
+                                </ul>
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
@@ -319,240 +360,252 @@
     <div class="tab-content" id="buscar-content" style="display: none;">
         <br>
         <div class="container-fluid">
-            <form style="text-align: center;" action="{{ url_for('buscarGeneral') }}" method="POST" enctype="multipart/form-data">
-                <input type="text" class="searchbar long" name="search" placeholder="Buscar por nombre de imagen o etiquetas...">
-            </form>
+            <div class="row">
+                <div class="col align-self-center center">
+                    <form style="text-align: center;" action="{{ url_for('buscarGeneral') }}" method="POST"
+                        enctype="multipart/form-data">
+
+                        <input type="text" class="searchbar long" name="search"
+                            placeholder="Buscar por nombre de imagen o etiquetas...">
+                    </form>
+                </div>
+                <div class="col align-self-center center">
+                    <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
+                        <button type="submit" class="boton">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                            </svg>
+                            Eliminar filtros
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                {% for t in galeria4 %}
+                <div class="col-md-3">
+                    <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;">
+                        <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg" width="300"
+                            height="300" onclick="showImgModal(event);">
+                        <div class="card-body">
+                            <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
+                            <ul class="list-group list-group-flush">
+                                {% for q in t['etiquetas'] %}
+                                    <li class="list-group-item">{{ q }}</li>
+                                {% endfor %}
+                            </ul>
+                            <!-- Botón de descarga -->
+                            <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
+                                <button type="button" class="btn btn-primary">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path fill-rule="evenodd"
+                                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg>
+                                </button>
+                            </a>
+                            <!-- Botón para eliminar -->
+                            <a href="{{ url_for('insertarGusta', id_imagen= t['id'] ) }}">
+                                <button type="button" class="btn btn-outline-danger" onclick="toggleHeart(event);">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart"
+                                        style="display: inline;" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                                    </svg>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill"
+                                        style="display: none" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                                    </svg>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <br>
-        <div class="row">
-            {% for t in galeria4 %}
-            <div class="col-md-3">
-                <div class="card mx-auto" style="width: 18rem; padding: 10px; margin-bottom: 10px;">
-                    <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg"
-                        width="300" height="300" onclick="showImgModal(event);">
-                    <div class="card-body">
-                        <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                        {% for q in t['etiquetas'] %}
-                        <p class="card-text">{{ q }}</p>
+    </div>
+
+        <!-- Modals -->
+
+        <!--Modal de cerrar sesion-->
+        <div class="modal fade" id="modalCerrarSesion">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCerrarCenterTitle">¿Seguro que quieres cerrar sesion?
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col align-self-center center">
+                                <button id="bi" type="button" class="boton btn-sm"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col align-self-center center">
+                                <form method="GET" action="{{ url_for('logout') }}">
+                                    <input type="submit" id="bi" class="boton btn-sm" value="Confirmar">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal de agregar imagen -->
+        <div class="modal fade" id="nuevaImgModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <section class="content">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="error-msg">
+                            {{ message }}
+                        </div>
                         {% endfor %}
-                        <!-- Botón de descarga -->
-                        <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
-                            <button type="button" class="btn btn-primary">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download"
+                        {% endif %}
+                        {% endwith %}
+                    </section>
+                    <div class="modal-header">
+                        <h4 class="modal-title" style="font-weight: bold;">Agregar Imagen</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+
+                    <!-- Modal body -->
+                    <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6 my-auto">
+                                    <img id="imgDisplay" style="display: none; margin: auto;">
+                                    <svg id="imgPlaceholder" width="100%" viewBox="0 0 16 16" class="bi bi-image"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M14.002 2h-12a1 1 0 0 0-1 1v9l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094L15.002 9.5V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm4 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                    </svg>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <input type="text" class="textfield" id="nombre" name="nombre"
+                                        placeholder="Nombre de la imagen">
+                                    <textarea id="etiquetas" style="height:150px" name="etiquetas"
+                                        placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
+                                    <input type="checkbox" id="privada" name="privadas" value="privada">
+                                    <label for="privada">Privada</label>
+
+                                </div>
+                            </div>
+                            <br>
+                            <input type="file" name="archivo" class="inputfile" accept="image/*" id="imgInputFile"
+                                onchange="displayImg(event);">
+                            <label for="imgInputFile" id="imgInputLabel">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                     <path fill-rule="evenodd"
-                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
                                 </svg>
-                            </button>
-                        </a>
-                        <!-- Botón para eliminar -->
-                        <a href="{{ url_for('deleteGusta', id_imagen= t['id'] ) }}">
-                            <button type="button" class="btn btn-outline-danger" onclick="toggleHeart(event);">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart"
-                                    style="display: none;" fill="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                                </svg>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill"
-                                    style="display: inline" fill="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                                </svg>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Modals -->
-
-    <!--Modal de cerrar sesion-->
-    <div class="modal fade" id="modalCerrarSesion">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCerrarCenterTitle">¿Seguro que quieres cerrar sesion?
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col align-self-center center">
-                            <button id="bi" type="button" class="boton btn-sm" data-dismiss="modal">Cancelar</button>
+                                <span> Escoge un archivo </span>
+                            </label>
                         </div>
-                        <div class="col align-self-center center">
-                            <form method="GET" action="{{ url_for('logout') }}">
-                                <input type="submit" id="bi" class="boton btn-sm" value="Confirmar">
-                            </form>
 
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <input type="submit" class="boton" value="Guardar">
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!--Modal de agregar imagen -->
-    <div class="modal fade" id="nuevaImgModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
 
-                <!-- Modal Header -->
-                <section class="content">
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="error-msg">
-                        {{ message }}
+        <!-- Modal de actualizar Imagen -->
+        <div class="modal fade" id="actualizarImgModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" style="font-weight: bold;">Actualizar Imagen</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    {% endfor %}
-                    {% endif %}
-                    {% endwith %}
-                </section>
-                <div class="modal-header">
-                    <h4 class="modal-title" style="font-weight: bold;">Agregar Imagen</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
 
 
-                <!-- Modal body -->
-                <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-6 my-auto">
-                                <img id="imgDisplay" style="display: none; margin: auto;">
-                                <svg id="imgPlaceholder" width="100%" viewBox="0 0 16 16" class="bi bi-image"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M14.002 2h-12a1 1 0 0 0-1 1v9l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094L15.002 9.5V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm4 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                </svg>
-                            </div>
+                    <form name="actualizar_imagen" action="{{ url_for('actualizarImg') }}" method="POST">
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6 my-auto">
+                                    <img id="imgUpdateDisplay" style="display: none; margin: auto;">
+                                </div>
 
-                            <div class="col-sm-6">
-                                <input type="text" class="textfield" id="nombre" name="nombre"
-                                    placeholder="Nombre de la imagen">
-                                <textarea id="etiquetas" style="height:150px" name="etiquetas"
-                                    placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
-                                <input type="checkbox" id="privada" name="privadas" value="privada">
-                                <label for="privada">Privada</label>
+                                <div class="col">
+                                    <input type="hidden" name="id" value="">
+                                    <input type="hidden" name="ruta" value="">
+                                    <input type="text" class="textfield" name="nombre" placeholder="Nombre de la imagen"
+                                        value="">
+                                    <textarea name="etiquetas" style="height:150px"
+                                        placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
+                                    <input type="radio" id="radioBtnPrivada" name="privada" value="Privada" />
+                                    <label for="radioBtnPrivada">Privada</label>
+                                    <input type="radio" id="radioBtnPublica" name="privada" value="Publica" />
+                                    <label for="radioBtnPublica">Publica</label>
+                                </div>
 
                             </div>
                         </div>
-                        <br>
-                        <input type="file" name="archivo" class="inputfile" accept="image/*" id="imgInputFile"
-                            onchange="displayImg(event);">
-                        <label for="imgInputFile" id="imgInputLabel">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                <path fill-rule="evenodd"
-                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-                            </svg>
-                            <span> Escoge un archivo </span>
-                        </label>
 
-
-
-
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <input type="submit" class="boton" value="Guardar">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal de actualizar Imagen -->
-    <div class="modal fade" id="actualizarImgModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title" style="font-weight: bold;">Actualizar Imagen</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                
-                <form name="actualizar_imagen" action="{{ url_for('actualizarImg') }}" method="POST">
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-6 my-auto">
-                                <img id="imgUpdateDisplay" style="display: none; margin: auto;">
-                            </div>
-    
-                            <div class="col">
-                                <input type="hidden" name="id" value="">
-                                <input type="hidden" name="ruta" value="">
-                                <input type="text" class="textfield" name="nombre" placeholder="Nombre de la imagen"
-                                    value="">
-                                <textarea name="etiquetas" style="height:150px"
-                                    placeholder="Escribe aquí etiquetas con las que decribirías tu imagen"></textarea>
-                                <input type="radio" id="radioBtnPrivada" name="privada" value="Privada" />
-                                <label for="radioBtnPrivada">Privada</label>
-                                <input type="radio" id="radioBtnPublica" name="privada" value="Publica" />
-                                <label for="radioBtnPublica">Publica</label>
-                            </div>
-    
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <input type="submit" class="boton" value="Actualizar">
                         </div>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <input type="submit" class="boton" value="Actualizar">
-                    </div>
-                </form>
-                
-
-                
-                
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Modal de mostrar imagen -->
-    <div id="showImgModal" class="customModal">
+        <!-- Modal de mostrar imagen -->
+        <div id="showImgModal" class="customModal">
 
-        <!-- The Close Button -->
-        <span class="showImgModal-close" onclick="closeImgModal();">&times;</span>
+            <!-- The Close Button -->
+            <span class="showImgModal-close" onclick="closeImgModal();">&times;</span>
 
-        <!-- Modal Content (The Image) -->
-        <div class="showImgModal-content my-auto center">
-            <img style="margin: auto;">
+            <!-- Modal Content (The Image) -->
+            <div class="showImgModal-content my-auto center">
+                <img style="margin: auto;">
+            </div>
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="showImgModal-caption"></div>
         </div>
 
-        <!-- Modal Caption (Image Text) -->
-        <div id="showImgModal-caption"></div>
-    </div>
 
-
-    <!-- Bootsrap JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-        </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-        </script>
+        <!-- Bootsrap JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+            </script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+            </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+            </script>
 </body>
 
 </html>

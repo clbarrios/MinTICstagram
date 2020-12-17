@@ -83,6 +83,12 @@ def deleteGusta(id_imagen):
     eliminar_guardadas(1, id_imagen)
     return redirect('/principal')
 
+@app.route("/insertarGusta/<int:id_imagen>",  methods=('GET', 'POST'))
+@login_required
+def insertarGusta(id_imagen):
+    insertar_guardadas(1,id_imagen)
+    return redirect('/principal')
+
 @app.route("/actualizarImg", methods=('GET', 'POST'))
 @login_required
 def actualizarImg():
@@ -109,20 +115,80 @@ def actualizarImg():
     actualizar_imagen(id_, nombre_imagen, ruta, priv, etiquetas)
     return redirect('/principal')
 
-@app.route("/buscarGeneral", methods=('GET', 'POST'))
+
+@app.route("/buscarPrivadas", methods=('GET', 'POST'))
+@login_required
+<<<<<<< HEAD
+def buscarGeneral():
+=======
+def buscarPrivadas():
+    busqueda =  request.form.get("search").split()
+    
+    if len(busqueda) == 0:
+        img_privadas = get_imagenes(1, 1)
+    else:
+        img_privadas=buscar_imagenes(busqueda,1, context="privadas")
+    
+    img_publicas = get_imagenes(1, 0)
+    img_guardadas = get_guardadas(1)
+   
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+
+
+
+@app.route("/buscarPublicas", methods=('GET', 'POST'))
+@login_required
+def buscarPublicas():
+>>>>>>> cb8bab72448e545e3b923896a57e9cf6e75df2dc
+    busqueda =  request.form.get("search").split()
+   
+    if len(busqueda) == 0:
+        img_publicas = get_imagenes(1, 0)
+    else:
+        img_publicas=buscar_imagenes(busqueda,1, context="publicas")
+
+    img_privadas = get_imagenes(1, 1)
+    img_guardadas = get_guardadas(1)
+  
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+
+
+@app.route("/buscarGuardadas", methods=('GET', 'POST'))
+@login_required
+def buscarGuardadas():
+    busqueda =  request.form.get("search").split()
+
+    if len(busqueda) == 0:
+        img_guardadas = get_guardadas(1)
+    else:
+        img_guardadas = buscar_imagenes(busqueda, 1, context="guardadas")
+
+    img_privadas = get_imagenes(1, 1)
+    img_publicas = get_imagenes(1, 0)
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+
+
+<<<<<<< HEAD
+=======
+@app.route("/buscarGeneral", methods=('GET', 'POST'))   
 @login_required
 def buscarGeneral():
     busqueda =  request.form.get("search").split()
-    imagenes_buscadas = buscar_imagenes(busqueda)
-    print(imagenes_buscadas)
 
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
-    img_buscadas = imagenes_buscadas
-    
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
+    img_buscadas = buscar_imagenes(busqueda, 1)
 
+    if len(busqueda) == 0:
+        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
+    else:
+        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
+    
+>>>>>>> cb8bab72448e545e3b923896a57e9cf6e75df2dc
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
@@ -259,12 +325,13 @@ def reestablecimientoExitoso():
     return render_template("reestablecimientoExitoso.html")
 
 
-@app.route("/principal/")
+@app.route("/principal/", methods=('GET', 'POST'))
 @login_required
 def principal():
     img_privadas = get_imagenes(1, 1)
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
+    #img_buscadas = imagenes_buscadas
 
     username = request.cookies.get('usuario')
     
