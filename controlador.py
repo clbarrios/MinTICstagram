@@ -18,11 +18,6 @@ app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = "./static/img"
 
 
-
-galeria1 = ['img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg','img/imagen14.jpg', 'img/imagen15.jpg', 'img/imagen15.jpg' ]
-galeria2 = ['img/imagen2.png', 'img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen7.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg','img/imagen15.jpg', 'img/imagen1.jpg', 'img/imagen2.png' ]
-galeria3 = ['img/imagen3.jpg', 'img/imagen4.jpg', 'img/imagen5.jpg', 'img/imagen6.jpg', 'img/imagen7.jpg', 'img/imagen8.jpg', 'img/imagen9.jpg', 'img/imagen10.jpg', 'img/imagen11.jpg', 'img/imagen12.jpg', 'img/imagen13.jpg', 'img/imagen14.jpg', 'img/imagen15.jpg','img/imagen1.jpg', 'img/imagen2.png', 'img/imagen3.jpg' ]
-
 def login_required(view):
     @wraps(view)
     def wrapped_view(*arg, **kwargs):
@@ -44,31 +39,31 @@ def upload():
             return redirect('/principal')
         
         nom_imagen =  request.form.get("nombre")
-        ruta = "img/1" + str(filename)
+        ruta = "img/"+str(session['user_id']) + str(filename)
         etiquetas =  request.form.get("etiquetas").split()
         if(request.form.get("privadas")):
             privada=1
         else:
             privada=0
         
-        if nom_imagen == None:
+        if nom_imagen == None or len(nom_imagen) == 0:
             flash("Debe ingresar el nombre de la imagen")
             return redirect('/principal')
 
-        if etiquetas == None:
+        if etiquetas == None or len(etiquetas) == 0 :
             flash("Debe ingresar al menos una etiqueta a la imagen")
             return redirect('/principal')
 
         # Verifiacion de rutas duplicadas
         if validar_ruta(ruta):
-            insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
+            insertar_imagen(nom_imagen, session['user_id'], ruta, privada, etiquetas)
         else:
             flash("Ya subiste esta imagen")
             return redirect('/principal')
 
         flash("Se ha agregado su imagen con exito")
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], "1" + filename))
-        return 'ok'
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], str(session['user_id']) + filename))
+        return redirect('/principal')
 
 
 @app.route("/delete/<int:id>", methods=('GET', 'POST'))
@@ -80,13 +75,13 @@ def delete(id):
 @app.route("/deleteGusta/<int:id_imagen>", methods=('GET', 'POST'))
 @login_required
 def deleteGusta(id_imagen):
-    eliminar_guardadas(1, id_imagen)
+    eliminar_guardadas(session['user_id'], id_imagen)
     return redirect('/principal')
 
 @app.route("/insertarGusta/<int:id_imagen>",  methods=('GET', 'POST'))
 @login_required
 def insertarGusta(id_imagen):
-    insertar_guardadas(1,id_imagen)
+    insertar_guardadas(session['user_id'],id_imagen)
     return redirect('/principal')
 
 @app.route("/actualizarImg", methods=('GET', 'POST'))
@@ -103,12 +98,12 @@ def actualizarImg():
 
     etiquetas = request.form.get("etiquetas").split()
 
-    if nombre_imagen == None:
-            flash("Debe ingresar el nombre de la imagen")
+    if nombre_imagen == "" or len(nombre_imagen) == 0:
+            flash("No puedes eliminar el nombre de la imagen")
             return redirect('/principal')
 
-    if etiquetas == None:
-        flash("Debe ingresar al menos una etiqueta a la imagen")
+    if etiquetas == "" or len(etiquetas) == 0 :
+        flash("No puedes eliminar todas las etiquetas")
         return redirect('/principal')
 
     
@@ -122,12 +117,12 @@ def buscarPrivadas():
     busqueda =  request.form.get("search").split()
     
     if len(busqueda) == 0:
-        img_privadas = get_imagenes(1, 1)
+        img_privadas = get_imagenes(session['user_id'], 1)
     else:
-        img_privadas=buscar_imagenes(busqueda,1, context="privadas")
+        img_privadas=buscar_imagenes(busqueda,session['user_id'], context="privadas")
     
-    img_publicas = get_imagenes(1, 0)
-    img_guardadas = get_guardadas(1)
+    img_publicas = get_imagenes(session['user_id'], 0)
+    img_guardadas = get_guardadas(session['user_id'])
    
     
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
@@ -140,12 +135,12 @@ def buscarPublicas():
     busqueda =  request.form.get("search").split()
    
     if len(busqueda) == 0:
-        img_publicas = get_imagenes(1, 0)
+        img_publicas = get_imagenes(session['user_id'], 0)
     else:
-        img_publicas=buscar_imagenes(busqueda,1, context="publicas")
+        img_publicas=buscar_imagenes(busqueda,session['user_id'], context="publicas")
 
-    img_privadas = get_imagenes(1, 1)
-    img_guardadas = get_guardadas(1)
+    img_privadas = get_imagenes(session['user_id'], 1)
+    img_guardadas = get_guardadas(session['user_id'])
   
     
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
@@ -159,10 +154,10 @@ def buscarGuardadas():
     if len(busqueda) == 0:
         img_guardadas = get_guardadas(1)
     else:
-        img_guardadas = buscar_imagenes(busqueda, 1, context="guardadas")
+        img_guardadas = buscar_imagenes(busqueda, session['user_id'], context="guardadas")
 
-    img_privadas = get_imagenes(1, 1)
-    img_publicas = get_imagenes(1, 0)
+    img_privadas = get_imagenes(session['user_id'], 1)
+    img_publicas = get_imagenes(session['user_id'], 0)
     
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 
@@ -172,10 +167,10 @@ def buscarGuardadas():
 def buscarGeneral():
     busqueda =  request.form.get("search").split()
 
-    img_privadas = get_imagenes(1, 1)
-    img_publicas = get_imagenes(1, 0)
-    img_guardadas = get_guardadas(1)
-    img_buscadas = buscar_imagenes(busqueda, 1)
+    img_privadas = get_imagenes(session['user_id'], 1)
+    img_publicas = get_imagenes(session['user_id'], 0)
+    img_guardadas = get_guardadas(session['user_id'])
+    img_buscadas = buscar_imagenes(busqueda, session['user_id'])
 
     if len(busqueda) == 0:
         return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
@@ -327,9 +322,9 @@ def reestablecimientoExitoso():
 @app.route("/principal/", methods=('GET', 'POST'))
 @login_required
 def principal():
-    img_privadas = get_imagenes(1, 1)
-    img_publicas = get_imagenes(1, 0)
-    img_guardadas = get_guardadas(1)
+    img_privadas = get_imagenes(session['user_id'], 1)
+    img_publicas = get_imagenes(session['user_id'], 0)
+    img_guardadas = get_guardadas(session['user_id'])
     #img_buscadas = imagenes_buscadas
 
     username = request.cookies.get('usuario')
