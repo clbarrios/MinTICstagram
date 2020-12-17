@@ -40,7 +40,7 @@ def upload():
         f = request.files['archivo']
         filename = secure_filename(f.filename)
         if(not filename):
-            flash("no hay ningun archivo cargado")
+            flash("No ha cargado ningún archivo")
             return redirect('/principal')
         
         nom_imagen =  request.form.get("nombre")
@@ -51,6 +51,14 @@ def upload():
         else:
             privada=0
         
+        if nom_imagen == None:
+            flash("Debe ingresar el nombre de la imagen")
+            return redirect('/principal')
+
+        if etiquetas == None:
+            flash("Debe ingresar al menos una etiqueta a la imagen")
+            return redirect('/principal')
+
         # Verifiacion de rutas duplicadas
         if validar_ruta(ruta):
             insertar_imagen(nom_imagen, 1, ruta, privada, etiquetas)
@@ -75,18 +83,53 @@ def deleteGusta(id_imagen):
     eliminar_guardadas(1, id_imagen)
     return redirect('/principal')
 
-@app.route("/actualizarImg")
+@app.route("/actualizarImg", methods=('GET', 'POST'))
 @login_required
 def actualizarImg():
-    return "OK"
+    id_= request.form.get("id")
+    nombre_imagen = request.form.get("nombre")
+    ruta = request.form.get("ruta")
+    privada = request.form.get("privada")
+    if privada == 'Publica':
+        priv = 0
+    else:
+        priv = 1
 
-@app.route("/buscarGeneral")
+    etiquetas = request.form.get("etiquetas").split()
+
+    if nombre_imagen == None:
+            flash("Debe ingresar el nombre de la imagen")
+            return redirect('/principal')
+
+    if etiquetas == None:
+        flash("Debe ingresar al menos una etiqueta a la imagen")
+        return redirect('/principal')
+
+    
+    actualizar_imagen(id_, nombre_imagen, ruta, priv, etiquetas)
+    return redirect('/principal')
+
+@app.route("/buscarGeneral", methods=('GET', 'POST'))
 @login_required
 def buscarGeneral():
+<<<<<<< HEAD
     lista_etiquetas_buscadas =  request.form.get("search")
 
     imagenes_buscadas = buscar_imagenes(lista_etiquetas_buscadas)
     return "OK"
+=======
+    busqueda =  request.form.get("search").split()
+    imagenes_buscadas = buscar_imagenes(busqueda)
+    print(imagenes_buscadas)
+
+    img_privadas = get_imagenes(1, 1)
+    img_publicas = get_imagenes(1, 0)
+    img_guardadas = get_guardadas(1)
+    img_buscadas = imagenes_buscadas
+    
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
+
+>>>>>>> 5629707664630663f1a545bc7f2722f9a54c1707
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
