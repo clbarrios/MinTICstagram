@@ -155,12 +155,6 @@ def buscarGuardadas():
 @app.route("/buscarGeneral", methods=('GET', 'POST'))
 @login_required
 def buscarGeneral():
-<<<<<<< HEAD
-    lista_etiquetas_buscadas =  request.form.get("search")
-
-    imagenes_buscadas = buscar_imagenes(lista_etiquetas_buscadas)
-    return "OK"
-=======
     busqueda =  request.form.get("search").split()
     imagenes_buscadas = buscar_imagenes(busqueda)
 
@@ -171,7 +165,6 @@ def buscarGeneral():
     
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
 
->>>>>>> 5629707664630663f1a545bc7f2722f9a54c1707
 
 @app.route('/', methods=("GET", "POST"))
 def ingreso():
