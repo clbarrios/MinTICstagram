@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="boxedreg">
+<div class="boxedreg" style="height: 500px;">
 
     <form method="POST" class="formulario" action="{{ url_for('registro') }}">
         <h1>Registro de Usuario</h1>
-        <br><br>
+        <br>
         {{ form.hidden_tag() }}
     
         {{ form.nombre.label }}
