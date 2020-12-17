@@ -4,10 +4,10 @@ import utils
 from credenciales import app_mail, app_password
 from validate_email import validate_email
 from forms import FormRegistro
-from forms import FormInicio
+from forms import FormInicio, FormNuevaContra
 import os
 from functools import wraps
-#from werkzeug import secure_filename
+from werkzeug import secure_filename
 from db import *
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
@@ -83,7 +83,8 @@ def actualizarImg():
 @app.route("/buscarGeneral")
 @login_required
 def buscarGeneral():
-    lista_etiquetas_buscadas =  request.form.get("search").split()
+    lista_etiquetas_buscadas =  request.form.get("search")
+
     imagenes_buscadas = buscar_imagenes(lista_etiquetas_buscadas)
     return "OK"
 
@@ -179,17 +180,43 @@ def reestablecerContra():
         if not utils.isEmailValid(correo):
             flash("Escribe un correo valido")
             return render_template("reestablecerContra.html")
+        
+        token2 = secrets.token_urlsafe(50)
         yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=correo,subject="Reestablece tu contraseña",contents="Hola, Usa el link para cambiar tu contraseña.")
+        yag.send(to=correo,subject="Reestablece tu contraseña",contents="Hola, Usa el siguiente link para cambiar tu contraseña </br><br> <a href='http://127.0.0.1:5000/resContra/"+ token2 +"' >RESTABLECE TU CONTRASEÑA </a>")
+        
         flash("Se envio un correo para que cambies tu contraseña")
     return render_template("reestablecerContra.html")
     
+@app.route("/resContra/<string:tk>", methods=('GET','POST'))  
+def resContra(tk):
+    resp = make_response(redirect(url_for('nuevaContra')))
+    resp.set_cookie('tk', tk)
+    return resp
     
 
-
-@app.route("/nuevaContra")
+@app.route("/nuevaContra", methods=('GET','POST'))
 def nuevaContra():
-    return render_template("nuevaContra.html")
+    form = FormNuevaContra()
+    titulo = 'MinTICstagram | Nueva Contraseña'
+    if request.method == "POST":
+        contra = request.form.get('contranueva')
+        contraconf = request.form.get('contranuevaconf')
+
+        if not utils.isPasswordValid(contra):
+            flash("La contraseña que escogiste no es un contraseña válida. Vuelve a intentar.")
+            return render_template('nuevaContra.html', title=titulo, form=form)
+        
+        if contra != contraconf:
+            flash("Las contraseñas no coinciden")
+            return render_template('nuevaContra.html', title=titulo, form=form)
+        
+        hash_password = generate_password_hash(contra)
+        username = request.cookies.get('usuario')
+        actualizar_contraseña(username, hash_password)
+        return redirect(url_for('reestablecimientoExitoso'))
+
+    return render_template("nuevaContra.html", title=titulo, form=form)
 
 @app.route("/reestablecimientoExitoso")
 def reestablecimientoExitoso():
@@ -203,7 +230,7 @@ def principal():
     img_publicas = get_imagenes(1, 0)
     img_guardadas = get_guardadas(1)
 
-    username = request.cookies.get('username')
+    username = request.cookies.get('usuario')
     
     return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
 

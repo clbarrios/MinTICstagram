@@ -1,4 +1,40 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="boxedForm" style="height: 450px;">
+    <form method="POST" class="formulario" action="{{ url_for('nuevaContra') }}">
+        <h1>Nueva Contraseña</h1>
+        <br>
+        {{ form.hidden_tag() }}
+
+        {{ form.contranueva.label }}
+        {{ form.contranueva(placeholder="Restablece tu contraseña", size=30) }}
+        <br><br>
+        <p style="font-size: 12px;"><b>Contraseña: Mínimo 8 caracteres, un número, una mayúscula, una minúscula y un caractér especial</b></p>
+        <br>
+        {{ form.contranuevaconf.label }}
+        {{ form.contranuevaconf(placeholder="Confirma tu contraseña", size=30) }}
+        <br><br><br>
+
+        {{ form.restablecer(class_="boton") }}
+    </form>
+    <section class="content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="error-msg">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </section>
+</div>
+{% endblock %}
+
+
+
+
+<!--<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +55,7 @@
 </head>
 <body>
     <div class="boxedForm " style="height: 450px;">
-        <form class="formulario" action="{{ url_for('reestablecimientoExitoso') }}">
+        <form method="POST" class="formulario" action="{{ url_for('nuevaContra') }}">
             <h1 style="text-align: center;">Nueva Contraseña</h1>
             <br>
             <label for="nuevacontra"> Elige tu nueva contraseña</label>

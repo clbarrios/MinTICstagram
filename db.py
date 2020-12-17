@@ -95,12 +95,12 @@ def activar_usuario(token):
     except Error as e:
         print(e)
 
-def actualizar_contraseña(id_, contraseña):
+def actualizar_contraseña(nombre, contraseña):
     '''
     Actualizar la contraseña del usuario identificado con id_ en la base de datos
     '''
-    query = "UPDATE Usuarios SET contraseña=? WHERE id=?;"
-    values = (contraseña, id_)
+    query = "UPDATE Usuarios SET contraseña=? WHERE nombre_usuario=?;"
+    values = (contraseña, nombre)
     try:
         con = conectar()
         cursor = con.cursor()
