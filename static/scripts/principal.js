@@ -1,29 +1,30 @@
 let tabActual = null,tabImg = null ,contentActual = null, contentImg = null;
 window.onload = function(){    
-    document.getElementById("myImgs-tab").click();
+    //document.getElementById("myImgs-tab").click();
 }
 
 
 function openTab(id) {
-        if(contentActual != null){
-            contentActual.style.display = "none"
-            contentActual.className=contentActual.className.replace("active","")
-        }
+    if(contentActual != null){
+        contentActual.style.display = "none"
+        contentActual.className=contentActual.className.replace("active","")
+    }
 
-        contentActual = document.getElementById(id + "-content");
-        
-         if(contentActual.getAttribute("id") == "myImgs-content"){
-              obtenerSubTab("privadas")
-         }
-        
-        contentActual.style.display = "block"
+    contentActual = document.getElementById(id + "-content");
 
-        if(tabActual != null){
-            
-            tabActual.className=tabActual.className.replace("active","")
-        }
-        tabActual= document.getElementById(id + "-tab")
-        tabActual.className += " active"
+    if(contentActual.getAttribute("id") == "myImgs-content"){
+        obtenerSubTab("privadas")
+    }
+    
+   
+    contentActual.style.display = "block"
+
+    if(tabActual != null){
+        
+        tabActual.className=tabActual.className.replace("active","")
+    }
+    tabActual= document.getElementById(id + "-tab")
+    tabActual.className += " active"
 
 }
 
@@ -55,7 +56,7 @@ function displayImg(event) {
     img.onload = function() {
         var h = img.height;
         var w = img.width;
-        //console.log("img size: " + this.width + "x" + this.height);
+        console.log("img size: " + this.width + "x" + this.height);
         var dispImg = document.getElementById("imgDisplay");
         dispImg.src = this.src;
         if (w >= h) {
@@ -79,7 +80,6 @@ function displayImg(event) {
             defaultLabel = label.innerHTML;
         var filename = "";
         filename = input.value.split('\\').pop();
-        console.log(filename);
 
         if (filename) {
             label.querySelector("span").innerHTML = filename;
