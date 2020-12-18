@@ -120,6 +120,10 @@ def buscarPrivadas():
         img_privadas = get_imagenes(session['user_id'], 1)
     else:
         img_privadas=buscar_imagenes(busqueda,session['user_id'], context="privadas")
+        if len(img_privadas) == 0:
+            flash("No hay resultados para tu busqueda")
+        
+        
     
     img_publicas = get_imagenes(session['user_id'], 0)
     img_guardadas = get_guardadas(session['user_id'])
@@ -138,6 +142,8 @@ def buscarPublicas():
         img_publicas = get_imagenes(session['user_id'], 0)
     else:
         img_publicas=buscar_imagenes(busqueda,session['user_id'], context="publicas")
+        if len(img_publicas) == 0:
+            flash("No hay resultados para tu busqueda")
 
     img_privadas = get_imagenes(session['user_id'], 1)
     img_guardadas = get_guardadas(session['user_id'])
@@ -155,6 +161,8 @@ def buscarGuardadas():
         img_guardadas = get_guardadas(1)
     else:
         img_guardadas = buscar_imagenes(busqueda, session['user_id'], context="guardadas")
+        if len(img_guardadas) == 0:
+            flash("No hay resultados para tu busqueda")
 
     img_privadas = get_imagenes(session['user_id'], 1)
     img_publicas = get_imagenes(session['user_id'], 0)
@@ -175,6 +183,8 @@ def buscarGeneral():
     if len(busqueda) == 0:
         return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas)
     else:
+        if len(img_buscadas) == 0:
+            flash("No hay resultados para tu busqueda")
         return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas)
     
 
