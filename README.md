@@ -34,7 +34,7 @@ Se trata de una red social ficticia donde los usuarios pueden subir y compartir 
 | requests           |    2.25.0 |
 | setuptools         |    49.2.1 |
 | urllib3            |    1.26.2 |
-| validate-email 1.3 |  0.14.245 |
-| Werkzeug           | 1.0.1     |
+| validate-email 1.3 | 1.0.1     |
+| Werkzeug           | 0.16.0    |
 | WTForms            | 2.3.3     |
 | yagmail            | 0.14.245  |
