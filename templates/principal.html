@@ -65,6 +65,17 @@
             Descubrir
         </div>
     </div>
+    <section>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-msg">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </section>
     <div class="tab-content" id="myImgs-content" style="display: none;">
         <div class="grid-container three-cols">
             <div class="grid-item tab-img" id="privadas-tab" onclick="obtenerSubTab('privadas');">
@@ -78,17 +89,7 @@
             </div>
         </div>
         <br>
-        <section>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <div class="error-msg">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        </section>
+
 
         <div class="tab-content" id="privadas-content" style="display: none;">
             <div class="container-fluid">
@@ -102,6 +103,7 @@
                         </div>
                         <div class="col align-self-center center">
                             <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="tab" value="privadas">
                                 <button type="submit" class="boton">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
@@ -196,6 +198,7 @@
                         <div class="col align-self-center center">
                             <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
                                 <button type="submit" class="boton">
+                                    <input type="hidden" name="tab" value="publicas">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
                                     </svg>
@@ -287,6 +290,7 @@
                         </div>
                         <div class="col align-self-center center">
                             <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="tab" value="guardadas">
                                 <button type="submit" class="boton">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
@@ -375,7 +379,8 @@
                 </div>
                 <div class="col align-self-center center">
                     <form action="{{ url_for('principal') }}" method="POST" enctype="multipart/form-data">
-                        <button type="submit" class="boton">
+                        <input type="hidden" name="tab" value="buscar">
+                        <button type="submit" class="boton">                            
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
                             </svg>
@@ -589,6 +594,17 @@
             <div id="showImgModal-caption"></div>
         </div>
 
+        <!-- Cambiar pestaña desde el servidor -->
+        {% if tabID == "buscar" %}
+            <script>
+                document.getElementById('{{ tabID }}' + "-tab").click();
+            </script>
+        {% else %}
+            <script>
+                document.getElementById("myImgs-tab").click();
+                document.getElementById('{{ tabID }}' + "-tab").click();
+            </script>
+        {% endif %}
 
         <!-- Bootsrap JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -600,7 +616,7 @@
             </script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-            </script>
+        </script>
 </body>
 
 </html>

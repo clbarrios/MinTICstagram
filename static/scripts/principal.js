@@ -1,29 +1,30 @@
 let tabActual = null,tabImg = null ,contentActual = null, contentImg = null;
 window.onload = function(){    
-    document.getElementById("myImgs-tab").click();
+    //document.getElementById("myImgs-tab").click();
 }
 
 
 function openTab(id) {
-        if(contentActual != null){
-            contentActual.style.display = "none"
-            contentActual.className=contentActual.className.replace("active","")
-        }
+    if(contentActual != null){
+        contentActual.style.display = "none"
+        contentActual.className=contentActual.className.replace("active","")
+    }
 
-        contentActual = document.getElementById(id + "-content");
-        
-         if(contentActual.getAttribute("id") == "myImgs-content"){
-              obtenerSubTab("privadas")
-         }
-        
-        contentActual.style.display = "block"
+    contentActual = document.getElementById(id + "-content");
 
-        if(tabActual != null){
-            
-            tabActual.className=tabActual.className.replace("active","")
-        }
-        tabActual= document.getElementById(id + "-tab")
-        tabActual.className += " active"
+    if(contentActual.getAttribute("id") == "myImgs-content"){
+        obtenerSubTab("privadas")
+    }
+    
+   
+    contentActual.style.display = "block"
+
+    if(tabActual != null){
+        
+        tabActual.className=tabActual.className.replace("active","")
+    }
+    tabActual= document.getElementById(id + "-tab")
+    tabActual.className += " active"
 
 }
 
