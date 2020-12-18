@@ -76,12 +76,14 @@ def delete(id):
 @login_required
 def deleteGusta(id_imagen):
     eliminar_guardadas(session['user_id'], id_imagen)
+    g.tabID = "guardadas"
     return redirect('/principal')
 
 @app.route("/insertarGusta/<int:id_imagen>",  methods=('GET', 'POST'))
 @login_required
 def insertarGusta(id_imagen):
     insertar_guardadas(session['user_id'],id_imagen)
+    g.tabID = "buscar"
     return redirect('/principal')
 
 @app.route("/actualizarImg", methods=('GET', 'POST'))
@@ -117,7 +119,7 @@ def buscarPrivadas():
 
     if request.form.get("search") is None:
         return redirect("/principal")
-        
+
     busqueda =  request.form.get("search").split()
     g.tabID = "privadas"
     
@@ -343,12 +345,14 @@ def nuevaContra():
 def reestablecimientoExitoso():
     return render_template("reestablecimientoExitoso.html")
 
-
 @app.route("/principal/", methods=('GET', 'POST'))
 @login_required
 def principal():
+    
     if 'tabID' not in g:
-        g.tabID="privadas"
+        g.tabID = "privadas"
+    else:
+        print(g.tabID)
 
     if request.method == "POST":
         g.tabID = request.form.get("tab")

@@ -135,12 +135,14 @@
                             <img src="{{ url_for('static', filename= t['ruta'] ) }}" class="card-img-top myImg"
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
-                                <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5><br>
-                                <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
-                                    {% for q in t['etiquetas'] %}
-                                        <li class="list-group-item">{{ q }}</li>
-                                    {% endfor %}
-                                </ul>
+                                <h5 class="card-title" style="float: left;"> {{ t['nombre'] }} </h5>                                
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for q in t['etiquetas'] %}
+                                    <li class="list-group-item">{{ q }}</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="card-body">
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
@@ -179,6 +181,7 @@
                                     </button>
                                 </a>
                             </div>
+                            
                         </div>
                     </div>
                     {% endfor %}
@@ -228,13 +231,13 @@
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                                <br>
-                                <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
-                                    {% for q in t['etiquetas'] %}
-                                        <li class="list-group-item">{{ q }}</li>
-                                    {% endfor %}
-                                </ul>
-                                <br>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for q in t['etiquetas'] %}
+                                    <li class="list-group-item">{{ q }}</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="card-body">
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
@@ -321,12 +324,14 @@
                                 width="300" height="300" onclick="showImgModal(event);">
                             <div class="card-body">
                                 <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                                <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
-                                    <br>
-                                    {% for q in t['etiquetas'] %}
-                                        <li class="list-group-item">{{ q }}</li>
-                                    {% endfor %}
-                                </ul>
+                            </div>
+                            <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
+                                <br>
+                                {% for q in t['etiquetas'] %}
+                                    <li class="list-group-item">{{ q }}</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="card-body">
                                 <!-- Botón de descarga -->
                                 <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                     <button type="button" class="btn btn-primary">
@@ -398,13 +403,13 @@
                             height="300" onclick="showImgModal(event);">
                         <div class="card-body">
                             <h5 class="card-title" style="float: left;">{{ t['nombre'] }}</h5>
-                            <br>
-                            <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
-                                {% for q in t['etiquetas'] %}
-                                    <li class="list-group-item">{{ q }}</li>
-                                {% endfor %}
-                            </ul>
-                            <br>
+                        </div>
+                        <ul class="list-group list-group-flush" style="display: block; margin: 10px;">
+                            {% for q in t['etiquetas'] %}
+                                <li class="list-group-item">{{ q }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="card-body">
                             <!-- Botón de descarga -->
                             <a download="imagen.jpg" href="{{ url_for('static', filename= t['ruta'] ) }}">
                                 <button type="button" class="btn btn-primary">
@@ -595,6 +600,7 @@
         </div>
 
         <!-- Cambiar pestaña desde el servidor -->
+        <script> console.log('{{ tabID }}') </script>
         {% if tabID == "buscar" %}
             <script>
                 document.getElementById('{{ tabID }}' + "-tab").click();
