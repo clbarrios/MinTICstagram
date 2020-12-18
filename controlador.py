@@ -17,6 +17,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = "./static/img"
 
+
+# Pequeña clase estatica para gestionar las pestañas de la vista principal desde
+# el servidor
 class Tab:
     tabID = "privadas"
 
