@@ -79,7 +79,6 @@ function displayImg(event) {
             defaultLabel = label.innerHTML;
         var filename = "";
         filename = input.value.split('\\').pop();
-        console.log(filename);
 
         if (filename) {
             label.querySelector("span").innerHTML = filename;
