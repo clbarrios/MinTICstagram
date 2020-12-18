@@ -55,7 +55,7 @@ function displayImg(event) {
     img.onload = function() {
         var h = img.height;
         var w = img.width;
-        //console.log("img size: " + this.width + "x" + this.height);
+        console.log("img size: " + this.width + "x" + this.height);
         var dispImg = document.getElementById("imgDisplay");
         dispImg.src = this.src;
         if (w >= h) {
