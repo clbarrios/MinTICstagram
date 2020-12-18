@@ -17,6 +17,16 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = "./static/img"
 
+class Tab:
+    tabID = "privadas"
+
+    @staticmethod
+    def setTabID(tab):
+        Tab.tabID = tab
+
+    @staticmethod
+    def getTabID():
+        return Tab.tabID
 
 def login_required(view):
     @wraps(view)
@@ -76,14 +86,14 @@ def delete(id):
 @login_required
 def deleteGusta(id_imagen):
     eliminar_guardadas(session['user_id'], id_imagen)
-    g.tabID = "guardadas"
+    Tab.setTabID("guardadas")
     return redirect('/principal')
 
 @app.route("/insertarGusta/<int:id_imagen>",  methods=('GET', 'POST'))
 @login_required
 def insertarGusta(id_imagen):
     insertar_guardadas(session['user_id'],id_imagen)
-    g.tabID = "buscar"
+    Tab.setTabID("buscar")
     return redirect('/principal')
 
 @app.route("/actualizarImg", methods=('GET', 'POST'))
@@ -121,7 +131,7 @@ def buscarPrivadas():
         return redirect("/principal")
 
     busqueda =  request.form.get("search").split()
-    g.tabID = "privadas"
+    Tab.setTabID("privadas")
     
     if len(busqueda) == 0:
         img_privadas = get_imagenes(session['user_id'], 1)
@@ -133,9 +143,7 @@ def buscarPrivadas():
     img_publicas = get_imagenes(session['user_id'], 0)
     img_guardadas = get_guardadas(session['user_id'])
    
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=g.tabID)
-
-
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=Tab.getTabID())
 
 @app.route("/buscarPublicas", methods=('GET', 'POST'))
 @login_required
@@ -145,7 +153,7 @@ def buscarPublicas():
         return redirect("/principal")
 
     busqueda =  request.form.get("search").split()
-    g.tabID = "publicas"
+    Tab.setTabID("publicas")
    
     if len(busqueda) == 0:
         img_publicas = get_imagenes(session['user_id'], 0)
@@ -158,7 +166,7 @@ def buscarPublicas():
     img_guardadas = get_guardadas(session['user_id'])
   
     
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=g.tabID)
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=Tab.getTabID())
 
 
 @app.route("/buscarGuardadas", methods=('GET', 'POST'))
@@ -169,7 +177,7 @@ def buscarGuardadas():
         return redirect("/principal")
 
     busqueda =  request.form.get("search").split()
-    g.tabID = "guardadas"
+    Tab.setTabID("guardadas")
 
     if len(busqueda) == 0:
         img_guardadas = get_guardadas(1)
@@ -181,7 +189,7 @@ def buscarGuardadas():
     img_privadas = get_imagenes(session['user_id'], 1)
     img_publicas = get_imagenes(session['user_id'], 0)
     
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=g.tabID)
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=Tab.getTabID())
 
 
 @app.route("/buscarGeneral", methods=('GET', 'POST'))   
@@ -192,7 +200,7 @@ def buscarGeneral():
         return redirect("/principal")
 
     busqueda =  request.form.get("search").split()
-    g.tabID = "buscar"
+    Tab.setTabID("buscar")
 
     img_privadas = get_imagenes(session['user_id'], 1)
     img_publicas = get_imagenes(session['user_id'], 0)
@@ -200,11 +208,11 @@ def buscarGeneral():
     img_buscadas = buscar_imagenes(busqueda, session['user_id'])
 
     if len(busqueda) == 0:
-        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=g.tabID)
+        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, tabID=Tab.getTabID())
     else:
         if len(img_buscadas) == 0:
             flash("No hay resultados para tu busqueda")
-        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas, tabID=g.tabID)
+        return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4 = img_buscadas, tabID=Tab.getTabID())
     
 
 @app.route('/', methods=("GET", "POST"))
@@ -349,13 +357,13 @@ def reestablecimientoExitoso():
 @login_required
 def principal():
     
-    if 'tabID' not in g:
-        g.tabID = "privadas"
-    else:
-        print(g.tabID)
+    #if 'tabID' not in g:
+    #    g.tabID = "privadas"
+    #else:
+    #    print(g.tabID)
 
     if request.method == "POST":
-        g.tabID = request.form.get("tab")
+        Tab.setTabID(request.form.get("tab"))
 
     img_privadas = get_imagenes(session['user_id'], 1)
     img_publicas = get_imagenes(session['user_id'], 0)
@@ -364,7 +372,7 @@ def principal():
 
     username = request.cookies.get('usuario')
     
-    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4=img_descubrir, tabID=g.tabID)
+    return render_template("principal.html",  galeria1=img_privadas, galeria2=img_publicas, galeria3=img_guardadas, galeria4=img_descubrir, tabID=Tab.getTabID())
 
 @app.before_request
 def load_logged_in_user():
