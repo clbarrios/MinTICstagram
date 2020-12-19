@@ -395,4 +395,5 @@ def logout():
 # Activar el modo debug
 if __name__=="__main__":
     app.secret_key = os.urandom(24)
-    app.run(debug=True)
+    app.run(debug=True, host='127.0.0.1', port =443, ssl_context=('micertificado.pem', 'llaveprivada.pem') )
+   
