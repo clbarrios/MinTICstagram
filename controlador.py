@@ -14,7 +14,7 @@ import secrets
 
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = "bQeThVmYq3t6w9z$C&F)J@NcRfUjXnZr"
 app.config['UPLOAD_FOLDER'] = "./static/img"
 
 
@@ -359,11 +359,6 @@ def reestablecimientoExitoso():
 @app.route("/principal/", methods=('GET', 'POST'))
 @login_required
 def principal():
-    
-    #if 'tabID' not in g:
-    #    g.tabID = "privadas"
-    #else:
-    #    print(g.tabID)
 
     if request.method == "POST":
         Tab.setTabID(request.form.get("tab"))
@@ -394,6 +389,5 @@ def logout():
 
 # Activar el modo debug
 if __name__=="__main__":
-    app.secret_key = os.urandom(24)
-    app.run(debug=True, host='127.0.0.1', port =443, ssl_context=('micertificado.pem', 'llaveprivada.pem') )
+    app.run(debug=True, host='0.0.0.0', port=443, ssl_context=('micertificado.pem', 'llaveprivada.pem') )
    
