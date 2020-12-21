@@ -417,6 +417,22 @@ def get_id_imagen(ruta):
         print(e)
 
 
+def get_ruta_imagen(id_):
+    query = "SELECT ruta FROM Imagenes WHERE id=?;"
+    values = (id_,)
+
+    try:
+        con = conectar()
+        cursor = con.cursor()
+        cursor.execute(query, values)
+        res = cursor.fetchone()
+        desconectar()
+        return res if res is None else res[0]
+        
+    except Error as e:
+        print(e) 
+
+
 def actualizar_imagen(id_, nombre_imagen, ruta, privada, etiquetas):
     '''
     Actualiza los datos de una imagen en la base de datos
