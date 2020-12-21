@@ -1,4 +1,4 @@
-from controlador import controlador as application
+from controlador import app as application
 
 if __name__ == "__main__":
-    controlador = application
+    app = application
