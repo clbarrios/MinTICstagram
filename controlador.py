@@ -283,7 +283,9 @@ def registro():
 
 
         yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=cor,subject="Activa tu cuenta",contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='http://127.0.0.1:5000/activacionExitosa/"+ token +"' >ACTIVA TU CUENTA </a>")
+        yag.send(to=cor,
+                 subject="Activa tu cuenta",
+                 contents="Hola, Bienvenido a MinTinstagram, has click en el siguiente link para activar tu cuenta </br><br> <a href='https://100.24.8.192/activacionExitosa/"+ token +"' >ACTIVA TU CUENTA </a>")
         
         return redirect('/activacion')
     
@@ -318,7 +320,9 @@ def reestablecerContra():
         
         token2 = secrets.token_urlsafe(50)
         yag = yagmail.SMTP(app_mail, app_password)
-        yag.send(to=correo,subject="Reestablece tu contraseña",contents="Hola, Usa el siguiente link para cambiar tu contraseña </br><br> <a href='http://127.0.0.1:5000/resContra/"+ token2 +"' >RESTABLECE TU CONTRASEÑA </a>")
+        yag.send(to=correo,
+                 subject="Reestablece tu contraseña",
+                 contents="Hola, Usa el siguiente link para cambiar tu contraseña </br><br> <a href='https://100.24.8.192/resContra/"+ token2 +"' >RESTABLECE TU CONTRASEÑA </a>")
         
         flash("Se envio un correo para que cambies tu contraseña")
     return render_template("reestablecerContra.html")
