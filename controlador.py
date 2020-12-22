@@ -322,15 +322,16 @@ def reestablecerContra():
         yag = yagmail.SMTP(app_mail, app_password)
         yag.send(to=correo,
                  subject="Reestablece tu contraseña",
-                 contents="Hola, Usa el siguiente link para cambiar tu contraseña </br><br> <a href='https://100.24.8.192/resContra/"+ token2 +"' >RESTABLECE TU CONTRASEÑA </a>")
+                 contents="Hola, Usa el siguiente link para cambiar tu contraseña </br><br> <a href='https://100.24.8.192/resContra/"+ token2 +"/"+ nom_usuario['nombre'] + "'>RESTABLECE TU CONTRASEÑA </a>")
         
         flash("Se envio un correo para que cambies tu contraseña")
     return render_template("reestablecerContra.html")
     
-@app.route("/resContra/<string:tk>", methods=('GET','POST'))  
-def resContra(tk):
+@app.route("/resContra/<string:tk>/<string:usuario>", methods=('GET','POST'))  
+def resContra(tk,usuario):
     resp = make_response(redirect(url_for('nuevaContra')))
     resp.set_cookie('tk', tk)
+    resp.set_cookie('usuario', usuario)
     return resp
     
 @app.route("/nuevaContra", methods=('GET','POST'))
